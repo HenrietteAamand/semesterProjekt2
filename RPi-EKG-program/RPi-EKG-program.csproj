@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <RuntimeIdentifier>linux-arm</RuntimeIdentifier>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>TRACE</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="RaspberryCore">
+      <HintPath>C:\RaspberryPi\RaspberryCore.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="LinuxDeployment" AfterTargets="PostBuildEvent">
+    <Message Importance="high" Text="Linux deployment locally after VS Build of $(ProjectName)" />
+    <MSBuild Condition="'$(DeployOnBuild)'!='true'" Projects="$(MSBuildProjectFullPath)" Properties="DeployOnBuild=true;PublishProfile=RPi;" />
+  </Target>
+
+  <Target Name="LinuxDeviceDeployment" AfterTargets="LinuxDeployment">
+    <Message Importance="high" Text="Linux device deployment after VS Build of $(ProjectName)" />
+    <Exec Command="&quot;C:\Program Files (x86)\PuTTY&quot;\plink.exe -ssh pi@raspberrypi.local -pw raspberry -batch -T hostname&#xD;&#xA;&quot;C:\Program Files (x86)\PuTTY&quot;\pscp.exe    -pw raspberry   &quot;$(ProjectDir)bin&quot;\Debug\netcoreapp3.1\linux-arm\*.*   pi@raspberrypi.local:./Programs/&#xD;&#xA;" />
+  </Target>
+</Project>
