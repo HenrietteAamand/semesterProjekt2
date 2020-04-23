@@ -5,6 +5,10 @@ using System.Text;
 namespace RPi_EKG_program
 {
     class Measurement
-{
-}
+    {
+
+
+    }
+
+
 }
