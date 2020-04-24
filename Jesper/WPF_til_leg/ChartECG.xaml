@@ -15,27 +15,29 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
             <StackPanel.Resources>
                 <Style BasedOn="{StaticResource MahApps.Styles.CheckBox}" TargetType="{x:Type CheckBox}">
-                    <Setter Property="Margin" Value="10" />
+                    <Setter Property="Margin" Value="20" />
+                    <Setter Property="Width" Value="100" />
+                    <Setter Property="MaxWidth" Value="100" />
                 </Style>
             </StackPanel.Resources>
-            <CheckBox IsChecked="{Binding MariaSeriesVisibility}">
-                Maria Series
+            <CheckBox IsChecked="{Binding ECGSeriesVisibility}">
+                ECG
             </CheckBox>
-            <CheckBox IsChecked="{Binding CharlesSeriesVisibility}">
-                Charles Series
+            <CheckBox IsChecked="{Binding BaseLineSeriesVisibility}">
+                Base Line
             </CheckBox>
-            <CheckBox IsChecked="{Binding JohnSeriesVisibility}">
-                John Series
+            <CheckBox IsChecked="{Binding STSeriesVisibility}">
+                ST Segment
             </CheckBox>
         </StackPanel>
         <lvc:CartesianChart Grid.Row="1" Hoverable="False">
             <lvc:CartesianChart.Series>
-                <lvc:LineSeries Title="Maria" Values="4,7,2,9,3" Visibility="{Binding MariaSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" />
-                <lvc:LineSeries Title="Charles" Values="6,2,6,3,8" Visibility="{Binding CharlesSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" />
-                <lvc:LineSeries Title="John" Values="7,2,8,3,9" Visibility="{Binding JohnSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000"/>
+                <lvc:LineSeries Title="ECG" Values="4,7,2,9,3" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" />
+                <lvc:LineSeries Title="Charles" Values="6,2,6,3,8" Visibility="{Binding BaseLineSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" />
+                <lvc:LineSeries Title="John" Values="7,2,8,3,9" Visibility="{Binding STSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000"/>
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Labels="January, February, March, April, May">

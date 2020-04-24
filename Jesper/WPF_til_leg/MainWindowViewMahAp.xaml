@@ -9,7 +9,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:uc="clr-namespace:Wpf.CartesianChart.DynamicVisibility"
 		mc:Ignorable="d"
-		Title="MainWindow" Height="754.8" Width="1472.4"
+		Title="ECG Analysis Application" Height="754.8" Width="1472.4"
 		BorderThickness="0" 
 		GlowBrush="Black"
 		ResizeMode="CanResizeWithGrip"

@@ -5,48 +5,48 @@ namespace Wpf.CartesianChart.DynamicVisibility
 {
     public partial class ChartECG : UserControl, INotifyPropertyChanged
     {
-        private bool _mariaSeriesVisibility;
-        private bool _charlesSeriesVisibility;
-        private bool _johnSeriesVisibility;
+        private bool _ECGSeriesVisibility;
+        private bool _baseLineSeriesVisibility;
+        private bool _stSeriesVisibility;
 
         public ChartECG()
         {
             InitializeComponent();
 
-            MariaSeriesVisibility = true;
-            CharlesSeriesVisibility = true;
-            JohnSeriesVisibility = false;
+            ECGSeriesVisibility = true;
+            BaseLineSeriesVisibility = true;
+            STSeriesVisibility = false;
 
             DataContext = this;
         }
 
-        public bool MariaSeriesVisibility
+        public bool ECGSeriesVisibility
         {
-            get { return _mariaSeriesVisibility; }
+            get { return _ECGSeriesVisibility; }
             set
             {
-                _mariaSeriesVisibility = value;
-                OnPropertyChanged("MariaSeriesVisibility");
+                _ECGSeriesVisibility = value;
+                OnPropertyChanged("ECGSeriesVisibility");
             }
         }
 
-        public bool CharlesSeriesVisibility
+        public bool BaseLineSeriesVisibility
         {
-            get { return _charlesSeriesVisibility; }
+            get { return _baseLineSeriesVisibility; }
             set
             {
-                _charlesSeriesVisibility = value;
-                OnPropertyChanged("CharlesSeriesVisibility");
+                _baseLineSeriesVisibility = value;
+                OnPropertyChanged("BaseLineSeriesVisibility");
             }
         }
 
-        public bool JohnSeriesVisibility
+        public bool STSeriesVisibility
         {
-            get { return _johnSeriesVisibility; }
+            get { return _stSeriesVisibility; }
             set
             {
-                _johnSeriesVisibility = value;
-                OnPropertyChanged("JohnSeriesVisibility");
+                _stSeriesVisibility = value;
+                OnPropertyChanged("STSeriesVisibility");
             }
         }
 
