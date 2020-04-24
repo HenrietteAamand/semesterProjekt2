@@ -54,24 +54,56 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="auto" MaxWidth="420"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
             <ColumnDefinition Width="20"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
 
 
         <!--ROW 1-->
+        <WrapPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="7"
+                    HorizontalAlignment="Center"
+                    Margin="10,0,10,0"
+                   >
+        <TextBox
+            MinWidth="200"
+            IsReadOnly="True" 
+            Text="Name: "/>
+        <TextBox
+            MinWidth="200"
+            Margin="10,0,10,0"  
+            IsReadOnly="True" 
+            Text="CPR: "/>
+        <TextBox
+            Margin="10,0,10,0"  
+            MinWidth="200"
+            IsReadOnly="True" 
+            Text="Gender: "/>
+            <TextBox
+            Margin="10,0,10,0"  
+            MinWidth="200"
+            IsReadOnly="True" 
+            Text="Age: "/>
+        </WrapPanel>
+
+
         <!--Indsættes under Grid.Columns="1"-->
         <!--Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"-->
         <TextBox
@@ -80,7 +112,7 @@
                              
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Search For Patient...">
+                             Controls:TextBoxHelper.Watermark="Search For Patient..." Grid.ColumnSpan="1" Margin="10,0,10,0">
             <!--<TextBox.InputBindings>
                 <KeyBinding Key="Return"
                                         Command="{Binding TextBoxButtonCmd, Mode=OneWay}"
@@ -99,50 +131,49 @@
         </TextBox>
 
         <!--ROW 2-->
-
-        <TabControl Grid.Row="2" Grid.RowSpan="5" Grid.Column="1" Grid.ColumnSpan="1">
-            <TabItem>
-                <ScrollViewer 
-                          HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Disabled">
-                    <UniformGrid Columns="2" Width="400">
-                        <ListView 
-                              BorderThickness="1"
-                            MinWidth="30"
-                            MaxWidth="300"
+        <Border Grid.Row="2" Grid.Column="1" Grid.RowSpan="1" Width="400" Margin="10" BorderThickness="0.5" BorderBrush="Black">
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+        
+        <ListView 
+                              
+                            Width="200"
+            BorderThickness="0.5"
                               ItemsSource="{Binding Patients}"
                               SelectedIndex="0"
                               Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn DisplayMemberBinding="{Binding PatientCPR}" Header="CPR" />
-                                    <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding PatientCPR}" Header="CPR" />
+                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
 
-                                </GridView>
-                            </ListView.View>
-                        </ListView>
+                    </GridView>
+                </ListView.View>
+            </ListView>
 
-                        <ListView
-                            BorderThickness="1"
+            <ListView
+                            BorderThickness="0.5"
                               SelectedIndex="0"
-                            MaxWidth="200" MinWidth="30"
+                            Width="200"
                               Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
-                            <ListViewItem>ECG 1</ListViewItem>
-                            <ListViewItem>ECG 2</ListViewItem>
-                            <ListViewItem>ECG 3</ListViewItem>
-                            <ListViewItem>ECG 4</ListViewItem>
-                        </ListView>
+                <ListViewItem>ECG 1</ListViewItem>
+                <ListViewItem>ECG 2</ListViewItem>
+                <ListViewItem>ECG 3</ListViewItem>
+                <ListViewItem>ECG 4</ListViewItem>
+            </ListView>
+        </StackPanel>
+        </Border>
+        <Controls:Badged Grid.Row="3" x:Name="uploadOffDBButton"
+                             Margin="10,0,10,0" Grid.Column="1">
+            <Button Content="Upload to Public Database" />
+        </Controls:Badged>
 
-                    </UniformGrid>
-                </ScrollViewer>
-            </TabItem>
-        </TabControl>
-
-
-        <uc:ChartECG Margin="10" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="4" />
-
+        <Border Margin="10,10,10,0" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="6" Grid.RowSpan="3" BorderThickness="1" BorderBrush="Black">
+        <uc:ChartECG Margin="10" />
+        </Border>
 
         <!--ROW 3-->
+
+
 
         <!--ROW 4-->
 
