@@ -7,8 +7,9 @@
 		xmlns:local="clr-namespace:WPF_til_leg"
 		xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+        xmlns:uc="clr-namespace:Wpf.CartesianChart.DynamicVisibility"
 		mc:Ignorable="d"
-		Title="MainWindow" Height="450" Width="800"
+		Title="MainWindow" Height="754.8" Width="1472.4"
 		BorderThickness="0" 
 		GlowBrush="Black"
 		ResizeMode="CanResizeWithGrip"
@@ -33,11 +34,11 @@
                              Margin="10" 
                              BadgeBackground="Red">
                 <Button>
-                <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconModern Width="15" Height="15" Kind="Clock" />
-                    <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Update" />
-                </StackPanel>
-            </Button>
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconModern Width="15" Height="15" Kind="Clock" />
+                        <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Update" />
+                    </StackPanel>
+                </Button>
             </Controls:Badged>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
@@ -136,6 +137,10 @@
                 </ScrollViewer>
             </TabItem>
         </TabControl>
+
+
+        <uc:ChartECG Margin="10" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="2" Grid.RowSpan="4" />
+
 
         <!--ROW 3-->
 

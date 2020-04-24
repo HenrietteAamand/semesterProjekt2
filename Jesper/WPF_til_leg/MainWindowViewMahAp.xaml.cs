@@ -29,7 +29,7 @@ namespace WPF_til_leg
         public MainWindow()
         {
             InitializeComponent();
-            showDialog();
+            ShowDialog();
             updateBadge.Badge = updates;
             PatientModel patient1 = new PatientModel {Name = "jens", PatientCPR = "123456"  };
             Patients = new List<PatientModel>();
@@ -40,7 +40,7 @@ namespace WPF_til_leg
 
         }
 
-        async Task showDialog()
+        async Task ShowDialog()
         {
             var result = await this.ShowMessageAsync("Welcome", $"There are {updates} new ECG's. Do you wanna update?", MessageDialogStyle.AffirmativeAndNegative);
 
