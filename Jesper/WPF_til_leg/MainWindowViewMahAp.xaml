@@ -16,37 +16,49 @@
 		WindowTransitionsEnabled="False"
 		WindowStartupLocation="CenterScreen"
     
-    TitleBarHeight="50"
-     WindowState="Maximized">
-    <!--DataContext="{Binding RelativeSource={RelativeSource Self}}"-->
+        TitleBarHeight="50"
+        WindowState="Maximized">
 
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands Margin="5">
-            <Button>
+            <Button Click="Button_Click" >
                 <StackPanel Orientation="Horizontal">
-                    <iconPacks:PackIconModern Width="15" Height="15" Kind="Settings" />
-                    <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Settings" />
+                    <iconPacks:PackIconModern 
+                        Width="15" 
+                        Height="15" 
+                        Kind="Settings" />
+                    <TextBlock 
+                        Margin="4 0 0 0" 
+                        VerticalAlignment="Center" 
+                        Text="Setup" />
                 </StackPanel>
             </Button>
-            <Controls:Badged Name="updateBadge"
-                             BadgePlacementMode="TopRight" 
-                             Padding="-10" 
-                             Margin="10" 
-                             BadgeBackground="Red">
-                <Button>
-                    <StackPanel Orientation="Horizontal">
-                        <iconPacks:PackIconModern Width="15" Height="15" Kind="Clock" />
-                        <TextBlock Margin="4 0 0 0" VerticalAlignment="Center" Text="Update" />
-                    </StackPanel>
-                </Button>
+            <Controls:Badged 
+                Name="updateBadge"
+                BadgePlacementMode="TopRight" 
+                Padding="-10" 
+                Margin="10" 
+                BadgeBackground="Red">
+                    <Button>
+                        <StackPanel Orientation="Horizontal">
+                            <iconPacks:PackIconModern 
+                                    Width="15" 
+                                    Height="15" 
+                                    Kind="Clock" />
+                            <TextBlock 
+                                    Margin="4 0 0 0" 
+                                    VerticalAlignment="Center" 
+                                    Text="Update" />
+                        </StackPanel>
+                    </Button>
             </Controls:Badged>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout Header="Flyout" Position="Right" Width="200">
-                <!-- Your custom content here -->
+            <Controls:Flyout x:Name="settingFlyOut" Header="Setup"  Position="Right" Width="500" Theme="Adapt">
+                <uc:ChartECG/>
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
@@ -75,49 +87,40 @@
 
 
         <!--ROW 1-->
-        <WrapPanel Orientation="Horizontal"
-                    Grid.Row="1"
-                    Grid.Column="2"
-                    Grid.ColumnSpan="7"
-                    HorizontalAlignment="Center"
-                    Margin="10,0,10,0"
-                   >
-        <TextBox
-            MinWidth="200"
-            IsReadOnly="True" 
-            Text="Name: "/>
-        <TextBox
-            MinWidth="200"
-            Margin="10,0,10,0"  
-            IsReadOnly="True" 
-            Text="CPR: "/>
-        <TextBox
-            Margin="10,0,10,0"  
-            MinWidth="200"
-            IsReadOnly="True" 
-            Text="Gender: "/>
-            <TextBox
-            Margin="10,0,10,0"  
-            MinWidth="200"
-            IsReadOnly="True" 
-            Text="Age: "/>
+        <WrapPanel 
+            Orientation="Horizontal"
+            Grid.Row="1"
+            Grid.Column="2"
+            Grid.ColumnSpan="7"
+            HorizontalAlignment="Center"
+            Margin="10,0,10,0">
+                <TextBox
+                    MinWidth="200"
+                    IsReadOnly="True" 
+                    Text="Name: "/>
+                <TextBox
+                    MinWidth="200"
+                    Margin="10,0,10,0"  
+                    IsReadOnly="True" 
+                    Text="CPR: "/>
+                <TextBox
+                    Margin="10,0,10,0"  
+                    MinWidth="200"
+                    IsReadOnly="True" 
+                    Text="Gender: "/>
+                <TextBox
+                    Margin="10,0,10,0"  
+                    MinWidth="200"
+                    IsReadOnly="True" 
+                    Text="Age: "/>
         </WrapPanel>
 
-
-        <!--Indsættes under Grid.Columns="1"-->
-        <!--Controls:TextBoxHelper.ButtonCommand="{Binding TextBoxButtonCmd, Mode=OneWay}"-->
         <TextBox
             Grid.Row="1"
             Grid.Column="1"
-                             
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.Watermark="Search For Patient..." Grid.ColumnSpan="1" Margin="10,0,10,0">
-            <!--<TextBox.InputBindings>
-                <KeyBinding Key="Return"
-                                        Command="{Binding TextBoxButtonCmd, Mode=OneWay}"
-                                        CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=TextBox}, Path=Text, Mode=OneWay}" />
-            </TextBox.InputBindings>-->
             <TextBox.Style>
                 <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Search}" TargetType="{x:Type TextBox}">
                     <Style.Triggers>
@@ -131,44 +134,58 @@
         </TextBox>
 
         <!--ROW 2-->
-        <Border Grid.Row="2" Grid.Column="1" Grid.RowSpan="1" Width="400" Margin="10" BorderThickness="0.5" BorderBrush="Black">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
+        <Border 
+            Grid.Row="2" 
+            Grid.Column="1" 
+            Grid.RowSpan="1" 
+            Width="400" 
+            Margin="10" 
+            BorderThickness="0.5" 
+            BorderBrush="Black">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
         
-        <ListView 
-                              
-                            Width="200"
-            BorderThickness="0.5"
-                              ItemsSource="{Binding Patients}"
-                              SelectedIndex="0"
-                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding PatientCPR}" Header="CPR" />
-                        <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name" />
+                <ListView 
+                    Width="200"
+                    BorderThickness="0.5"
+                    ItemsSource="{Binding Patients}"
+                    SelectedIndex="0"
+                    Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding PatientCPR}" Header="CPR" />
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
 
-                    </GridView>
-                </ListView.View>
-            </ListView>
-
-            <ListView
-                            BorderThickness="0.5"
-                              SelectedIndex="0"
-                            Width="200"
-                              Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
-                <ListViewItem>ECG 1</ListViewItem>
-                <ListViewItem>ECG 2</ListViewItem>
-                <ListViewItem>ECG 3</ListViewItem>
-                <ListViewItem>ECG 4</ListViewItem>
-            </ListView>
-        </StackPanel>
+                <ListView
+                    BorderThickness="0.5"
+                    SelectedIndex="0"
+                    Width="200"
+                    Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                    <ListViewItem>ECG 1</ListViewItem>
+                    <ListViewItem>ECG 2</ListViewItem>
+                    <ListViewItem>ECG 3</ListViewItem>
+                    <ListViewItem>ECG 4</ListViewItem>
+                </ListView>
+            </StackPanel>
         </Border>
-        <Controls:Badged Grid.Row="3" x:Name="uploadOffDBButton"
-                             Margin="10,0,10,0" Grid.Column="1">
-            <Button Content="Upload to Public Database" />
+        <Controls:Badged 
+            Grid.Row="3" 
+            x:Name="uploadOffDBButton"
+            Margin="10,0,10,0" Grid.Column="1">
+                <Button Content="Upload to Public Database" />
         </Controls:Badged>
 
-        <Border Margin="10,10,10,0" Grid.Row="2" Grid.Column="3" Grid.ColumnSpan="6" Grid.RowSpan="3" BorderThickness="1" BorderBrush="Black">
-        <uc:ChartECG Margin="10" />
+        <Border 
+            Margin="10,10,10,0" 
+            Grid.Row="2" 
+            Grid.Column="3" 
+            Grid.ColumnSpan="6" 
+            Grid.RowSpan="3" 
+            BorderThickness="1" 
+            BorderBrush="Black">
+                <uc:ChartECG Margin="10" />
         </Border>
 
         <!--ROW 3-->

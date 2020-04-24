@@ -50,5 +50,10 @@ namespace WPF_til_leg
             }
 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            settingFlyOut.IsOpen = true;
+        }
     }
 }
