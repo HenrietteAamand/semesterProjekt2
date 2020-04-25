@@ -151,25 +151,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="MainWindowModel.cs" />
-    <Compile Include="MainWindowView.xaml.cs">
-      <DependentUpon>MainWindowView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="SetupECGUC.xaml.cs">
+    <Compile Include="Presentation\SetupECGUC.xaml.cs">
       <DependentUpon>SetupECGUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SetupPatientUC.xaml.cs">
+    <Compile Include="Presentation\SetupPatientUC.xaml.cs">
       <DependentUpon>SetupPatientUC.xaml</DependentUpon>
     </Compile>
-    <Page Include="ChartECG.xaml">
+    <Page Include="Presentation\ChartECG.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindowView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindowViewModel.xaml">
+    <Page Include="Presentation\MainWindowPresentation.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -177,11 +169,11 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ChartECG.xaml.cs">
+    <Compile Include="Presentation\ChartECG.xaml.cs">
       <DependentUpon>ChartECG.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindowViewModel.xaml.cs">
-      <DependentUpon>MainWindowViewModel.xaml</DependentUpon>
+    <Compile Include="Presentation\MainWindowPresentation.xaml.cs">
+      <DependentUpon>MainWindowPresentation.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resources\Icons.xaml">
@@ -192,17 +184,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="SetupECGUC.xaml">
+    <Page Include="Presentation\SetupECGUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SetupPatientUC.xaml">
+    <Page Include="Presentation\SetupPatientUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PatientModel.cs" />
+    <Compile Include="Models\PatientModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -235,6 +227,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Logic\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.1.1-ci1320\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.1.1-ci1320\build\MaterialDesignThemes.targets')" />

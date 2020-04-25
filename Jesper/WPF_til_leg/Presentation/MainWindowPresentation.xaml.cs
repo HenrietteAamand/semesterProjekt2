@@ -15,18 +15,19 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using WPF_til_leg.Models;
 
-namespace WPF_til_leg
+namespace WPF_til_leg.Presentation
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindowViewModel : MetroWindow
+    public partial class MainWindowPresentation : MetroWindow
     {
         public int updates = 10;
         public List<PatientModel> Patients { get; set; }
 
-        public MainWindowViewModel()
+        public MainWindowPresentation()
         {
             InitializeComponent();
             ShowDialog();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace WPF_til_leg
+namespace WPF_til_leg.Presentation
 {
     public partial class ChartECG : UserControl, INotifyPropertyChanged
     {

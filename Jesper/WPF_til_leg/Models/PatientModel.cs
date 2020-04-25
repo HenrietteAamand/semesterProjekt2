@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WPF_til_leg
+namespace WPF_til_leg.Models
 {
     public class PatientModel
     {

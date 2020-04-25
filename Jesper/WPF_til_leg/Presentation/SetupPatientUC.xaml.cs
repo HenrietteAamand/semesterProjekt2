@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF_til_leg
+namespace WPF_til_leg.Presentation
 {
     /// <summary>
     /// Interaction logic for SetupUC.xaml
