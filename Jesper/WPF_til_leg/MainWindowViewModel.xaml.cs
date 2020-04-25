@@ -21,12 +21,12 @@ namespace WPF_til_leg
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindowViewModel : MetroWindow
     {
         public int updates = 10;
         public List<PatientModel> Patients { get; set; }
 
-        public MainWindow()
+        public MainWindowViewModel()
         {
             InitializeComponent();
             ShowDialog();

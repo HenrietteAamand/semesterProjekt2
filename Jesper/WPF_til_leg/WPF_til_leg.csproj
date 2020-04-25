@@ -151,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="MainWindowModel.cs" />
+    <Compile Include="MainWindowView.xaml.cs">
+      <DependentUpon>MainWindowView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SetupECGUC.xaml.cs">
       <DependentUpon>SetupECGUC.xaml</DependentUpon>
     </Compile>
@@ -161,7 +165,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindowViewMahAp.xaml">
+    <Page Include="MainWindowView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindowViewModel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -172,8 +180,8 @@
     <Compile Include="ChartECG.xaml.cs">
       <DependentUpon>ChartECG.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindowViewMahAp.xaml.cs">
-      <DependentUpon>MainWindowViewMahAp.xaml</DependentUpon>
+    <Compile Include="MainWindowViewModel.xaml.cs">
+      <DependentUpon>MainWindowViewModel.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Resources\Icons.xaml">
