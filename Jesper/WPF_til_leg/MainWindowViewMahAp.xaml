@@ -7,9 +7,9 @@
 		xmlns:local="clr-namespace:WPF_til_leg"
 		xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:uc="clr-namespace:Wpf.CartesianChart.DynamicVisibility"
+        xmlns:uc="clr-namespace:WPF_til_leg"
 		mc:Ignorable="d"
-		Title="ECG Analysis Application" Height="754.8" Width="1472.4"
+		Title="ECG Analysis Application" Height="754" Width="1472.4"
 		BorderThickness="0" 
 		GlowBrush="Black"
 		ResizeMode="CanResizeWithGrip"
@@ -57,8 +57,11 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="settingFlyOut" Header="Setup"  Position="Right" Width="500" Theme="Adapt">
-                <uc:ChartECG/>
+            <Controls:Flyout x:Name="settingFlyOut" Header="Setup"  Position="Right" Width="500" Theme="Adapt" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <UniformGrid Columns="1" Rows="2">
+                    <uc:SetupECGUC Grid.Row="1" Grid.Column="1" Margin="10"/>
+                    <uc:SetupPatientUC Grid.Row="2" Grid.Column="1"  Margin="10"/>
+                </UniformGrid>
             </Controls:Flyout>
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
@@ -87,33 +90,33 @@
 
 
         <!--ROW 1-->
-        <WrapPanel 
-            Orientation="Horizontal"
+        <UniformGrid 
+            Columns="4"
             Grid.Row="1"
             Grid.Column="2"
             Grid.ColumnSpan="7"
-            HorizontalAlignment="Center"
+            HorizontalAlignment="Stretch"
             Margin="10,0,10,0">
                 <TextBox
-                    MinWidth="200"
-                    IsReadOnly="True" 
+                    Margin="0,0,5,0"
+                    IsReadOnly="True"
+                    Focusable="False"
                     Text="Name: "/>
-                <TextBox
-                    MinWidth="200"
-                    Margin="10,0,10,0"  
-                    IsReadOnly="True" 
+                <TextBox 
+                    Margin="0,0,5,0"
+                    IsReadOnly="True"
+                    Focusable="False"
                     Text="CPR: "/>
                 <TextBox
-                    Margin="10,0,10,0"  
-                    MinWidth="200"
+                    Margin="0,0,5,0"
                     IsReadOnly="True" 
+                    Focusable="False"
                     Text="Gender: "/>
                 <TextBox
-                    Margin="10,0,10,0"  
-                    MinWidth="200"
+                    Focusable="False"
                     IsReadOnly="True" 
                     Text="Age: "/>
-        </WrapPanel>
+        </UniformGrid>
 
         <TextBox
             Grid.Row="1"
@@ -134,7 +137,8 @@
         </TextBox>
 
         <!--ROW 2-->
-        <Border 
+        <Border
+            x:Name="listViewBorder"
             Grid.Row="2" 
             Grid.Column="1" 
             Grid.RowSpan="1" 
@@ -143,22 +147,24 @@
             BorderThickness="0.5" 
             BorderBrush="Black">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
-        
+
                 <ListView 
+                    x:Name="patientsLV"
                     Width="200"
                     BorderThickness="0.5"
                     ItemsSource="{Binding Patients}"
                     SelectedIndex="0"
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding PatientCPR}" Header="CPR" />
-                                <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn DisplayMemberBinding="{Binding PatientCPR}" Header="CPR" />
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
 
                 <ListView
+                    x:Name="ecgLV"
                     BorderThickness="0.5"
                     SelectedIndex="0"
                     Width="200"
@@ -170,14 +176,8 @@
                 </ListView>
             </StackPanel>
         </Border>
-        <Controls:Badged 
-            Grid.Row="3" 
-            x:Name="uploadOffDBButton"
-            Margin="10,0,10,0" Grid.Column="1">
-                <Button Content="Upload to Public Database" />
-        </Controls:Badged>
-
-        <Border 
+        <Border
+            x:Name="ecgBorder"
             Margin="10,10,10,0" 
             Grid.Row="2" 
             Grid.Column="3" 
@@ -189,10 +189,18 @@
         </Border>
 
         <!--ROW 3-->
+        <Controls:Badged 
+            Grid.Row="3" 
+            x:Name="uploadOffDBB"
+            Margin="10,0,10,0" Grid.Column="1">
+            <Button>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                    <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Upload" />
+                    <TextBlock Margin="5" Text="Upload to Public Database"/>
+                </StackPanel>
+            </Button>
 
-
-
-        <!--ROW 4-->
+        </Controls:Badged>
 
     </Grid>
 </Controls:MetroWindow>

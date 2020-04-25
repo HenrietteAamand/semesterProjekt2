@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 
-namespace Wpf.CartesianChart.DynamicVisibility
+namespace WPF_til_leg
 {
     public partial class ChartECG : UserControl, INotifyPropertyChanged
     {
         private bool _ECGSeriesVisibility;
         private bool _baseLineSeriesVisibility;
         private bool _stSeriesVisibility;
-        string ecg;
         
 
         
@@ -25,13 +24,6 @@ namespace Wpf.CartesianChart.DynamicVisibility
             STSeriesVisibility = false;
 
             DataContext = this;
-
-            //    string[] lines = ecg.Split(
-            //new[] { Environment.NewLine },
-            //StringSplitOptions.None);
-
-            ecg = "";
-
         }
 
         public bool ECGSeriesVisibility
