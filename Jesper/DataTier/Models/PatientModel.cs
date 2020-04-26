@@ -7,6 +7,22 @@ namespace DataTier.Models
     public class PatientModel
     {
 
+        #region Attributes
+
+        #endregion
+
+        #region Properties
+
+        #endregion
+
+        #region Constructor
+
+        #endregion
+
+        #region Methods
+
+        #endregion
+
         private string _patientCPR;
         private string _name;
 
