@@ -15,7 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
-using WPF_til_leg.Models;
+using WPF_til_leg;
+using LogicTier;
 
 namespace WPF_til_leg.Presentation
 {
@@ -48,7 +49,7 @@ namespace WPF_til_leg.Presentation
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            settingFlyOut.IsOpen = true;
+            settingsFlyOut.IsOpen = true;
         }
     }
 }

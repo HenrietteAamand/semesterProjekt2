@@ -20,7 +20,7 @@
         WindowState="Maximized">
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands Margin="5">
-            <Button Click="Button_Click" >
+            <Button Click="Button_Click">
                 <StackPanel Orientation="Horizontal">
                     <iconPacks:PackIconModern 
                         Width="15" 
@@ -57,7 +57,7 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="settingFlyOut" Header="Setup"  Position="Right" Width="500" Theme="Adapt" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Controls:Flyout x:Name="settingsFlyOut" Header="Setup"  Position="Right" Width="500" Theme="Adapt" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <UniformGrid Columns="1" Rows="2">
                     <uc:SetupECGUC Grid.Row="1" Grid.Column="1" Margin="10"/>
                     <uc:SetupPatientUC Grid.Row="2" Grid.Column="1"  Margin="10"/>
