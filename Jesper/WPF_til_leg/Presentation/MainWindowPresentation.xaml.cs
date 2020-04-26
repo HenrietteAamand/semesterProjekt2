@@ -38,11 +38,11 @@ namespace WPF_til_leg.Presentation
 
         async Task ShowDialog()
         {
-            var result = await this.ShowMessageAsync("Welcome", $"There are {0} new ECG's. Do you wanna update?", MessageDialogStyle.AffirmativeAndNegative);
+            var result = await this.ShowMessageAsync("Velkommen", $"Der er {0} nye EKG målinger. Vil du opdatere?", MessageDialogStyle.AffirmativeAndNegative);
 
             if (result == MessageDialogResult.Affirmative)
             {
-                await this.ShowMessageAsync($" {0} ECG's have been updated","");
+                await this.ShowMessageAsync($" {0} EKG målinger er blevet opdateret","");
             }
 
         }

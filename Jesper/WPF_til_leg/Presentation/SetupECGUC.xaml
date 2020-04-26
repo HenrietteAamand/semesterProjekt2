@@ -40,7 +40,7 @@
         <GroupBox 
             Grid.Row="1"
             Grid.Column="1"
-            Header="Setup ECG"
+            Header="Tilknyt EKG"
             HorizontalAlignment="Stretch"
             Padding="auto">
             <Grid VerticalAlignment="Center">
@@ -69,7 +69,7 @@
                         <DataTemplate>
                             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                 <!--<iconPacks:PackIconMaterial VerticalAlignment="Center" Margin="0,5,0,0" Kind="" />-->
-                                <TextBlock Margin="5,5,5,0" VerticalAlignment="Center" Text="Link ECG to PatientID" />
+                                <TextBlock Margin="5,5,5,0" VerticalAlignment="Center" Text="Tilknyt EKG til PatientID" />
                             </StackPanel>
                         </DataTemplate>
                     </Controls:MetroHeader.HeaderTemplate>
@@ -83,7 +83,7 @@
                     MinWidth="300"
                     Margin="10,0,10,10"
                     Controls:TextBoxHelper.ClearTextButton="True"
-                    Controls:TextBoxHelper.Watermark="Please select an ECG measurer..."
+                    Controls:TextBoxHelper.Watermark="Vælg EKG måler..."
                     BorderThickness="4">
                     <ComboBox.ContextMenu>
                         <ContextMenu>
@@ -104,7 +104,7 @@
                     MinWidth="300"
                     Margin="0,0,0,10"
                     Controls:TextBoxHelper.ClearTextButton="True"
-                    Controls:TextBoxHelper.Watermark="Please select a PatientID..."
+                    Controls:TextBoxHelper.Watermark="Vælg et PatientID..."
                     BorderThickness="4">
                         <ComboBox.ContextMenu>
                             <ContextMenu>
@@ -125,7 +125,7 @@
                     <Button>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconUnicons Margin="5" VerticalAlignment="Center" Kind="Link" />
-                            <TextBlock Margin="5" Text="Link ECG"/>
+                            <TextBlock Margin="5" Text="Tilknyt EKG"/>
                         </StackPanel>
                     </Button>
 
@@ -138,7 +138,7 @@
                     <Button>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconBoxIcons Margin="5" VerticalAlignment="Center" Kind="RegularUnlink" />
-                            <TextBlock Margin="5" Text="Unlink ECG from patient"/>
+                            <TextBlock Margin="5" Text="Nulstil EKG"/>
                         </StackPanel>
                     </Button>
 

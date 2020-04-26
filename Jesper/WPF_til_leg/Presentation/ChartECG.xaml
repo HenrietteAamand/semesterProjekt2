@@ -28,7 +28,7 @@
                 </Style>
             </StackPanel.Resources>
             <CheckBox IsChecked="{Binding ECGSeriesVisibility}">
-                ECG
+                EKG
             </CheckBox>
             <CheckBox IsChecked="{Binding BaseLineSeriesVisibility}">
                 Base Line
@@ -39,7 +39,7 @@
         </StackPanel>
         <lvc:CartesianChart Grid.Row="1" Hoverable="False">
             <lvc:CartesianChart.Series>
-                <lvc:LineSeries Title="ECG" Values="4,4,4,5,4,3.5,9,1,2,4,4,4.5,4,4" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" PointGeometrySize="0"/>
+                <lvc:LineSeries Title="EKG" Values="4,4,4,5,4,3.5,9,1,2,4,4,4.5,4,4" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" PointGeometrySize="0"/>
                 <lvc:LineSeries Title="Base Line" Values="4,4,4,4,4,4,4,4,4,4,4,4,4,4" Visibility="{Binding BaseLineSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" Stroke="Black" PointGeometrySize="0"/>
                 <lvc:LineSeries Title="ST Segment" Values="NaN,NaN,NaN,NaN,NaN,NaN,NaN,1,2,4,NaN" Visibility="{Binding STSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" Stroke="Red" PointGeometrySize="0"/>
             </lvc:CartesianChart.Series>
