@@ -14,7 +14,7 @@ namespace LogicTier
 
 		public MainWindowLogic()
 		{
-
+			analyzeECG = new AnalyzeECG();
 		}
 
 		public void LoadPatient(String cpr) {}

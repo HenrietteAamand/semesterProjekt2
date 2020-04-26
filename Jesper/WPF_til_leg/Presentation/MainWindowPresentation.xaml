@@ -9,7 +9,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:uc="clr-namespace:WPF_til_leg.Presentation"
 		mc:Ignorable="d"
-		Title="ECG Analysis Application" Height="754" Width="1472.4"
+		Title="EKG Analyse Applikation" Height="754" Width="1472.4"
 		BorderThickness="0" 
 		GlowBrush="Black"
 		ResizeMode="CanResizeWithGrip"
@@ -29,7 +29,7 @@
                     <TextBlock 
                         Margin="4 0 0 0" 
                         VerticalAlignment="Center" 
-                        Text="Setup" />
+                        Text="Opsæt måler og patienter" />
                 </StackPanel>
             </Button>
             <Controls:Badged 
@@ -57,7 +57,7 @@
 
     <Controls:MetroWindow.Flyouts>
         <Controls:FlyoutsControl>
-            <Controls:Flyout x:Name="settingsFlyOut" Header="Setup"  Position="Right" Width="500" Theme="Adapt" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Controls:Flyout x:Name="settingsFlyOut" Header="Opsæt måler og patienter"  Position="Right" Width="500" Theme="Adapt" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <UniformGrid Columns="1" Rows="2">
                     <uc:SetupECGUC Grid.Row="1" Grid.Column="1" Margin="10"/>
                     <uc:SetupPatientUC Grid.Row="2" Grid.Column="1"  Margin="10"/>
@@ -101,7 +101,7 @@
                     Margin="0,0,5,0"
                     IsReadOnly="True"
                     Focusable="False"
-                    Text="Name: "/>
+                    Text="Navn: "/>
             <TextBox 
                     Margin="0,0,5,0"
                     IsReadOnly="True"
@@ -111,11 +111,11 @@
                     Margin="0,0,5,0"
                     IsReadOnly="True" 
                     Focusable="False"
-                    Text="Gender: "/>
+                    Text="Køn: "/>
             <TextBox
                     Focusable="False"
                     IsReadOnly="True" 
-                    Text="Age: "/>
+                    Text="Alder: "/>
         </UniformGrid>
 
         <TextBox
@@ -123,7 +123,7 @@
             Grid.Column="1"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Search For Patient..." Grid.ColumnSpan="1" Margin="10,0,10,0">
+                             Controls:TextBoxHelper.Watermark="Søg efter patient..." Grid.ColumnSpan="1" Margin="10,0,10,0">
             <TextBox.Style>
                 <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Search}" TargetType="{x:Type TextBox}">
                     <Style.Triggers>
@@ -158,7 +158,7 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding PatientCPR}" Header="CPR" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Name"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Navn"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -171,7 +171,7 @@
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Measurements" />
+                            <GridViewColumn Header="Målinger" />
                         </GridView>
                     </ListView.View>
                     <ListViewItem>ECG 1</ListViewItem>
@@ -201,7 +201,7 @@
             <Button>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                     <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Upload" />
-                    <TextBlock Margin="5" Text="Upload to Public Database"/>
+                    <TextBlock Margin="5" Text="Upload til Offentlig Database"/>
                 </StackPanel>
             </Button>
 
