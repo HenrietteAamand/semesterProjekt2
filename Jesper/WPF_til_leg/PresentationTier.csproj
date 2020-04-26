@@ -194,7 +194,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\PatientModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -229,7 +228,10 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Logic\" />
+    <ProjectReference Include="..\LogicTier\LogicTier.csproj">
+      <Project>{24504885-5bd1-4adc-bfb7-82cacfc39939}</Project>
+      <Name>LogicTier</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.1.1-ci1320\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.1.1-ci1320\build\MaterialDesignThemes.targets')" />

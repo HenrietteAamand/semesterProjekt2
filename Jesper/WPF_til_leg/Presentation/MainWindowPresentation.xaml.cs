@@ -24,18 +24,12 @@ namespace WPF_til_leg.Presentation
     /// </summary>
     public partial class MainWindowPresentation : MetroWindow
     {
-        public int updates = 10;
-        public List<PatientModel> Patients { get; set; }
 
         public MainWindowPresentation()
         {
             InitializeComponent();
             ShowDialog();
-            updateBadge.Badge = updates;
-            PatientModel patient1 = new PatientModel {Name = "jens", PatientCPR = "123456"  };
-            Patients = new List<PatientModel>();
-            Patients.Add(patient1);
-            this.DataContext = Patients;
+
       
             
 
@@ -43,11 +37,11 @@ namespace WPF_til_leg.Presentation
 
         async Task ShowDialog()
         {
-            var result = await this.ShowMessageAsync("Welcome", $"There are {updates} new ECG's. Do you wanna update?", MessageDialogStyle.AffirmativeAndNegative);
+            var result = await this.ShowMessageAsync("Welcome", $"There are {0} new ECG's. Do you wanna update?", MessageDialogStyle.AffirmativeAndNegative);
 
             if (result == MessageDialogResult.Affirmative)
             {
-                await this.ShowMessageAsync($" {updates} ECG's have been updated","");
+                await this.ShowMessageAsync($" {0} ECG's have been updated","");
             }
 
         }

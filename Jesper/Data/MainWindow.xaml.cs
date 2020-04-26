@@ -13,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WPF_til_leg.Presentation
+namespace Data
 {
     /// <summary>
-    /// Interaction logic for SetupECGUC.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class SetupECGUC : UserControl
+    public partial class MainWindow : Window
     {
-        public SetupECGUC()
+        public MainWindow()
         {
             InitializeComponent();
         }
-
     }
 }

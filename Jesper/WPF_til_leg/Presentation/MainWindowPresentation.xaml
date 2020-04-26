@@ -51,6 +51,7 @@
                     </StackPanel>
                 </Button>
             </Controls:Badged>
+
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
 
@@ -168,6 +169,11 @@
                     SelectedIndex="0"
                     Width="200"
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Measurements" />
+                        </GridView>
+                    </ListView.View>
                     <ListViewItem>ECG 1</ListViewItem>
                     <ListViewItem>ECG 2</ListViewItem>
                     <ListViewItem>ECG 3</ListViewItem>

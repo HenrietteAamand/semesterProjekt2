@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace WPF_til_leg.Models
+namespace DataTier.Models
 {
     public class PatientModel
     {
 
-            private string _patientCPR;
-            private string _name;
+        private string _patientCPR;
+        private string _name;
 
-            public string PatientCPR
+        public string PatientCPR
         {
             get => this._patientCPR;
             set
@@ -20,9 +18,9 @@ namespace WPF_til_leg.Models
                 this._patientCPR = value;
             }
         }
-            public string Name
-            {
-                get => this._name;
+        public string Name
+        {
+            get => this._name;
             set
             {
                 this._name = value;
