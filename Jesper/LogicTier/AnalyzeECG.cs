@@ -29,9 +29,9 @@ namespace LogicTier
             patientRef = new PatientModel();
         }
 
-        public List<ECGModel> LoadNewECGs(PatientModel patient) { }
+        public List<ECGModel> LoadNewECGs(PatientModel patient) { throw new NotImplementedException(); }
 
-        public void CreateAnalyzedECG(int ECGID, List<IllnessModel> illnes, CartesianChart<Sereiscollection> AECGChart, int pulse) { }
+        public void CreateAnalyzedECG(int ECGID, List<IllnessModel> illnes, SeriesCollection AECGChart, int pulse) { }
 
         public void CalculateIntervalIR() { }
 

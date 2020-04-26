@@ -17,7 +17,7 @@ namespace LogicTier
 
         public PatientModel newPatient(string cpr, string firstName, string lastName) 
         {
-            
+            throw new NotImplementedException();
         }
 
         public void addPatient() { }
