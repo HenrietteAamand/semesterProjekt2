@@ -6,5 +6,6 @@ namespace LogicTier
 {
     class SetupWindowLogic
     {
+
     }
 }
