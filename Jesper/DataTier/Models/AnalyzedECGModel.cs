@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataTier.Models
 {
-    class AnalyzedECGModel
+    public class AnalyzedECGModel
     {
     }
 }
