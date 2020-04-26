@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DataTier.Models
 {
-    class ECGModel
+    public class ECGModel
     {
         #region Attributes
 
