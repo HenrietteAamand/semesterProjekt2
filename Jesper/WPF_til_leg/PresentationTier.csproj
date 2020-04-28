@@ -228,8 +228,8 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\LogicTier\LogicTier.csproj">
-      <Project>{24504885-5bd1-4adc-bfb7-82cacfc39939}</Project>
+    <ProjectReference Include="..\LogicLayer\LogicTier.csproj">
+      <Project>{eb37023b-dd9e-4c10-9727-396cef71745b}</Project>
       <Name>LogicTier</Name>
     </ProjectReference>
   </ItemGroup>

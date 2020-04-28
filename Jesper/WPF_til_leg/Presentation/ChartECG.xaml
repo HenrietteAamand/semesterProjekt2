@@ -43,6 +43,13 @@
                 <lvc:LineSeries Title="Base Line" Values="4,4,4,4,4,4,4,4,4,4,4,4,4,4" Visibility="{Binding BaseLineSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" Stroke="Black" PointGeometrySize="0"/>
                 <lvc:LineSeries Title="ST Segment" Values="NaN,NaN,NaN,NaN,NaN,NaN,NaN,1,2,4,NaN" Visibility="{Binding STSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" Stroke="Red" PointGeometrySize="0"/>
             </lvc:CartesianChart.Series>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis>
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="1"></lvc:Separator>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisY>
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis>
                     <lvc:Axis.Separator>
