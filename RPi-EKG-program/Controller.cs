@@ -9,8 +9,9 @@ namespace RPi_EKG_program
     class Program
     {
 
-
+        private USB_stick LocalStorage;
         private static Display LCD_Display;
+        private static ADC1015 ADC;
         static void Main(string[] args)
         {
             SerLCD displayController = new SerLCD();
@@ -19,6 +20,10 @@ namespace RPi_EKG_program
 
             //displayController.lcdPrint("test");
 
+            ADC = new ADC();
+
+
+            ADC.readADC_Differential_0_1();
 
 
             LCD_Display = new Display();
@@ -26,17 +31,11 @@ namespace RPi_EKG_program
             LCD_Display.ScreenShow(4);
 
         }
-        public byte checkBattery()
-        {
-            return 123;
-        }
+       
         public void startIsPressed()
         {
 
         }
-        public void storeDataLocal(USB_stick)
-        {
-
-        }
+     
     }
 }
