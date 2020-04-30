@@ -28,7 +28,7 @@ namespace RPi_EKG_program
             ADconverter.isCableConnected();
 
 
-            displayController.ShowGreeting("123456"+"Frederikke")
+            displayController.ShowGreeting("123456" + "Frederikke");
             
 
 
