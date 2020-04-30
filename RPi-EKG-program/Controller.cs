@@ -12,6 +12,7 @@ namespace RPi_EKG_program
         private USB_stick LocalStorage;
         private static Display LCD_Display;
         private static ADC1015 ADC;
+        private Measurement measurement;
         static void Main(string[] args)
         {
             SerLCD displayController = new SerLCD();
@@ -20,15 +21,29 @@ namespace RPi_EKG_program
 
             //displayController.lcdPrint("test");
 
-            ADC = new ADC();
+            ADC = new ADC1015();
 
 
-            ADC.readADC_Differential_0_1();
+            short test = 1;
+
+            test = ADC.readADC_Differential_0_1();
 
 
             LCD_Display = new Display();
             displayController.lcdDisplay();
             LCD_Display.ScreenShow(4);
+
+
+            measurement = new Measurement();
+            DateTime Start = DateTime.Now;
+            
+            for (int i = 0; i < /*40sek*/; i++)
+            {
+                ADC.MeasureSignal();
+                
+
+            }
+
 
         }
        
@@ -36,6 +51,6 @@ namespace RPi_EKG_program
         {
 
         }
-     
+        
     }
 }

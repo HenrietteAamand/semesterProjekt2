@@ -5,19 +5,16 @@ using RaspberryPiCore.ADC;
 
 namespace RPi_EKG_program
 {
-    class ADC1015
+    class ADC
     {
         private ADC1015 adConverter;
+        private Measurement measurement;
 
-        public ADC1015(byte deviceAddress = 72,ushort gain = 0)
+        public ADC()
         {
             adConverter = new ADC1015();
         }
-        public short readADC_Differential_0_1()
-        {
-            return 1;
-
-        }
+        
         public bool isCableConnected()
         {
             if(adConverter.readADC_Differential_0_1() == 0)
@@ -30,22 +27,23 @@ namespace RPi_EKG_program
 
         public double measureSignal()
         {
-            
-            return 22;
+            double sample = (adConverter.readADC_Differential_0_1() / 2048.0) * 6.144;
+            return sample;
+
         }
-        public byte checkBattery()
-        {
+        //public byte checkBattery()
+        //{
 
 
 
-            if(checkBattery >8000)
-            return 4;
-            if (checkBattery > 7800)
-                return 3;
-            if (checkBattery > 7600)
-                return 2;
-            else return 1;
-        }
+        //    //if(checkBattery >8000)
+        //    //return 4;
+        //    //if (checkBattery > 7800)
+        //    //    return 3;
+        //    //if (checkBattery > 7600)
+        //    //    return 2;
+        //    //else return 1;
+        //}
 
 
     }

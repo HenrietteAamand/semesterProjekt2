@@ -25,7 +25,7 @@ namespace RPi_EKG_program
                     displayController.lcdDisplay();
                     displayController.lcdClear();
                     string Navn = "Lars"; //Navnet hentes fra lokalDB
-                    string CPR = "123456"; // CPR hentes også fra LokalDB - Måske kun de første 6
+                    /*string CPR = "123456";*/ // CPR hentes også fra LokalDB - Måske kun de første 6
 
                     if(Navn.Length>12)
                     {
