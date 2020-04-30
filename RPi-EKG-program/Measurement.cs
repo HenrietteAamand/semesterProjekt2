@@ -6,7 +6,7 @@ namespace RPi_EKG_program
 {
     class Measurement
     {
-        private string CPRNr { get; }
+        public string CPRNr { get; private set; }
         private List<double> Measurements { get; }
         private DateTime Dato;
         private double samplerate;
