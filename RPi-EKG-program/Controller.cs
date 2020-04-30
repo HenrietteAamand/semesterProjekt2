@@ -2,7 +2,7 @@
 using RaspberryPiCore.ADC;
 using RaspberryPiCore.TWIST;
 using RaspberryPiCore.LCD;
-
+using System.Collections.Generic;
 
 namespace RPi_EKG_program
 {
@@ -10,36 +10,33 @@ namespace RPi_EKG_program
     {
 
         private USB_stick LocalStorage;
-        private static Display LCD_Display;
-        private static ADC1015 ADC;
-        private Measurement measurement;
+        private Display LCD_Display;
+        
+       
         static void Main(string[] args)
         {
-            SerLCD displayController = new SerLCD();
-            displayController = new SerLCD();
-            displayController.lcdDisplay();
+            Display displayController = new Display();
+
 
             //displayController.lcdPrint("test");
 
-            ADC = new ADC1015();
+            ADC ADconverter = new ADC();
 
 
-            short test = 1;
-
-            test = ADC.readADC_Differential_0_1();
+            ADconverter.isCableConnected();
 
 
-            LCD_Display = new Display();
-            displayController.lcdDisplay();
-            LCD_Display.ScreenShow(4);
+            displayController.ScreenShow(4);
 
 
-            measurement = new Measurement();
+
             DateTime Start = DateTime.Now;
-            
+            List<double> Test = new List<double>();
+            Measurement measurement = new Measurement("123456-7890", Test, Start, 0.02, "54321");
+                 
             for (int i = 0; i < /*40sek*/; i++)
             {
-                ADC.MeasureSignal();
+                measurement.addToList(ADconverter.measureSignal());
                 
 
             }

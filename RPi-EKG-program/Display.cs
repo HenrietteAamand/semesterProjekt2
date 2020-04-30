@@ -10,7 +10,7 @@ namespace RPi_EKG_program
     class Display
     {
         private string Linjeskift = "                   ";
-        public SerLCD displayController;
+        private static SerLCD displayController;
         public Display()
         {
             displayController = new SerLCD();

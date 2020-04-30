@@ -7,7 +7,7 @@ namespace RPi_EKG_program
 {
     class ADC
     {
-        private ADC1015 adConverter;
+        private static ADC1015 adConverter;
         private Measurement measurement;
 
         public ADC()
