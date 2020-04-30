@@ -26,5 +26,17 @@ namespace RPi_EKG_program
             LCD_Display.ScreenShow(4);
 
         }
+        public byte checkBattery()
+        {
+            return 123;
+        }
+        public void startIsPressed()
+        {
+
+        }
+        public void storeDataLocal(USB_stick)
+        {
+
+        }
     }
 }
