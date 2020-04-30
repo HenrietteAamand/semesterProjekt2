@@ -4,12 +4,13 @@ using System.Text;
 using RaspberryPiCore.LCD;
 
 
+
 namespace RPi_EKG_program
 {
     class Display
     {
         private string Linjeskift = "                   ";
-        private SerLCD displayController;
+        public SerLCD displayController;
         public Display()
         {
             displayController = new SerLCD();
@@ -21,6 +22,7 @@ namespace RPi_EKG_program
             switch (ScreenNb)
             {
                 case 1:
+                    displayController.lcdDisplay();
                     displayController.lcdClear();
                     string Navn = "Lars"; //Navnet hentes fra lokalDB
                     string CPR = "123456"; // CPR hentes også fra LokalDB - Måske kun de første 6
@@ -40,7 +42,7 @@ namespace RPi_EKG_program
                     }
 
 
-                    displayController.lcdPrint(Linjeskift + "     Velkommen      " + "Du er logget ind som" + Navn + "  " + CPR ); ;
+                    displayController.lcdPrint("     Velkommen      Du er logget ind som" /*+ Navn + "  " + CPR */);
                     break;
                 case 2:
                     displayController.lcdClear();
@@ -52,8 +54,10 @@ namespace RPi_EKG_program
                     displayController.lcdPrint(Linjeskift + Linjeskift+"    Tryk på start   ");
                     break;
                 case 4:
+                    displayController.lcdDisplay();
                     displayController.lcdClear();
-                    displayController.lcdPrint("█_"); //alt code 219
+                    
+                    displayController.lcdPrint("             ###_  | | "); //alt code 219
                     break;
                     
             }

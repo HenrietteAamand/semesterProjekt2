@@ -7,7 +7,7 @@
       "name": ".NET Core Launch",
       "type": "coreclr",
       "cwd": "~/Programs",
-      "program": "RPi_dotnet_core_Console_Application1.dll", // Denne ændres til hvad I kalder jeres projekt
+      "program": "RPi_EKG_program.dll", // Denne ændres til hvad I kalder jeres projekt
       "request": "launch"
     }
   ]
