@@ -28,8 +28,8 @@ namespace RPi_EKG_program
             ADconverter.isCableConnected();
 
 
-            displayController.ScreenShow(4);
-
+            displayController.ShowGreeting("123456"+"Frederikke")
+            
 
 
             DateTime Start = DateTime.Now;

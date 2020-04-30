@@ -7,10 +7,10 @@ namespace RPi_EKG_program
     class Measurement
     {
         public string CPRNr { get; private set; }
-        private List<double> Measurements { get; }
-        private DateTime Dato;
-        private double samplerate;
-        private string MeasurerID;
+        public List<double> Measurements { get; private set; }
+        public DateTime Dato { get; private set; }
+        public double samplerate { get; private set; }
+        public string MeasurerID { get; private set; }
 
 
         public Measurement(string CPR, List<double> Measurements, DateTime Dato, double Samplerate, string MeasurerID)

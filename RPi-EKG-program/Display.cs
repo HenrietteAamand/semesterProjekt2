@@ -15,8 +15,41 @@ namespace RPi_EKG_program
         {
             displayController = new SerLCD();
             displayController.lcdDisplay();
+            displayController.lcdSetBackLight(255,255,0);
         }
+        public void ShowGreeting(string CPRNAVN)
+        {
+            string CPR = "";
+            string Navn = "";
+            displayController.lcdDisplay();
+            displayController.lcdClear();
+            for (int i = 0; i < 6; i++)
+            {
+                CPR += CPRNAVN[i];
+            }
+            for (int i = 6; i < CPRNAVN.Length; i++)
+            {
+                Navn += CPRNAVN[i];
+            }
 
+            if (Navn.Length > 12)
+            {
+                string NyNavn = "";
+                for (int i = 0; i < 12; i++)
+                {
+                    NyNavn += Navn[i];
+                }
+                Navn = NyNavn;
+            }
+            while (Navn.Length < 11)
+            {
+                Navn += " ";
+            }
+            displayController.lcdPrint("     Velkommen      Du er logget ind som" + Navn + "  " + CPR);
+
+
+
+        }
         public void ScreenShow(short ScreenNb)
         {
             switch (ScreenNb)
