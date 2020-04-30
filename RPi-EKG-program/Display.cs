@@ -21,7 +21,7 @@ namespace RPi_EKG_program
         {
             string CPR = "";
             string Navn = "";
-            displayController.lcdDisplay();
+            //displayController.lcdDisplay();
             displayController.lcdClear();
             for (int i = 0; i < 6; i++)
             {
@@ -45,7 +45,7 @@ namespace RPi_EKG_program
             {
                 Navn += " ";
             }
-            displayController.lcdPrint("     Velkommen      Du er logget ind som" + Navn + "  " + CPR);
+            displayController.lcdPrint("     Velkommen      Du er logget ind som"/* + Navn + "  " + CPR*/);
 
 
 
