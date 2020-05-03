@@ -11,6 +11,13 @@ namespace DataTier.Models
         #endregion
 
         #region Properties
+        private string cpr;
+        public string CPR
+        {
+            get { return cpr; }
+            private set { cpr = value; }
+        }
+
         private int aECGID;
 
         public int AECGID
@@ -57,6 +64,7 @@ namespace DataTier.Models
         public AnalyzedECGModel(int aECGID, int ecgID, IllnessModel illness, List<double> aECGCHart,
     int pulse)
         {
+            CPR = cpr;
             AECGID = aECGID;
             ECGID = ecgID;
             IllnesList.Add(illness);

@@ -11,6 +11,13 @@ namespace DataTier.Models
         #endregion
 
         #region Properties
+        private string cpr;
+        public string CPR
+        {
+            get { return cpr; }
+            private set { cpr = value; }
+        }
+
         private int ecgID;
 
         public int ECGID
@@ -47,8 +54,9 @@ namespace DataTier.Models
         #endregion
 
         #region Constructor
-        public ECGModel(int ecgID, DateTime date, int sampleRate, List<double> values)
+        public ECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values)
         {
+            CPR = cpr;
             ECGID = ecgID;
             Date = date;
             SampleRate = sampleRate;
