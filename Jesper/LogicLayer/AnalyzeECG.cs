@@ -31,7 +31,7 @@ namespace LogicTier
 
         public void CreateAnalyzedECG(int ECGID, List<IllnessModel> illnes, List<double> AECGChart, int pulse) { }
 
-        public void CalculateIntervalIR() { }
+        public void CalculateIntervalR() { }
 
         public void CalculateBaseline() { }
 

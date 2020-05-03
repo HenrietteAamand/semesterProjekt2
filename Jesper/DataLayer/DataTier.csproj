@@ -41,6 +41,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Databaser\Database.cs" />
+    <Compile Include="Databaser\DOEDB.cs" />
+    <Compile Include="Interfaces\IDOEDB.cs" />
     <Compile Include="Interfaces\ILocalDatabase.cs" />
     <Compile Include="Models\AnalyzedECGModel.cs" />
     <Compile Include="Models\ECGModel.cs" />
