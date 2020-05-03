@@ -13,7 +13,7 @@ namespace DataTier.Interfaces
 
         List<ECGMonitorModel> GetAllECGMonitors();
 
-        List<ECGModel> GetAllECGs(string cpr);
+        List<ECGModel> GetAllECGs();
 
         List<AnalyzedECGModel> GetAllAnalyzedECGs(string cpr);
 

@@ -59,8 +59,30 @@ namespace DataTier.Databaser
             throw new NotImplementedException();
         }
 
-        public List<ECGModel> GetAllECGs(string cpr)
+        public List<ECGModel> GetAllECGs()
         {
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+
+            List<ECGModel> measurements = new List<ECGModel>();
+
+
+            command = new SqlCommand("select * from dbo.Measurement", connection);
+            connection.Open();
+
+            reader = command.ExecuteReader();
+
+
+            while (reader.Read())
+            {
+
+                measurements.Add(new ECGModel(Convert.ToString(reader["CPR-ID"]),Convert.ToInt32(reader["MeasurerID"]),
+                    Convert.ToDateTime(reader["Dato"]), Convert.ToInt32(reader["Samplerate"]), reader["BLOB-measurement"]));
+
+            }
+
+            connection.Close();
+            return measurements;
+
             throw new NotImplementedException();
         }
 
@@ -73,7 +95,7 @@ namespace DataTier.Databaser
         {
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
-            List<PatientModel> patienter = new List<PatientModel>();
+            List<PatientModel> patients = new List<PatientModel>();
 
 
             command = new SqlCommand("select * from dbo.Patient", connection);
@@ -85,14 +107,14 @@ namespace DataTier.Databaser
             while (reader.Read())
             {
 
-                patienter.Add(new PatientModel(Convert.ToInt32(reader["Tilknyttet EKG"]), Convert.ToString(reader["CPR"]), 
+                patients.Add(new PatientModel(Convert.ToInt32(reader["Tilknyttet EKG"]), Convert.ToString(reader["CPR"]), 
                     Convert.ToString(reader["ForNavn"]), Convert.ToString(reader["EfterNavn"]), GetAllECGs(Convert.ToString(reader["CPR"])), GetAllAnalyzedECGs(Convert.ToString(reader["CPR"]))));
 
             }
 
             connection.Close();
-            return patienter;
-            throw new NotImplementedException();
+            return patients;
+            
         }
 
         public void IsAnalyzed(string ecgID)
