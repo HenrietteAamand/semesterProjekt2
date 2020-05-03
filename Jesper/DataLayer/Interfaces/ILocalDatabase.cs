@@ -29,6 +29,10 @@ namespace DataTier.Interfaces
 
         void IsAnalyzed(string ecgID);
 
+        void UpdateAnalyzedECGs();
+
+        void IsRead(string aECGID);
+
 
 
         //int HowManyNewECG();

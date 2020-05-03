@@ -77,10 +77,10 @@ namespace DataTier.Models
 
         }
 
-        public PatientModel(int id, int ecgMonitorID, string cpr, string firstName, string lastName,
+        public PatientModel(int ecgMonitorID, string cpr, string firstName, string lastName,
             List<ECGModel> ecgList, List<AnalyzedECGModel> aECGList)
         {
-            ID = id;
+            //ID = id;
             ECGMonitorID = ecgMonitorID;
             CPR = cpr;
             LastName = lastName;

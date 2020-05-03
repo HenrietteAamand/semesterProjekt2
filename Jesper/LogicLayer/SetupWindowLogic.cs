@@ -18,11 +18,24 @@ namespace LogicTier
         public PatientModel newPatient(string cpr, string firstName, string lastName) 
         {
             throw new NotImplementedException();
+
+            //Opretter en patient, og gemmer den i databasen
+            //Kalder CreatePatient()
+            //Sker når der trykeks på "Opret patient"
         }
 
-        public void addPatient() { }
+        public void LinkECGToPatient(string ecgID, string cpr)
+        {
+            //Linker ECG-monitor til et patient objekt
+        }
 
-        public void resetECGMonitor() { }
+        public void resetECGMonitor(string ecgID)
+        { 
+            //Finder patient med pågældende ECG-monitor tilknyttet
+            //Fjerner ECG-monitoren fra patient objektet
+            //Sætter InUse på ECG-monitoren til false
+            //Sker når der trykkes på "Nulstil EKG-måler", og når ern EKG-måler der er i brug, er valgt
+        }
 
 
     }
