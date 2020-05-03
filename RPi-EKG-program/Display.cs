@@ -4,26 +4,61 @@ using System.Text;
 using RaspberryPiCore.LCD;
 
 
+
 namespace RPi_EKG_program
 {
     class Display
     {
         private string Linjeskift = "                   ";
-        private SerLCD displayController;
+        private static SerLCD displayController;
         public Display()
         {
             displayController = new SerLCD();
             displayController.lcdDisplay();
+            displayController.lcdSetBackLight(255,255,0);
         }
+        public void ShowGreeting(string CPRNAVN)
+        {
+            string CPR = "";
+            string Navn = "";
+            //displayController.lcdDisplay();
+            displayController.lcdClear();
+            for (int i = 0; i < 6; i++)
+            {
+                CPR += CPRNAVN[i];
+            }
+            for (int i = 6; i < CPRNAVN.Length; i++)
+            {
+                Navn += CPRNAVN[i];
+            }
 
+            if (Navn.Length > 12)
+            {
+                string NyNavn = "";
+                for (int i = 0; i < 12; i++)
+                {
+                    NyNavn += Navn[i];
+                }
+                Navn = NyNavn;
+            }
+            while (Navn.Length < 11)
+            {
+                Navn += " ";
+            }
+            displayController.lcdPrint("     Velkommen      Du er logget ind som"/* + Navn + "  " + CPR*/);
+
+
+
+        }
         public void ScreenShow(short ScreenNb)
         {
             switch (ScreenNb)
             {
                 case 1:
+                    displayController.lcdDisplay();
                     displayController.lcdClear();
                     string Navn = "Lars"; //Navnet hentes fra lokalDB
-                    string CPR = "123456"; // CPR hentes også fra LokalDB - Måske kun de første 6
+                    /*string CPR = "123456";*/ // CPR hentes også fra LokalDB - Måske kun de første 6
 
                     if(Navn.Length>12)
                     {
@@ -40,7 +75,7 @@ namespace RPi_EKG_program
                     }
 
 
-                    displayController.lcdPrint(Linjeskift + "     Velkommen      " + "Du er logget ind som" + Navn + "  " + CPR ); ;
+                    displayController.lcdPrint("     Velkommen      Du er logget ind som" /*+ Navn + "  " + CPR */);
                     break;
                 case 2:
                     displayController.lcdClear();
@@ -52,8 +87,10 @@ namespace RPi_EKG_program
                     displayController.lcdPrint(Linjeskift + Linjeskift+"    Tryk på start   ");
                     break;
                 case 4:
+                    displayController.lcdDisplay();
                     displayController.lcdClear();
-                    displayController.lcdPrint("█_"); //alt code 219
+                    
+                    displayController.lcdPrint("             ###_  | | "); //alt code 219
                     break;
                     
             }
