@@ -11,6 +11,7 @@ namespace LogicTier
     {
         private List<IllnessModel> illnessList;
         private PatientModel patientRef;
+        private List<ECGModel> ecgList;
 
         private ILocalDatabase lDBRef;
 
@@ -30,16 +31,23 @@ namespace LogicTier
             illnessList = new List<IllnessModel>();
             patientRef = new PatientModel();
             lDBRef = new Database();
+            ecgList = new List<ECGModel>();
         }
 
         public List<ECGModel> LoadNewECGs(PatientModel patient) { throw new NotImplementedException(); }
 
         public void CreateAnalyzedECG(int ecgID, List<IllnessModel> illnes, List<double> aECGChart, int pulse)
         {
+            //Der kommer en liste med ECG'er som er nye.
+            //Hvis der vælges et ECG har den et tilknyttet cpr.
+            //Det CPR
             //Henter ikke analyseret ecg
+            ecgList = lDBRef.GetAllECGs(ecgList[ecgID].CPR);
             //Beregner udvalgte parametre
             //Sammenligner parametre med Illnesses
             // ST-segment og Baseline til charts
+
+
 
         }
 
