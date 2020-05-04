@@ -51,5 +51,6 @@ namespace WPF_til_leg.Presentation
         {
             settingsFlyOut.IsOpen = true;
         }
+
     }
 }

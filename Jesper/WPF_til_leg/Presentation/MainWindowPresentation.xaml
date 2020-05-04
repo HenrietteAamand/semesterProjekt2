@@ -209,7 +209,7 @@
 
         </Controls:Badged>
 
-            <TextBox
+            <TextBox x:Name="idT"
             Grid.Row="1"
             Grid.Column="1"
                              Controls:TextBoxHelper.ClearTextButton="True"
