@@ -18,13 +18,13 @@ namespace DataTier.Models
             private set { cpr = value; }
         }
 
-        private int aECGID;
+        //private int aECGID;
 
-        public int AECGID
-        {
-            get { return aECGID; }
-            private set { aECGID = value; }
-        }
+        //public int AECGID
+        //{
+        //    get { return aECGID; }
+        //    private set { aECGID = value; }
+        //}
 
         private int ecgID;
 
@@ -58,18 +58,27 @@ namespace DataTier.Models
             private set { pulse = value; }
         }
 
+        private DateTime date;
+
+        public DateTime Date
+        {
+            get { return date; }
+            private set { date = value; }
+        }
+
         #endregion
 
         #region Constructors
-        public AnalyzedECGModel(int aECGID, int ecgID, IllnessModel illness, List<double> aECGCHart,
+        public AnalyzedECGModel(string cpr, int ecgID, DateTime date, IllnessModel illness, List<double> aECGCHart,
     int pulse)
         {
             CPR = cpr;
-            AECGID = aECGID;
+            //AECGID = aECGID;
             ECGID = ecgID;
             IllnesList.Add(illness);
             AECGCHART = aECGCHart;
             Pulse = pulse;
+            Date = date;
         }
         #endregion
 

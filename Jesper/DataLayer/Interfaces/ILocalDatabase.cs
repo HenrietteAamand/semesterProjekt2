@@ -15,7 +15,7 @@ namespace DataTier.Interfaces
 
         List<ECGModel> GetAllECGs();
 
-        List<AnalyzedECGModel> GetAllAnalyzedECGs(string cpr);
+        List<AnalyzedECGModel> GetAllAnalyzedECGs();
 
         List<IllnessModel> GetAllIllnesses();
 
@@ -31,7 +31,7 @@ namespace DataTier.Interfaces
 
         void UpdateAnalyzedECGs();
 
-        void IsRead(string aECGID);
+        void IsRead(string ecgID);
 
 
 

@@ -28,35 +28,74 @@ namespace DataTier.Databaser
             throw new NotImplementedException();
         }
 
-        public List<AnalyzedECGModel> GetAllAnalyzedECGs(string cpr)
+        public List<AnalyzedECGModel> GetAllAnalyzedECGs()
         {
-            //connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
-            //List<AnalyzedECGModel> weight = new List<AnalyzedECGModel>();
+            List<AnalyzedECGModel> measurements = new List<AnalyzedECGModel>();
+            IllnessModel illness = new IllnessModel(0, "NN", " ", (Convert.ToDateTime(0) - Convert.ToDateTime(0)), false, false);
 
+            command = new SqlCommand("select * from dbo.Measurement where IsAnalyzed = 'true'", connection);
+            connection.Open();
 
-            //command = new SqlCommand("select * from dbo.Measurement where cpr = '" + cpr + "'", connection);
-            //connection.Open();
+            reader = command.ExecuteReader();
 
-            //reader = command.ExecuteReader();
+            
+            while (reader.Read())
+            {
+                List<byte> bytesArr = new List<byte>();
+                List<double> tal = new List<double>();
 
+                string selectString = $"SELECT * FROM dbo.Measurement";
 
-            //while (reader.Read())
-            //{
+                using (SqlCommand cmd = new SqlCommand(selectString, connection))
+                {
+                    reader = cmd.ExecuteReader();
+                }
+                if (reader.Read())
+                {
+                    bytesArr = (List<byte>)reader["BLOB-measurement"];
+                }
+                for (int i = 0, j = 0; i < bytesArr.Count; i += 8, j++)
+                {
+                    tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
+                }
 
-            //    weight.Add(new AnalyzedECGModel();
+               
+                measurements.Add(new AnalyzedECGModel(Convert.ToString(reader["CPR-ID"]), Convert.ToInt32(reader["Id"]),
+                    Convert.ToDateTime(reader["Dato"]), illness, tal,0));
 
-            //}
-
-            //connection.Close();
-            //return weight;
+            }
+            reader.Close();
+            connection.Close();
+            return measurements;
 
             throw new NotImplementedException();
         }
 
         public List<ECGMonitorModel> GetAllECGMonitors()
         {
-            throw new NotImplementedException();
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+
+            List<ECGMonitorModel> ecgMonitors = new List<ECGMonitorModel>();
+
+
+            command = new SqlCommand("select * from dbo.EKG-Measurer", connection);
+            connection.Open();
+
+            reader = command.ExecuteReader();
+
+
+            while (reader.Read())
+            {
+
+                ecgMonitors.Add(new ECGMonitorModel(Convert.ToInt32(reader["ECGID"]), Convert.ToBoolean(reader["InUse"])));
+
+            }
+
+            connection.Close();
+            return ecgMonitors;
+
         }
 
         public List<ECGModel> GetAllECGs()
@@ -74,16 +113,32 @@ namespace DataTier.Databaser
 
             while (reader.Read())
             {
+                List<byte> bytesArr = new List<byte>();
+                List<double> tal = new List<double>();
 
-                measurements.Add(new ECGModel(Convert.ToString(reader["CPR-ID"]),Convert.ToInt32(reader["MeasurerID"]),
-                    Convert.ToDateTime(reader["Dato"]), Convert.ToInt32(reader["Samplerate"]), reader["BLOB-measurement"]));
+                string selectString = $"SELECT * FROM dbo.Measurement";
+
+                using (SqlCommand cmd = new SqlCommand(selectString, connection))
+                {
+                    reader = cmd.ExecuteReader();
+                }
+                if (reader.Read())
+                {
+                    bytesArr = (List<byte>)reader["BLOB-measurement"];
+                }
+                for (int i = 0, j = 0; i < bytesArr.Count; i += 8, j++)
+                {
+                    tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
+                }
+
+
+                measurements.Add(new ECGModel(Convert.ToString(reader["CPRID"]),Convert.ToInt32(reader["Id"]),
+                    Convert.ToDateTime(reader["Date"]), Convert.ToInt32(reader["Samplerate"]),tal));
 
             }
-
+            reader.Close();
             connection.Close();
             return measurements;
-
-            throw new NotImplementedException();
         }
 
         public List<IllnessModel> GetAllIllnesses()
@@ -107,8 +162,8 @@ namespace DataTier.Databaser
             while (reader.Read())
             {
 
-                patients.Add(new PatientModel(Convert.ToInt32(reader["Tilknyttet EKG"]), Convert.ToString(reader["CPR"]), 
-                    Convert.ToString(reader["ForNavn"]), Convert.ToString(reader["EfterNavn"]), GetAllECGs(Convert.ToString(reader["CPR"])), GetAllAnalyzedECGs(Convert.ToString(reader["CPR"]))));
+                patients.Add(new PatientModel(Convert.ToInt32(reader["LinkedECG"]), Convert.ToString(reader["CPR"]), 
+                    Convert.ToString(reader["FirstName"]), Convert.ToString(reader["LastName"])));
 
             }
 
@@ -119,10 +174,11 @@ namespace DataTier.Databaser
 
         public void IsAnalyzed(string ecgID)
         {
+
             throw new NotImplementedException();
         }
 
-        public void IsRead(string aECGID)
+        public void IsRead(string ecgID)
         {
             throw new NotImplementedException();
         }
