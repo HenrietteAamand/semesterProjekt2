@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataTier", "DataLayer\DataT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicTier", "LogicLayer\LogicTier.csproj", "{EB37023B-DD9E-4C10-9727-396CEF71745B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oevelse2", "..\..\..\Oevelse10BLOB_DB\Oevelse2\Oevelse2.csproj", "{17AE1A75-A751-46BD-9186-C961FAFF9BF8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oevelse10BLOB_DB", "Oevelse10BLOB_DB\Oevelse10BLOB_DB\Oevelse10BLOB_DB.csproj", "{B70D2A9C-6BB0-4294-B20E-9169E03E3960}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{EB37023B-DD9E-4C10-9727-396CEF71745B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EB37023B-DD9E-4C10-9727-396CEF71745B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EB37023B-DD9E-4C10-9727-396CEF71745B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{17AE1A75-A751-46BD-9186-C961FAFF9BF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17AE1A75-A751-46BD-9186-C961FAFF9BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17AE1A75-A751-46BD-9186-C961FAFF9BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17AE1A75-A751-46BD-9186-C961FAFF9BF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B70D2A9C-6BB0-4294-B20E-9169E03E3960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B70D2A9C-6BB0-4294-B20E-9169E03E3960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B70D2A9C-6BB0-4294-B20E-9169E03E3960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B70D2A9C-6BB0-4294-B20E-9169E03E3960}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
