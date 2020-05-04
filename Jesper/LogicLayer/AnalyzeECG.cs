@@ -32,17 +32,19 @@ namespace LogicTier
             patientRef = new PatientModel();
             lDBRef = new Database();
             ecgList = new List<ECGModel>();
+            ecgList = lDBRef.GetAllECGs();
         }
 
         public List<ECGModel> LoadNewECGs(PatientModel patient) { throw new NotImplementedException(); }
 
         public void CreateAnalyzedECG(int ecgID, List<IllnessModel> illnes, List<double> aECGChart, int pulse)
         {
-            //Der kommer en liste med ECG'er som er nye.
+            //Der kommer en liste med alle ECG'er
+            //Der laves en liste med ECG'er som er nye.
             //Hvis der vælges et ECG har den et tilknyttet cpr.
             //Det CPR
             //Henter ikke analyseret ecg
-            ecgList = lDBRef.GetAllECGs();
+            
             //Beregner udvalgte parametre
             //Sammenligner parametre med Illnesses
             // ST-segment og Baseline til charts

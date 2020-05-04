@@ -50,6 +50,23 @@ namespace DataTier.Models
             private set { values = value; }
         }
 
+        private bool isRead;
+
+        public bool IsRead
+        {
+            get { return isRead; }
+            set { isRead = value; }
+        }
+
+        private bool isAnalyzed;
+
+        public bool IsAnalyzed
+        {
+            get { return isAnalyzed; }
+            set { isAnalyzed = value; }
+        }
+
+
 
         #endregion
 
