@@ -42,7 +42,7 @@ namespace LogicTier
             //Hvis der vælges et ECG har den et tilknyttet cpr.
             //Det CPR
             //Henter ikke analyseret ecg
-            ecgList = lDBRef.GetAllECGs(ecgList[ecgID].CPR);
+            ecgList = lDBRef.GetAllECGs();
             //Beregner udvalgte parametre
             //Sammenligner parametre med Illnesses
             // ST-segment og Baseline til charts
