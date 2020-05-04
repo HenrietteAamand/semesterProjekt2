@@ -54,19 +54,19 @@ namespace DataTier.Models
 
         private List<ECGModel> ecgList;
 
-        public List<ECGModel> ECGList
-        {
-            get { return ecgList; }
-            set { ecgList = value; }
-        }
+        //public List<ECGModel> ECGList
+        //{
+        //    get { return ecgList; }
+        //    set { ecgList = value; }
+        //}
 
-        private List<AnalyzedECGModel> aECGList;
+        //private List<AnalyzedECGModel> aECGList;
 
-        public List<AnalyzedECGModel> AECGList
-        {
-            get { return aECGList; }
-            set { aECGList = value; }
-        }
+        //public List<AnalyzedECGModel> AECGList
+        //{
+        //    get { return aECGList; }
+        //    set { aECGList = value; }
+        //}
 
 
         #endregion
@@ -77,15 +77,14 @@ namespace DataTier.Models
 
         }
 
-        public PatientModel(int ecgMonitorID, string cpr, string firstName, string lastName,
-            List<ECGModel> ecgList, List<AnalyzedECGModel> aECGList)
+        public PatientModel(int ecgMonitorID, string cpr, string firstName, string lastName)
         {
             //ID = id;
             ECGMonitorID = ecgMonitorID;
             CPR = cpr;
             LastName = lastName;
-            ECGList = ecgList;
-            AECGList = aECGList;
+            //ECGList = ecgList;
+            //AECGList = aECGList;
         }
 
         #endregion

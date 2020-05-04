@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DataTier.Models
 {
@@ -29,7 +27,10 @@ namespace DataTier.Models
             this.intervalR = intervalR;
             this.stSegmentElevated = stSegmentElevated;
             this.stSegmentDepressed = stSegmentDepressed;
+
         }
+
+
 
         #endregion
 
