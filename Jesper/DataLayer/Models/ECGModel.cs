@@ -50,17 +50,26 @@ namespace DataTier.Models
             private set { values = value; }
         }
 
+        private bool isAnalyzed;
+
+        public bool IsAnalyzed
+        {
+            get { return isAnalyzed; }
+            private set { isAnalyzed = value; }
+        }
+
 
         #endregion
 
         #region Constructor
-        public ECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values)
+        public ECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values, bool isAnalyzed)
         {
             CPR = cpr;
             ECGID = ecgID;
             Date = date;
             SampleRate = sampleRate;
             Values = values;
+            IsAnalyzed = isAnalyzed;
         }
 
         #endregion

@@ -133,7 +133,7 @@ namespace DataTier.Databaser
 
 
                 measurements.Add(new ECGModel(Convert.ToString(reader["CPRID"]),Convert.ToInt32(reader["Id"]),
-                    Convert.ToDateTime(reader["Date"]), Convert.ToInt32(reader["Samplerate"]),tal));
+                    Convert.ToDateTime(reader["Date"]), Convert.ToInt32(reader["Samplerate"]),tal, false));
 
             }
             reader.Close();
@@ -172,9 +172,23 @@ namespace DataTier.Databaser
             
         }
 
-        public void IsAnalyzed(string ecgID)
+        public void IsAnalyzed(ECGModel ecgMearsurement)
         {
+            //connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
+            //connection.Open();
+            //if ( ecgMearsurement.IsAnalyzed == true)
+            //{
+            //    string insertStringParam = @"UPDATE dbo.Measurement SET IsAnalyzed = '1' where Id = '"+ ecgMearsurement.ECGID +"'";
+            //    using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
+            //    {
+            //        cmd.Parameters.AddWithValue("@data", tal.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
+            //        id = (int)cmd.ExecuteScalar();
+            //    }
+            //}
+            
+
+            //connection.Close();
             throw new NotImplementedException();
         }
 

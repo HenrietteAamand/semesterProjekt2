@@ -27,7 +27,7 @@ namespace DataTier.Interfaces
 
         void ResetECGMonitor(string ecgMonitorID);
 
-        void IsAnalyzed(string ecgID);
+        void IsAnalyzed(ECGModel ecgMearsurement);
 
         void UpdateAnalyzedECGs();
 
