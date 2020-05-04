@@ -74,10 +74,8 @@ namespace DataTier.Databaser
 
             while (reader.Read())
             {
-
                 measurements.Add(new ECGModel(Convert.ToString(reader["CPR-ID"]),Convert.ToInt32(reader["MeasurerID"]),
                     Convert.ToDateTime(reader["Dato"]), Convert.ToInt32(reader["Samplerate"]), reader["BLOB-measurement"]));
-
             }
 
             connection.Close();

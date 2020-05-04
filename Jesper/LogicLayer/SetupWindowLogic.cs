@@ -38,5 +38,11 @@ namespace LogicTier
         }
 
 
+        public List<ECGMonitorModel> getAllMonitors()
+        {
+            //Henter alle ECG monitors til liste
+            throw new NotImplementedException();
+        }
+
     }
 }
