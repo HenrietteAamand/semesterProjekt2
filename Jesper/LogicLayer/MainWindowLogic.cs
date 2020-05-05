@@ -1,4 +1,4 @@
-﻿using DataTier.Models;
+﻿using Models.Models;
 using System;
 using System.Collections.Generic;
 
