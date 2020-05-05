@@ -44,5 +44,10 @@ namespace LogicTier
             throw new NotImplementedException();
         }
 
+
+        public bool monitorInUse(ECGMonitorModel monitor)
+        {
+            return monitor.InUse;
+        }
     }
 }
