@@ -55,7 +55,7 @@ namespace DataTier.Models
         public int Pulse
         {
             get { return pulse; }
-            private set { pulse = value; }
+            set { pulse = value; }
         }
 
         private DateTime date;
@@ -65,6 +65,15 @@ namespace DataTier.Models
             get { return date; }
             private set { date = value; }
         }
+
+        private double baseline;
+
+        public double Baseline
+        {
+            get { return baseline; }
+            set { baseline = value; }
+        }
+
 
         #endregion
 
@@ -80,6 +89,8 @@ namespace DataTier.Models
             Pulse = pulse;
             Date = date;
         }
+
+        public AnalyzedECGModel() { }
         #endregion
 
         #region Methods

@@ -14,6 +14,7 @@ namespace LogicTier
         private PatientModel patientRef;
         private List<ECGModel> ecgList;
         List<List<double>> listOfListOfIntervals = new List<List<double>>();
+        List<AnalyzedECGModel> NewAECGModelsList = new List<AnalyzedECGModel>();
         List<ECGModel> newECGList;
         private const int intervalHistogram = 10;
 
@@ -26,13 +27,24 @@ namespace LogicTier
             get { return RTakThreshhold; }
             private set { RTakThreshhold = Baseline + 1.5; }
         }
-        public List<double> STSegmentList { get; private set;}
+        public List<double> STSegmentList { get; private set; }
         public List<int> STSegmentIndexList { get; private set; }
         public double STSegmentTreshhold { get; private set; }
         public bool STSegmentElevated { get; private set; }
         public bool STSegmentDepressed { get; private set; }
         public List<double> AECGCollection { get; private set; }
-        
+
+
+        //Puls
+        int Rtak_old = 0;
+        int Rtak_new = 0;
+        double sample;
+        double diff;
+        private double threshold = 2.2;
+        bool belowThreshold = true;
+        List<double> RRList = new List<double>();
+        private int Puls;
+
 
 
         public AnalyzeECG()
@@ -48,7 +60,7 @@ namespace LogicTier
 
         public void CreateAnalyzedECG(string cpr, int ecgID, List<IllnessModel> illnes, List<double> aECGChart, int pulse)
         {
-            
+
 
             //Der kommer en liste med alle ECG'er
             //Der laves en liste med ECG'er som er nye.
@@ -61,16 +73,23 @@ namespace LogicTier
                 }
             }
 
+            foreach (ECGModel ecg in newECGList)
+            {
+                NewAECGModelsList.Add(new AnalyzedECGModel());
+            }
 
-            //Beregner udvalgte parametre
+            //Beregner og sætter baseline for alle nyoprettede aECG'er
+            CalculateBaseline();
+
+
             //Sammenligner parametre med Illnesses
             // ST-segment og Baseline til charts
 
-            
 
-            
-            
-            
+
+
+
+
 
 
 
@@ -117,23 +136,27 @@ namespace LogicTier
 
                 }
 
-
-            }
-
-            //Laver baseline
-            List<double> intervalList = new List<double>();
-            int intervalListCount = listOfListOfIntervals[0].Count;
-            for (int i = 0; i < listOfListOfIntervals.Count; i++)
-            {
-                if (listOfListOfIntervals[i].Count > intervalListCount)
+                //Laver baseline
+                List<double> intervalList = new List<double>();
+                int intervalListCount = listOfListOfIntervals[0].Count;
+                for (int i = 0; i < listOfListOfIntervals.Count; i++)
                 {
-                    intervalListCount = listOfListOfIntervals[i].Count;
-                    intervalList = listOfListOfIntervals[i];
+                    if (listOfListOfIntervals[i].Count > intervalListCount)
+                    {
+                        intervalListCount = listOfListOfIntervals[i].Count;
+                        intervalList = listOfListOfIntervals[i];
+                    }
+
                 }
 
+                //Sætter Baseline for aECG
+                int j = 0;
+                NewAECGModelsList[j].Baseline = intervalList.Average(); ;
+                j++;
+
             }
 
-            Baseline = intervalList.Average();
+
         }
 
         public List<double> CalculateST()
@@ -143,10 +166,10 @@ namespace LogicTier
             //Måle tiden fra R-tak til første målte værdi under baseline
 
             //Hvis den tid er for høj/lang er der STEMI
-                //Kalder AddIllness()
+            //Kalder AddIllness()
             //Måler tiden fra første værdi under baseline, til første værdi over baseline igen
             //Hvis den tid er for lang så er der NonStemi.
-                //Kalder AddIllnes
+            //Kalder AddIllnes
             //Kig på powerpoint for intro slide 19.
 
             //laver liste med værdier for ST-segment
@@ -169,12 +192,53 @@ namespace LogicTier
 
         //public void addMark()
         //{
-            
+
         //}
 
         public void UploadAnalyzedECG()
         {
             lDBRef.UpdateAnalyzedECGs();
+        }
+
+
+        public void calculatePuls()
+        {
+            //For hver ecg skal den tage det første objekt i aECG og sætte pulsen for det. Så skal både ecg og aECG gå én op.
+
+            foreach (ECGModel ecg in newECGList)
+            {
+                for (int i = 0; i < ecg.Values.Count; i++)
+                {
+                    if (ecg.Values[i] > threshold && belowThreshold == true)
+                    {
+                        Rtak_new = i;
+                        diff = (Rtak_new - Rtak_old) / Convert.ToDouble(ecg.SampleRate);
+                        RRList.Add(diff);
+                        Rtak_old = Rtak_new;
+                    }
+                    if (ecg.Values[i] < threshold)
+                    {
+                        belowThreshold = true;
+                    }
+                    else
+                    {
+                        belowThreshold = false;
+                    }
+                }
+
+                int Puls = 0;
+                if (RRList.Count > 0)
+                {
+                    Puls = (int)(60 / RRList.Average());
+                    RRList.RemoveAt(0);
+                }
+
+                int j = 0;
+                NewAECGModelsList[j].Pulse = Puls;
+                j++;
+
+
+            }
         }
     }
 }
