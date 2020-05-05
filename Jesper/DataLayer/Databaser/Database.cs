@@ -135,7 +135,8 @@ namespace DataTier.Databaser
 
 
                 measurements.Add(new ECGModel(Convert.ToString(reader["CPRID"]),Convert.ToInt32(reader["Id"]),
-                    Convert.ToDateTime(reader["Date"]), Convert.ToInt32(reader["Samplerate"]),tal, ""));
+                    Convert.ToDateTime(reader["Date"]), Convert.ToInt32(reader["Samplerate"]),tal, Convert.ToString(reader["MonitorID"]), 
+                    Convert.ToBoolean(reader["IsAnalyzed"])));
 
             }
             reader.Close();
