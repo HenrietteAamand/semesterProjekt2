@@ -11,11 +11,69 @@ namespace RPi_EKG_program
     {
         private string Linjeskift = "                   ";
         private static SerLCD displayController;
+        
+
+        public void updateMenuBar(bool connection,byte StorageStatus, byte batteryStatus)
+        {
+            displayController.lcdGotoXY(0, 0);
+            string Connect = "";
+            string Storage = "";
+
+            if (connection == true)
+            {
+                Connect = "O";
+
+            }
+            else { Connect = "X"; }
+
+            if (StorageStatus != 0)
+            {
+                Storage = "Data: "+ StorageStatus;
+            }
+            else { Storage = "Data: 0"; }
+
+            string batteryniveau = "";
+
+            switch (batteryStatus)
+            {
+                case 1:
+                    {
+                        // Her ville der være en "custom" karatker for at vise batteristatus
+                        //Da vi ikke kan lave specielle custom karakter, bruger vi et system med procent 0- 100.
+                        batteryniveau = "25";
+
+                    }
+                    break;
+                case 2:
+                    batteryniveau = "50";
+
+                    break;
+                case 3:
+                    {
+
+                        batteryniveau = "75";
+
+                    }
+                    break;
+                case 4:
+                    batteryniveau = "99";
+
+                    break;
+            }
+                
+
+            displayController.lcdPrint(Convert.ToString(DateTime.Now.Hour)+":"+ Convert.ToString(DateTime.Now.Minute)+ "|" + Connect + "|" + Storage + "|" + batteryniveau);
+                
+
+        }
+
+
         public Display()
         {
             displayController = new SerLCD();
             displayController.lcdDisplay();
             displayController.lcdSetBackLight(255,255,0);
+
         }
         public void ShowGreeting(string CPRNAVN)
         {
@@ -23,6 +81,7 @@ namespace RPi_EKG_program
             string Navn = "";
             //displayController.lcdDisplay();
             displayController.lcdClear();
+
             for (int i = 0; i < 6; i++)
             {
                 CPR += CPRNAVN[i];
@@ -96,7 +155,9 @@ namespace RPi_EKG_program
             }
 
 
+
         }
+
 
 
     }
