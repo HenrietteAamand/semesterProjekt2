@@ -5,7 +5,7 @@ using System.Text;
 
 namespace LogicTier
 {
-    class SetupWindowLogic
+    public class SetupWindowLogic
     {
         private List<ECGMonitorModel> ecgMonitorList;
         private List<PatientModel> patientList;

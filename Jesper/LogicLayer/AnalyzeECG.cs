@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace LogicTier
 {
-    class AnalyzeECG
+    public class AnalyzeECG
     {
         private List<IllnessModel> illnessList;
         private PatientModel patientRef;
