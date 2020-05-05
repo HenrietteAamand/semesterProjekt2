@@ -18,13 +18,13 @@ namespace DataTier.Models
             private set { cpr = value; }
         }
 
-        //private int aECGID;
+        private int aECGID;
 
-        //public int AECGID
-        //{
-        //    get { return aECGID; }
-        //    private set { aECGID = value; }
-        //}
+        public int AECGID
+        {
+            get { return aECGID; }
+            private set { aECGID = value; }
+        }
 
         private int ecgID;
 
