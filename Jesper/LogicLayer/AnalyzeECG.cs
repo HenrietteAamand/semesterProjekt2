@@ -163,6 +163,70 @@ namespace LogicTier
         {
             //Måle R-tak
             //R-tak threshhold er sat til Baseline +1,5 mV
+            //Den finder ud af, hvornår value bliver højere end threshold
+            //Så tager den, den højeste værdi efter threshold og gemmer indexet for spidsen på r-takken
+            foreach (ECGModel ecg in newECGList)
+            {
+                int rSpidsIndex = 0;
+                //Løber alle values igennem
+                for (int i = 0; i < ecg.Values.Count; i++)
+                {
+                    //Hvis en value er større end threshold og større end den tidligere største værdi bliver rSpidsIndex = i
+                    if (ecg.Values[i] > RTakThreshhold && ecg.Values[i] > ecg.Values[rSpidsIndex])
+                    {
+                        rSpidsIndex = i;
+                    }
+                }
+
+                int sSpidsIndex = 0;
+                for (int i = 0; i < ecg.Values.Count; i++)
+                {
+                    //Hvis en value er mindre end baseline og mindre end den tidligere mindste værdi og index er større end index for rSpidsIndex(dvs efter den)
+                    //bliver sSpidsIndex = i
+                    if (ecg.Values[i] < NewAECGModelsList[i].Baseline && ecg.Values[i] < ecg.Values[sSpidsIndex] && i>rSpidsIndex)
+                    {
+                        sSpidsIndex = i;
+                    }
+                }
+
+                int tSpidsIndex = 0;
+                for (int i = 0; i < ecg.Values.Count; i++)
+                {
+                    //Hvis en value er større end baseline og større end den tidligere største værdi og det ligger efter rSpidsIndex bliver tSpidsIndex = i
+                    if (ecg.Values[i] > NewAECGModelsList[i].Baseline && ecg.Values[i] > ecg.Values[tSpidsIndex] && i > sSpidsIndex)
+                    {
+                        tSpidsIndex = i;
+                    }
+                }
+
+               
+                //Alle values løbes igennem
+                for (int i = 0; i < ecg.Values.Count; i++)
+                {
+                    //Hvis indexet for en value, ligger ml. sSpidsIndex og tSpidsIndex tilføjes de til stSegment
+                    if (i>= sSpidsIndex && i<= tSpidsIndex)
+                    {
+                        STSegmentList.Add(ecg.Values[i]);
+                        STSegmentIndexList.Add(i);
+                    }
+                }
+
+                //STSegmentList's længde sammenlignes med Illnesses reference værdier
+                //Hvis STSegmentList er for lang, er ST-segmentet deprimeret
+                //if (STSegmentList.Count>illnessList[0].stMax)
+                //{
+                //    STSegmentDepressed = true;
+                //}
+
+                //Hvis længden ml. sSpindsIndex og rSpindsIndex er for lang, we ST-segmentet eleveret
+
+                //if ((sSpidsIndex-rSpidsIndex)>illnessList[0].srMax)
+                //{
+                //    STSegmentElevated = true;
+                //}
+            }
+
+
             //Måle tiden fra R-tak til første målte værdi under baseline
 
             //Hvis den tid er for høj/lang er der STEMI
