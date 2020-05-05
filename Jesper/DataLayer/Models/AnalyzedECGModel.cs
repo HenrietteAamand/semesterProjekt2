@@ -74,6 +74,23 @@ namespace DataTier.Models
             set { baseline = value; }
         }
 
+        private bool stElevated;
+
+        public bool STElevated
+        {
+            get { return stElevated; }
+            set { stElevated = value; }
+        }
+
+        private bool stDepressed;
+
+        public bool STDepressed
+        {
+            get { return stDepressed; }
+            set { stDepressed = value; }
+        }
+
+
 
         #endregion
 
