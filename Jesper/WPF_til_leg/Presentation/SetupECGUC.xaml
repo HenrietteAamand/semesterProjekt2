@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:WPF_til_leg.Presentation"
+             xmlns:uc="clr-namespace:WPF_til_leg.Presentation"
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
@@ -75,7 +75,7 @@
                     </Controls:MetroHeader.HeaderTemplate>
                 </Controls:MetroHeader>
 
-                <ComboBox
+                <ComboBox x:Name="EcgCB"
                     HorizontalAlignment="Center"
                     Grid.Row="2"
                     Grid.Column="0"
@@ -84,7 +84,7 @@
                     Margin="10,0,10,10"
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.Watermark="Vælg EKG måler..."
-                    BorderThickness="4">
+                    BorderThickness="4"  SelectionChanged="EcgCB_SelectionChanged">
                     <ComboBox.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="ECG" />
@@ -96,7 +96,7 @@
                         <ComboBoxItem Content="ECG 4" />
                 </ComboBox>
 
-                <ComboBox
+                <ComboBox x:Name="PatientIDCB"
                     HorizontalAlignment="Center"
                     Grid.Row="3"
                     Grid.Column="0"
@@ -122,7 +122,7 @@
                     x:Name="linkB"
                     Margin="10,0,10,10" Grid.Column="0"
                     MaxWidth="300">
-                    <Button>
+                    <Button x:Name="LinkECGB" Click="LinkECGB_Click">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconUnicons Margin="5" VerticalAlignment="Center" Kind="Link" />
                             <TextBlock Margin="5" Text="Tilknyt EKG"/>
@@ -135,7 +135,7 @@
                     x:Name="deleteECGB"
                     Margin="10,0,10,10" Grid.Column="1"
                     MaxWidth="300">
-                    <Button>
+                    <Button x:Name="ResetECGB" Click="ResetECGB_Click">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconBoxIcons Margin="5" VerticalAlignment="Center" Kind="RegularUnlink" />
                             <TextBlock Margin="5" Text="Nulstil EKG"/>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataTier.Models
+namespace Models.Models
 {
     public class AnalyzedECGModel
     {
@@ -11,6 +11,13 @@ namespace DataTier.Models
         #endregion
 
         #region Properties
+        private string cpr;
+        public string CPR
+        {
+            get { return cpr; }
+            private set { cpr = value; }
+        }
+
         private int aECGID;
 
         public int AECGID
@@ -48,21 +55,59 @@ namespace DataTier.Models
         public int Pulse
         {
             get { return pulse; }
-            private set { pulse = value; }
+            set { pulse = value; }
         }
+
+        private DateTime date;
+
+        public DateTime Date
+        {
+            get { return date; }
+            private set { date = value; }
+        }
+
+        private double baseline;
+
+        public double Baseline
+        {
+            get { return baseline; }
+            set { baseline = value; }
+        }
+
+        private bool stElevated;
+
+        public bool STElevated
+        {
+            get { return stElevated; }
+            set { stElevated = value; }
+        }
+
+        private bool stDepressed;
+
+        public bool STDepressed
+        {
+            get { return stDepressed; }
+            set { stDepressed = value; }
+        }
+
+
 
         #endregion
 
         #region Constructors
-        public AnalyzedECGModel(int aECGID, int ecgID, IllnessModel illness, List<double> aECGCHart,
+        public AnalyzedECGModel(string cpr, int ecgID, DateTime date, IllnessModel illness, List<double> aECGCHart,
     int pulse)
         {
-            AECGID = aECGID;
+            CPR = cpr;
+            //AECGID = aECGID;
             ECGID = ecgID;
             IllnesList.Add(illness);
             AECGCHART = aECGCHart;
             Pulse = pulse;
+            Date = date;
         }
+
+        public AnalyzedECGModel() { }
         #endregion
 
         #region Methods

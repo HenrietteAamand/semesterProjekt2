@@ -1,4 +1,4 @@
-﻿using DataTier.Models;
+﻿using Models.Models;
 using System;
 using System.Collections.Generic;
 
@@ -17,17 +17,43 @@ namespace LogicTier
 			analyzeECG = new AnalyzeECG();
 		}
 
-		public void LoadPatient(String cpr) {}
+		//public void LoadPatient(String cpr)
+		//{
+		//	//Henter alt data fra listen af patienter, for den valgte patient.
+		//	//Sker når der trykkes på en patient
+			
+		//}
 
-		public void UpdatePatientList() {}
+		public void SelectPatient(string cpr)
+		{
+			//Viser alle analyserede ECG'er på listen for valgt patient
+			//Sker når en patient vælges på listen
+		}
 
-		public void UpdateAECGList() {}
+		public void UpdatePatientList() 
+		{
+			//Sætter attributter, som fortæller at der er nye målinger og/eller nye syge målinger for alle patienter.
+			//Sker når der opdateres
+		}
 
-		public void UploadData() { }
+		public void UpdateAECGList()
+		{
+			//Sætter alle nye målinger ind på patientlisten
+			//Sker når der opdateres
+		}
 
-		public void SelectECG() { }
+		public void UploadData()
+		{ 
+			//Uploader data til DOEDB
+			//Sker når der trykkes på "Upload Til Offentlig Database"
+			//Kan kun gøres, hvis der er udfyldt et ID
+		}
 
-		public void SelectPatient() { }
-
+		public void SelectECG()
+		{
+			//Viser graf for det valgte ECG
+			//Sætter også isRead = true
+			//Sker når der vælges en ECG på listen
+		}
 	}
 }

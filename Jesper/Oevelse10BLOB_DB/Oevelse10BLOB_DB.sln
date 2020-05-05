@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oevelse10BLOB_DB", "Oevelse10BLOB_DB\Oevelse10BLOB_DB.csproj", "{B70D2A9C-6BB0-4294-B20E-9169E03E3960}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oevelse2", "Oevelse2\Oevelse2.csproj", "{17AE1A75-A751-46BD-9186-C961FAFF9BF8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B70D2A9C-6BB0-4294-B20E-9169E03E3960}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B70D2A9C-6BB0-4294-B20E-9169E03E3960}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B70D2A9C-6BB0-4294-B20E-9169E03E3960}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B70D2A9C-6BB0-4294-B20E-9169E03E3960}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17AE1A75-A751-46BD-9186-C961FAFF9BF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17AE1A75-A751-46BD-9186-C961FAFF9BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17AE1A75-A751-46BD-9186-C961FAFF9BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17AE1A75-A751-46BD-9186-C961FAFF9BF8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {87C19852-CFA7-41A0-8ABB-6EC5E99B9355}
+	EndGlobalSection
+EndGlobal

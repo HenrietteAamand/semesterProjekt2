@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataTier.Models
+namespace Models.Models
 {
     public class PatientModel
     {
@@ -12,13 +12,13 @@ namespace DataTier.Models
         #endregion
 
         #region Properties
-        private int id;
+        //private int id;
 
-        public int ID
-        {
-            get { return id; }
-            private set { id = value; }
-        }
+        //public int ID
+        //{
+        //    get { return id; }
+        //    private set { id = value; }
+        //}
 
         private int ecgMonitorID;
 
@@ -54,19 +54,19 @@ namespace DataTier.Models
 
         private List<ECGModel> ecgList;
 
-        public List<ECGModel> ECGList
-        {
-            get { return ecgList; }
-            set { ecgList = value; }
-        }
+        //public List<ECGModel> ECGList
+        //{
+        //    get { return ecgList; }
+        //    set { ecgList = value; }
+        //}
 
-        private List<AnalyzedECGModel> aECGList;
+        //private List<AnalyzedECGModel> aECGList;
 
-        public List<AnalyzedECGModel> AECGList
-        {
-            get { return aECGList; }
-            set { aECGList = value; }
-        }
+        //public List<AnalyzedECGModel> AECGList
+        //{
+        //    get { return aECGList; }
+        //    set { aECGList = value; }
+        //}
 
 
         #endregion
@@ -77,15 +77,14 @@ namespace DataTier.Models
 
         }
 
-        public PatientModel(int id, int ecgMonitorID, string cpr, string firstName, string lastName,
-            List<ECGModel> ecgList, List<AnalyzedECGModel> aECGList)
+        public PatientModel(int ecgMonitorID, string cpr, string firstName, string lastName)
         {
-            ID = id;
+            //ID = id;
             ECGMonitorID = ecgMonitorID;
             CPR = cpr;
             LastName = lastName;
-            ECGList = ecgList;
-            AECGList = aECGList;
+            //ECGList = ecgList;
+            //AECGList = aECGList;
         }
 
         #endregion

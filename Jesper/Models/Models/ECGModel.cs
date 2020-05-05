@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataTier.Models
+namespace Models.Models
 {
     public class ECGModel
     {
@@ -11,6 +11,13 @@ namespace DataTier.Models
         #endregion
 
         #region Properties
+        private string cpr;
+        public string CPR
+        {
+            get { return cpr; }
+            private set { cpr = value; }
+        }
+
         private int ecgID;
 
         public int ECGID
@@ -43,16 +50,44 @@ namespace DataTier.Models
             private set { values = value; }
         }
 
+        private bool isRead;
+
+        public bool IsRead
+        {
+            get { return isRead; }
+            set { isRead = value; }
+        }
+
+        private bool isAnalyzed;
+
+        public bool IsAnalyzed
+        {
+            get { return isAnalyzed; }
+            set { isAnalyzed = value; }
+        }
+
+        private string monitorId;
+
+        public string MonitorId
+        {
+            get { return monitorId; }
+            set { monitorId = value; }
+        }
+
+
 
         #endregion
 
         #region Constructor
-        public ECGModel(int ecgID, DateTime date, int sampleRate, List<double> values)
+        public ECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values, string monitorId, bool isAnalyzed)
         {
+            CPR = cpr;
             ECGID = ecgID;
             Date = date;
             SampleRate = sampleRate;
             Values = values;
+            MonitorId = monitorId;
+            IsAnalyzed = isAnalyzed;
         }
 
         #endregion

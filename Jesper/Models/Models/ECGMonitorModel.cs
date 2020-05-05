@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataTier.Models
+namespace Models.Models
 {
     public class ECGMonitorModel
     {
@@ -23,6 +23,11 @@ namespace DataTier.Models
         #endregion
 
         #region Constructor
+        public ECGMonitorModel(int id, bool inUse)
+        {
+            this.id = id;
+            InUse = inUse;
+        }
 
         #endregion
 
