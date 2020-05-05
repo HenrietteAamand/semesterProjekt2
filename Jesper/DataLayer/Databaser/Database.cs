@@ -4,8 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DataTier.Interfaces;
-using DataTier.Models;
+using DataTier;
 using System.Data.SqlClient;
+using Models.Models;
+
 
 namespace DataTier.Databaser
 {
