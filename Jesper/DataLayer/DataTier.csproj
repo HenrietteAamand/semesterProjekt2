@@ -48,15 +48,16 @@
     <Compile Include="Databaser\DOEDB.cs" />
     <Compile Include="Interfaces\IDOEDB.cs" />
     <Compile Include="Interfaces\ILocalDatabase.cs" />
-    <Compile Include="Models\AnalyzedECGModel.cs" />
-    <Compile Include="Models\ECGModel.cs" />
-    <Compile Include="Models\ECGMonitorModel.cs" />
-    <Compile Include="Models\IllnessModel.cs" />
-    <Compile Include="Models\PatientModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{47848402-88d7-4dab-83b9-222241e6fb6b}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

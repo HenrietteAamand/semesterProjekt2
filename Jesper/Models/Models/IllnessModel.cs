@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DataTier.Models
+namespace Models.Models
 {
     public class IllnessModel
     {

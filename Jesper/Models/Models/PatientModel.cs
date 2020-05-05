@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DataTier.Models
+namespace Models.Models
 {
     public class PatientModel
     {
