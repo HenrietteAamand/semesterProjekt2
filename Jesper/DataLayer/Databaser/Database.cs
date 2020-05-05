@@ -33,7 +33,7 @@ namespace DataTier.Databaser
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             List<AnalyzedECGModel> measurements = new List<AnalyzedECGModel>();
-            IllnessModel illness = new IllnessModel(0, "NN", " ", (Convert.ToDateTime(0) - Convert.ToDateTime(0)), false, false);
+            IllnessModel illness = new IllnessModel(0, "NN", " ", false, false);
 
             command = new SqlCommand("select * from dbo.Measurement where IsAnalyzed = 'true'", connection);
             connection.Open();
@@ -133,7 +133,7 @@ namespace DataTier.Databaser
 
 
                 measurements.Add(new ECGModel(Convert.ToString(reader["CPRID"]),Convert.ToInt32(reader["Id"]),
-                    Convert.ToDateTime(reader["Date"]), Convert.ToInt32(reader["Samplerate"]),tal, false));
+                    Convert.ToDateTime(reader["Date"]), Convert.ToInt32(reader["Samplerate"]),tal, ""));
 
             }
             reader.Close();
