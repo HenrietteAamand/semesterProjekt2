@@ -73,6 +73,7 @@ namespace LogicTier
                 }
             }
 
+            //Der oprettes nye aECG for alle nye ECG'er
             foreach (ECGModel ecg in newECGList)
             {
                 NewAECGModelsList.Add(new AnalyzedECGModel());
@@ -81,17 +82,14 @@ namespace LogicTier
             //Beregner og sætter baseline for alle nyoprettede aECG'er
             CalculateBaseline();
 
+            //Beregner og sætter ST for alle nye målinger. Laver også lister for ST index og values, til at lave graf
+            CalculateST();
 
-            //Sammenligner parametre med Illnesses
-            // ST-segment og Baseline til charts
+            //Beregner og sætter puls for alle nye målinger
+            CalculatePuls();
 
-
-
-
-
-
-
-
+            //Tilføjer illnesses til alle nye målinger
+            AddIllnes();
 
         }
 
@@ -245,12 +243,25 @@ namespace LogicTier
         {
             //Tilføjer Illness til aECG-måling
             //Kaldes af CalculateST()
+
+            foreach (AnalyzedECGModel aECG in NewAECGModelsList)
+            {
+                if (STSegmentDepressed)
+                {
+                    aECG.IllnesList.Add(illnessList[0]);
+                }
+
+                if (STSegmentElevated)
+                {
+                    aECG.IllnesList.Add(illnessList[1]);
+                }
+            }
         }
 
-        public void CreateAECGChart()
-        {
-            //Laver lister med værdier for ECG
-        }
+        //public void CreateAECGChart()
+        //{
+        //    //Laver lister med værdier for ECG
+        //}
 
         //public void CreateMark(List<double> STSegmentList, List<int> STSegmentIndexList) { }
 
@@ -265,7 +276,7 @@ namespace LogicTier
         }
 
 
-        public void calculatePuls()
+        public void CalculatePuls()
         {
             //For hver ecg skal den tage det første objekt i aECG og sætte pulsen for det. Så skal både ecg og aECG gå én op.
 
