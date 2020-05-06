@@ -39,6 +39,22 @@ namespace WPF_til_leg.Presentation
         // Tilknyt patient eller nulstil EKG-måler:
         private void EcgCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            //Der skal være et item for hver måler i DB
+            //Items'ne skal indeholde ID'erne for målerne i DB -> (Måler 1, 2, 3)
+            //GetAllMonitors -> giver os en liste med monitors
+            //List<ECGMOnitors> monitorList = new ...... -> monitorList[0] = monitor med ID 1 i DB
+            //monitorList[1] = monitor med ID 2 i DB
+            //monitorList[2] = monitor med ID 3 i DB
+            //Vi vælger måler nummer 5 i combobox
+            //Den har ID 5 i DB.
+            //monitorList[4] = Måler nr. 5 = ID 5 i DB
+            //monitorList[4].InUse()
+            //if(monitorList[4].InUse())
+            //Gøre det med knapperne
+
+            //Foreach(objekt monitor in monitorList)
+            //{Create.New.ComboBox.Item -> Name = "Monitor " + monitor.ID}
+
             //ECGMonitorModel ecgMoniter = new ECGMonitorModel(EcgCB.Text);
             //if (setupObj.monitorInUse(EcgCB) == false)
             //{
