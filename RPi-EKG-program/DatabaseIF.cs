@@ -25,37 +25,49 @@ namespace RPi_EKG_program
 
         public bool isConnected()
         {
-            //try
-            //{
-            //    connection.Open();
-            //}
-            //catch (SqlException)
-            //{
-            //    return false;
-            //}
-            //connection.Close();
+            try
+            {
+                connection.Open();
+            }
+            catch (SqlException)
+            {
+                return false;
+            }
+            connection.Close();
 
-            // SKAL VÆRE FALSE
-            return false; 
+            //// SKAL VÆRE FALSE siden vi ikke har mulighed for at connecte til DB'en
+            return true;
         }
 
         public void sendData(Measurement Maalinger)
         {
-            Writecmd = new SqlCommand("INSERT INTO dbo.Measurement (CPR-ID,BLOB-measurement,Dato,Samplerate,MeasurerID) VALUES(@CPR,@Data,@Dato,@SampleRate,@MeasurerID)", connection);
-            Writecmd.Parameters.AddWithValue("@CPR",Maalinger.CPRNr);
-            Writecmd.Parameters.AddWithValue("@Dato", Maalinger.Dato);
-            Writecmd.Parameters.AddWithValue("@Samplerate", Maalinger.samplerate);
-            Writecmd.Parameters.AddWithValue("@MeasurerID", Maalinger.MeasurerID);
-            Writecmd.Parameters.AddWithValue("@Data", Maalinger.Measurements.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
+
             //double[] DatArray = new double[Maalinger.Measurements.Count];
             //for (int i = 0; i < DatArray.Length; i++)
             //{
             //    DatArray[i] = Maalinger.Measurements[i];
             //}
             //Writecmd.Parameters.AddWithValue("@Data", DatArray.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
-            connection.Open();
+
             try
             {
+                Writecmd = new SqlCommand("INSERT INTO dbo.Measurement (ID,CPRID,BLOBmeasurement,Dato,Samplerate,MeasurerID) VALUES(@NytID,@CPR,@Data,@Dato,@SampleRate,@MeasurerID)", connection);
+                Writecmd.Parameters.AddWithValue("@NytID", 3);
+                Writecmd.Parameters.AddWithValue("@CPR", Maalinger.CPRNr);
+                Writecmd.Parameters.AddWithValue("@Dato", Maalinger.Dato);
+                Writecmd.Parameters.AddWithValue("@Samplerate", Maalinger.samplerate);
+                Writecmd.Parameters.AddWithValue("@MeasurerID", Maalinger.MeasurerID);
+
+                double[] DataArray = new double[Maalinger.Measurements.Count];
+
+                for (int i = 0; i < DataArray.Length; i++)
+                {
+                    DataArray[i] = Maalinger.Measurements[i];
+                }
+
+                Writecmd.Parameters.AddWithValue("@Data", DataArray.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
+
+                connection.Open();
                 Writecmd.ExecuteScalar();
             }
             catch (SqlException)
@@ -71,29 +83,27 @@ namespace RPi_EKG_program
 
         public string RecieveData(string MeasurerID)
         {
-            Readcmd = new SqlCommand("Select CPR,ForNavn from dbo.Patient WHERE tilknyttet EKG = @MeasurerID", connection);
+            Readcmd = new SqlCommand("Select CPR,ForNavn from dbo.Patient WHERE tilknyttetEKG = @MeasurerID", connection);
             Readcmd.Parameters.AddWithValue("@MeasurerID", MeasurerID);
 
             string CPR;
             string Fornavn;
-            string Return ="";
+            string CPRNavn = "";
 
-            connection.Open();
+
+
             try
             {
+                connection.Open();
                 reader = Readcmd.ExecuteReader();
                 if (reader.Read())
                 {
                     CPR = (string)reader["CPR"];
-                    
-                    for (int i = 0; i < 6; i++)
-                    {
-                        Return += CPR[i];
-                    }
+
 
                     Fornavn = (string)reader["ForNavn"];
 
-                    Return += Fornavn;
+                    CPRNavn += Fornavn;
                 }
             }
             catch (SqlException)
@@ -101,11 +111,15 @@ namespace RPi_EKG_program
 
                 throw;
             }
+            finally
+            {
+                connection.Close();
+            }
 
-            return Return;
+            return CPRNavn;
         }
 
-        
+
 
     }
 }

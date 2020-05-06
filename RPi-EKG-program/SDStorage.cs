@@ -37,7 +37,7 @@ namespace RPi_EKG_program
                 if (!inputFields[1].Contains("1"))
                 {
                     Counter++;
-                   
+
                 }
                 inputRecord = reader.ReadLine();
             }
@@ -148,8 +148,13 @@ namespace RPi_EKG_program
             input.Close();
         }
 
-        public void StoreInfoLocal(string CPR, string FirstName)
+        public void StoreInfoLocal(string CPRNavn)
         {
+            string CPR;
+            string FirstName;
+
+            CPR = CPRNavn.Split(Convert.ToChar(";"))[0];
+            FirstName = CPRNavn.Split(Convert.ToChar(";"))[1];
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"EKGPersonID.txt"))
             {
                 file.WriteLine(CPR + ";" + FirstName + ";" + DateTime.Now.ToString());
@@ -167,12 +172,25 @@ namespace RPi_EKG_program
             string inputRecord = reader.ReadLine();
             string[] inputFields = new string[3];
             inputFields = inputRecord.Split(Convert.ToChar(";"));
-            CPRNavn = inputFields[0] + inputFields[1];
-            
-
+            CPRNavn = inputFields[0].Split(Convert.ToChar("-"))[0] + inputFields[1];
 
             return CPRNavn;
         }
+
+        public string getCPRLocal()
+        {
+            input = new FileStream(@"EKGPersonID.txt", FileMode.Open, FileAccess.Read);
+            reader = new StreamReader(input);
+
+            string CPR = "";
+            string inputRecord = reader.ReadLine();
+            string[] inputFields = new string[3];
+            inputFields = inputRecord.Split(Convert.ToChar(";"));
+
+            CPR = inputFields[0];
+            return CPR;
+        }
+
 
     }
 }
