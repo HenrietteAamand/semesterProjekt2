@@ -115,5 +115,8 @@ namespace LogicTier
 			//Sker når der vælges en ECG på listen
 			return ecgValuesList;
 		}
+
+
+		//Metode til ST-values
 	}
 }

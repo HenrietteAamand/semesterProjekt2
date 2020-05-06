@@ -86,6 +86,15 @@ namespace LogicTier
         }
 
 
+        public List<PatientModel> getAllPatiens()
+        {
+            //Henter alle Patient til liste
+            List<PatientModel> patientList = new List<PatientModel>();
+            patientList = DB.GetAllPatients();
+            return patientList;
+        }
+
+
         public bool monitorInUse(ECGMonitorModel monitor)
         {
             return monitor.InUse;
