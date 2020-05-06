@@ -9,7 +9,7 @@ namespace RPi_EKG_program
     class Program
     {
         //    >DebugAdapterHost.Launch /LaunchJson:"C:\Users\emils\Source\Repos\semesterProjekt2\RPi-EKG-program\launch.json" /EngineGuid:541B8A8A-6081-4506-9F0A-1CE771DEBC04
-        private USB_stick LocalStorage;
+        private SDStorage LocalStorage;
         
         
        
@@ -17,7 +17,7 @@ namespace RPi_EKG_program
         {
             Display displayController = new Display();
             DatabaseIF LokalDB = new DatabaseIF();
-
+            
            
 
             ADC ADconverter = new ADC();
@@ -29,8 +29,8 @@ namespace RPi_EKG_program
             displayController.ScreenShow(4);
 
             displayController.ShowGreeting("123456" + "Frederikke");
-            
 
+            displayController.updateMenuBar(LokalDB.isConnected(), CheckStorage(), ADconverter.checkBattery());
 
             DateTime Start = DateTime.Now;
             List<double> Test = new List<double>();

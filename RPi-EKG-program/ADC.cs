@@ -13,11 +13,12 @@ namespace RPi_EKG_program
         public ADC()
         {
             adConverter = new ADC1015();
+
         }
         
         public bool isCableConnected()
         {
-            if(adConverter.readADC_Differential_0_1() == 0)
+            if(adConverter.readADC_SingleEnded(0)==0)
             { 
                 return false; 
             }
@@ -27,24 +28,26 @@ namespace RPi_EKG_program
 
         public double measureSignal()
         {
-            double sample = (adConverter.readADC_Differential_0_1() / 2048.0) * 6.144;
+            double sample = (adConverter.readADC_SingleEnded(0) / 2048.0) * 6.144;
             return sample;
 
         }
-        //public byte checkBattery()
-        //{
+        public byte checkBattery()
+        {
 
+            // Vi har ikke et batteri at teste på, vi laver test således at vores batteriniveau ligger et sted imellem 9.6V og 10V
 
+            //double batteryStatus = (adConverter.readADC_SingleEnded(3) / 2048.0) * 6.144;
+            //if (batteryStatus>=10)
+            //    return 4;
+            //if (batteryStatus>=9.6)
+            //    return 3;
+            //if (batteryStatus>=8.96)
+            //    return 2;
 
-        //    //if(checkBattery >8000)
-        //    //return 4;
-        //    //if (checkBattery > 7800)
-        //    //    return 3;
-        //    //if (checkBattery > 7600)
-        //    //    return 2;
-        //    //else return 1;
-        //}
+            //else return 1;
+            return 3;
 
-
+        }
     }
 }

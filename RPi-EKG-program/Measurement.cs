@@ -19,7 +19,12 @@ namespace RPi_EKG_program
             this.Measurements = Measurements;
             this.Dato = Dato;
             samplerate = Samplerate;
-            this.MeasurerID = MeasurerID; 
+            this.MeasurerID = MeasurerID;
+
+        }
+
+        public Measurement()
+        {
 
         }
 
