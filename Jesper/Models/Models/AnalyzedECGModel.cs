@@ -7,7 +7,7 @@ namespace Models.Models
     public class AnalyzedECGModel
     {
         #region Attributes
-
+        private int monitorId;
         #endregion
 
         #region Properties
@@ -90,21 +90,39 @@ namespace Models.Models
             set { stDepressed = value; }
         }
 
+        private int sampleRate;
+
+        public int SampleRate
+        {
+            get { return sampleRate; }
+            private set { sampleRate = value; }
+        }
+
+        private bool isRead;
+
+        public bool IsRead
+        {
+            get { return isRead; }
+            set { isRead = value; }
+        }
+
 
 
         #endregion
 
         #region Constructors
-        public AnalyzedECGModel(string cpr, int ecgID, DateTime date, IllnessModel illness, List<double> aECGCHart,
-    int pulse)
+        public AnalyzedECGModel(string cpr, int ecgID, int aECGID, DateTime date, IllnessModel illness, List<double> aECGCHart, int samplerate, int monitorID, bool isRead)
         {
             CPR = cpr;
-            //AECGID = aECGID;
+            AECGID = aECGID;
             ECGID = ecgID;
             IllnesList.Add(illness);
             AECGCHART = aECGCHart;
-            Pulse = pulse;
+            //Pulse = pulse;
             Date = date;
+            SampleRate = samplerate;
+            monitorId = monitorID;
+            IsRead = isRead;
         }
 
         public AnalyzedECGModel() { }

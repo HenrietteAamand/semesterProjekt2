@@ -34,7 +34,7 @@ namespace DataTier.Databaser
         {
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
-            List<AnalyzedECGModel> measurements = new List<AnalyzedECGModel>();
+            List<AnalyzedECGModel> ameasurements = new List<AnalyzedECGModel>();
             IllnessModel illness = new IllnessModel(0, "NN", " ", false, false);
 
             command = new SqlCommand("select * from dbo.Measurement where IsAnalyzed = 'true'", connection);
@@ -64,13 +64,15 @@ namespace DataTier.Databaser
                 }
 
                
-                measurements.Add(new AnalyzedECGModel(Convert.ToString(reader["CPR-ID"]), Convert.ToInt32(reader["Id"]),
-                    Convert.ToDateTime(reader["Dato"]), illness, tal,0));
+                ameasurements.Add(new AnalyzedECGModel(Convert.ToString(reader["CPR-ID"]), Convert.ToInt32(reader["ECGID"]), Convert.ToInt32(reader["AECGID"]),
+                    Convert.ToDateTime(reader["Dato"]), illness, tal, Convert.ToInt32(reader["Samplerate"]), 
+                    Convert.ToInt32(reader["MonitorID"]), Convert.ToBoolean(reader["IsRead"])));
+               
 
             }
             reader.Close();
             connection.Close();
-            return measurements;
+            return ameasurements;
 
             throw new NotImplementedException();
         }
@@ -146,6 +148,28 @@ namespace DataTier.Databaser
 
         public List<IllnessModel> GetAllIllnesses()
         {
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+
+            List<IllnessModel> illness = new List<IllnessModel>();
+
+
+            command = new SqlCommand("select * from dbo.Patient", connection);
+            connection.Open();
+
+            reader = command.ExecuteReader();
+
+
+            while (reader.Read())
+            {
+
+                illness.Add(new IllnessModel(Convert.ToInt32(reader["LinkedECG"]), Convert.ToString(reader["CPR"]),
+                    Convert.ToString(reader["FirstName"]), Convert.ToString(reader["LastName"])));
+
+            }
+
+            connection.Close();
+            return illness;
+
             throw new NotImplementedException();
         }
 
