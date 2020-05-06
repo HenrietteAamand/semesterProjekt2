@@ -116,7 +116,7 @@ namespace Models.Models
             CPR = cpr;
             AECGID = aECGID;
             ECGID = ecgID;
-            Illnes.Add(illness);
+            Illnes = illness;
             STValues = aECGCHart;
             //Pulse = pulse;
             Date = date;
