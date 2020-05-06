@@ -82,11 +82,18 @@ namespace Models.Models
             //ID = id;
             ECGMonitorID = ecgMonitorID;
             CPR = cpr;
+            FirstName = firstName;
             LastName = lastName;
             //ECGList = ecgList;
             //AECGList = aECGList;
         }
 
+        public PatientModel(string cpr, string firstName, string lastName)
+        {
+            CPR = cpr;
+            FirstName = firstName;
+            LastName = lastName;
+        }
         #endregion
 
         #region Methods

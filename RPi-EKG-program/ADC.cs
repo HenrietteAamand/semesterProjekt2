@@ -35,18 +35,20 @@ namespace RPi_EKG_program
         public byte checkBattery()
         {
 
-            // Vi har ikke et batteri at teste på, vi laver test således at vores batteriniveau ligger et sted imellem 9.6V og 10V
+            //Vi har ikke et batteri at teste på, vi laver test således at vores batteriniveau ligger et sted imellem 9.6V og 10V
 
             //double batteryStatus = (adConverter.readADC_SingleEnded(3) / 2048.0) * 6.144;
-            //if (batteryStatus>=10)
+            //if (batteryStatus >= 10)
             //    return 4;
-            //if (batteryStatus>=9.6)
+            //if (batteryStatus >= 9.6)
             //    return 3;
-            //if (batteryStatus>=8.96)
+            //if (batteryStatus >= 8.96)
             //    return 2;
 
             //else return 1;
+            
             return 3;
+
 
         }
     }

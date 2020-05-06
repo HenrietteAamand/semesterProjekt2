@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataTier.Interfaces
 {
-    interface IDOEDB
+    public interface IDOEDB
     {
+        void UploadData();
     }
 }

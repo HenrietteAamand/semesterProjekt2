@@ -7,7 +7,6 @@ namespace Models.Models
     public class ECGMonitorModel
     {
         #region Attributes
-        private int id;
         #endregion
 
         #region Properties
@@ -18,6 +17,15 @@ namespace Models.Models
             get { return inUse; }
             set { inUse = value; }
         }
+
+        private int id;
+
+        public int ID
+        {
+            get { return id; }
+            private set { id = value; }
+        }
+
 
 
         #endregion

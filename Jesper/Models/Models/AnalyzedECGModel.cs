@@ -50,6 +50,15 @@ namespace Models.Models
             private set { stValues = value; }
         }
 
+        private List<double> values;
+
+        public List<double> Values
+        {
+            get { return values; }
+            set { values = value; }
+        }
+
+
         private int pulse;
 
         public int Pulse

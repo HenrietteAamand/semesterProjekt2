@@ -1,6 +1,8 @@
 ﻿using Models.Models;
 using System;
 using System.Collections.Generic;
+using DataTier.Databaser;
+using DataTier.Interfaces;
 
 namespace LogicTier
 {
@@ -11,10 +13,18 @@ namespace LogicTier
 		public AnalyzedECGModel aECGRef { get; private set; }
 		public List<AnalyzedECGModel> aECGList { get; private set; }
 		public List<PatientModel> patientList { get; private set; }
+		private ILocalDatabase DB;
+		private IDOEDB DOEDB;
 
 		public MainWindowLogic()
 		{
 			analyzeECG = new AnalyzeECG();
+			patientList = new List<PatientModel>();
+			aECGList = new List<AnalyzedECGModel>();
+			DB = new Database();
+			DOEDB = new DOEDB();
+			patientList = DB.GetAllPatients();
+			aECGList = DB.GetAllAnalyzedECGs();
 		}
 
 		//public void LoadPatient(String cpr)
@@ -36,8 +46,8 @@ namespace LogicTier
 					analyzedECGList.Add(aECG);
 				}
 			}
-			//Sker når en patient vælges på listen
 
+			//Sker når en patient vælges på listen
 			return analyzedECGList;
 		}
 
@@ -48,38 +58,65 @@ namespace LogicTier
 			{
 				foreach (AnalyzedECGModel aECG in aECGList)
 				{
-					if (!aECG.IsRead)
+					if (aECG.CPR == patient.CPR)
 					{
-						//Sæt farven til blå
-					}
+						if (!aECG.IsRead)
+						{
+							if (aECG.Illnes != null)
+							{
+								//Sæt skriftfarven til rød
+							}
+							//Sæt farven til blå
+						}
 
-					if (aECG.Illnes)
-					{
-
+						if (aECG.Illnes != null)
+						{
+							//Sæt skriftfarven til rød
+						}
 					}
 				}
 			}
 			//Sker når der opdateres
 		}
 
-		public void UpdateAECGList()
-		{
-			//Sætter alle nye målinger ind på patientlisten
-			//Sker når der opdateres
-		}
+		//public void UpdateAECGList()
+		//{
+		//	//Sætter alle nye målinger ind på patientlisten
+		//	//Sker når der opdateres
+		//}
 
-		public void UploadData()
-		{ 
+		public void UploadData(string id)
+		{
+			//Hvis der er indtastet id uploader den
+			if (id != null)
+			{
+				DOEDB.UploadData();
+			}
+			
 			//Uploader data til DOEDB
 			//Sker når der trykkes på "Upload Til Offentlig Database"
 			//Kan kun gøres, hvis der er udfyldt et ID
 		}
 
-		public void SelectECG()
+		public List<double> GetECGValues(int ecgID, string cpr)
 		{
-			//Viser graf for det valgte ECG
+			List<double> ecgValuesList = new List<double>();
+
+			foreach (AnalyzedECGModel aECG in aECGList)
+			{
+				if (aECG.ECGID == ecgID)
+				{
+					ecgValuesList = aECG.Values;
+					aECG.IsRead = true;
+				}
+			}
+
 			//Sætter også isRead = true
 			//Sker når der vælges en ECG på listen
+			return ecgValuesList;
 		}
+
+
+		//Metode til ST-values
 	}
 }

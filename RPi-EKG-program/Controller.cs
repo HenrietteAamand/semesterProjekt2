@@ -38,6 +38,11 @@ namespace RPi_EKG_program
 
             displayController.updateMenuBar(LokalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
 
+
+            //Hvis batteri er over 5.
+
+
+
             DateTime Start = DateTime.Now;
             List<double> Test = new List<double>();
             Measurement measurement = new Measurement("123456-7890", Test, Start, 0.02, "54321");
