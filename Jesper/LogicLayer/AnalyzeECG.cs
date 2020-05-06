@@ -27,6 +27,8 @@ namespace LogicTier
             get { return RTakThreshhold; }
             private set { RTakThreshhold = Baseline + 1.5; }
         }
+
+
         public List<double> STSegmentList { get; private set; }
         public List<int> STSegmentIndexList { get; private set; }
         public double STSegmentTreshhold { get; private set; }
