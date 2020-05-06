@@ -106,7 +106,8 @@ namespace LogicTier
 			{
 				if (aECG.ECGID == ecgID)
 				{
-					aECG.v
+					ecgValuesList = aECG.Values;
+					aECG.IsRead = true;
 				}
 			}
 
