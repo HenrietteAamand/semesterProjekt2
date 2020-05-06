@@ -24,15 +24,41 @@ namespace LogicTier
 			
 		//}
 
-		public void SelectPatient(string cpr)
+		public List<AnalyzedECGModel> GetAECGListForPatient(string cpr)
 		{
+			List<AnalyzedECGModel> analyzedECGList = new List<AnalyzedECGModel>();
 			//Viser alle analyserede ECG'er på listen for valgt patient
+
+			foreach (AnalyzedECGModel aECG in aECGList)
+			{
+				if (aECG.CPR == cpr)
+				{
+					analyzedECGList.Add(aECG);
+				}
+			}
 			//Sker når en patient vælges på listen
+
+			return analyzedECGList;
 		}
 
 		public void UpdatePatientList() 
 		{
 			//Sætter attributter, som fortæller at der er nye målinger og/eller nye syge målinger for alle patienter.
+			foreach (PatientModel patient in patientList)
+			{
+				foreach (AnalyzedECGModel aECG in aECGList)
+				{
+					if (!aECG.IsRead)
+					{
+						//Sæt farven til blå
+					}
+
+					if (aECG.Illnes)
+					{
+
+					}
+				}
+			}
 			//Sker når der opdateres
 		}
 

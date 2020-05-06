@@ -10,6 +10,8 @@ namespace Models.Models
         private string about;
         private bool stSegmentElevated;
         private bool stSegmentDepressed;
+        private double stMax;
+        private double srMax;
 
         #endregion
 
@@ -18,13 +20,16 @@ namespace Models.Models
         #endregion
 
         #region Constructor
-        public IllnessModel(int id, string name, string about, bool stSegmentElevated, bool stSegmentDepressed)
+        public IllnessModel(int id, string name, string about, double stMax, double srMax, bool stSegmentElevated, bool stSegmentDepressed)
         {
             this.id = id;
             this.name = name;
             this.about = about;
+            this.stMax = stMax;
+            this.srMax = srMax;
             this.stSegmentElevated = stSegmentElevated;
             this.stSegmentDepressed = stSegmentDepressed;
+
 
         }
 
