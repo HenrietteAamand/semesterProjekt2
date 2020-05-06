@@ -7,7 +7,7 @@ using DataTier.Interfaces;
 using DataTier;
 using System.Data.SqlClient;
 using Models.Models;
-
+using System.ComponentModel;
 
 namespace DataTier.Databaser
 {
@@ -30,11 +30,17 @@ namespace DataTier.Databaser
 
             connection.Open();
 
-                string insertStringParam = @"INSERT INTO dbo.AnalyzedECG SET IsRead = 'TRUE'";
-                using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
-                {
-                    reader = cmd.ExecuteReader();
-                }
+            string insertStringParam = @"INSERT INTO dbo.Patients (CPR, FirstName, LastName) VALUES (@CPR, @vFirstName, @vLastName)";
+            using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
+            {
+                cmd.CommandText = insertStringParam;
+                cmd.Parameters.AddWithValue("@CPR", patient.CPR);
+                cmd.Parameters.AddWithValue("@FirstName", patient.FirstName);
+                cmd.Parameters.AddWithValue("@LastName", patient.LastName);
+
+                reader = cmd.ExecuteReader();
+                reader.Read();
+            }
             
             connection.Close();
 
@@ -210,7 +216,7 @@ namespace DataTier.Databaser
             
         }
 
-        public void IsAnalyzed(ECGModel ecgMearsurement, AnalyzedECGModel aEcgMeasurement)
+        public void UpdateIsAnalyzed(ECGModel ecgMearsurement, AnalyzedECGModel aEcgMeasurement)
         {
 
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
@@ -229,7 +235,7 @@ namespace DataTier.Databaser
             connection.Close();
         }
 
-        public void IsRead(AnalyzedECGModel aEcgMeasurement)
+        public void UpdateIsRead(AnalyzedECGModel aEcgMeasurement)
         {
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
@@ -247,13 +253,55 @@ namespace DataTier.Databaser
             connection.Close();
         }
 
-        public void LinkECGToPatient(string ecgMonitorID, string cpr)
+        public void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel ecgMonitor)
         {
-            throw new NotImplementedException();
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+
+            connection.Open();
+
+            if (ecgMonitor.ID == patient.ECGMonitorID)
+            {
+                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = '" + patient.ECGMonitorID + "'";
+                using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
+                {
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                }
+
+                string insertStringParam2 = "UPDATE dbo.ECGMonitor SET inUse = 1 ";
+                using (SqlCommand cmd = new SqlCommand(insertStringParam2, connection))
+                {
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                }
+            }
+            connection.Close();
         }
 
-        public void ResetECGMonitor(string ecgMonitorID)
+        public void UpdateResetECGMonitor(ECGMonitorModel ecgMonitor, PatientModel patient)
         {
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+
+            connection.Open();
+
+            if (ecgMonitor.InUse == false)
+            {
+                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = NULL";
+                using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
+                {
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                }
+
+                string insertStringParam2 = "UPDATE dbo.ECGMonitor SET inUse = 0 ";
+                using (SqlCommand cmd = new SqlCommand(insertStringParam2, connection))
+                {
+                    reader = cmd.ExecuteReader();
+                    reader.Read();
+                }
+            }
+            connection.Close();
+
             throw new NotImplementedException();
         }
 

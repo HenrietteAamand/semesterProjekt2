@@ -22,17 +22,17 @@ namespace DataTier.Interfaces
 
 
         //Gem
-        void LinkECGToPatient(string ecgMonitorID, string cpr);
+        void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel ecgMonitor);
 
         void CreatePatient(PatientModel patient);
 
-        void ResetECGMonitor(string ecgMonitorID);
+        void UpdateResetECGMonitor(ECGMonitorModel ecgMonitor, PatientModel patient);
 
-        void IsAnalyzed(ECGModel ecgMearsurement, AnalyzedECGModel aEcgMeasurement);
+        void UpdateIsAnalyzed(ECGModel ecgMearsurement, AnalyzedECGModel aEcgMeasurement);
 
         void UpdateAnalyzedECGs();
 
-        void IsRead(AnalyzedECGModel aEcgMeasurement);
+        void UpdateIsRead(AnalyzedECGModel aEcgMeasurement);
 
 
 
