@@ -39,7 +39,7 @@ namespace Models.Models
         public IllnessModel Illnes
         {
             get { return illness; }
-            private set { illness = value; }
+            set { illness = value; }
         }
 
         private List<double> stValues;

@@ -53,7 +53,7 @@ namespace LogicTier
 						//Sæt farven til blå
 					}
 
-					if (!aECG.Illnes == Null)
+					if (aECG.Illnes)
 					{
 
 					}
