@@ -25,17 +25,18 @@ namespace RPi_EKG_program
 
         public bool isConnected()
         {
-            try
-            {
-                connection.Open();
-            }
-            catch (SqlException)
-            {
-                return false;
-            }
-            connection.Close();
+            //try
+            //{
+            //    connection.Open();
+            //}
+            //catch (SqlException)
+            //{
+            //    return false;
+            //}
+            //connection.Close();
 
-            return true; 
+            // SKAL VÆRE FALSE
+            return false; 
         }
 
         public void sendData(Measurement Maalinger)

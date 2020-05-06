@@ -60,8 +60,10 @@ namespace RPi_EKG_program
 
                     break;
             }
-                
-
+            displayController.lcdDisplay();
+            displayController.lcdClear();
+            displayController.lcdPrint("HEEEEEEEEEj");
+            displayController.lcdClear();
             displayController.lcdPrint(Convert.ToString(DateTime.Now.Hour)+":"+ Convert.ToString(DateTime.Now.Minute)+ "|" + Connect + "|" + Storage + "|" + batteryniveau);
                 
 
@@ -149,7 +151,7 @@ namespace RPi_EKG_program
                     displayController.lcdDisplay();
                     displayController.lcdClear();
                     
-                    displayController.lcdPrint("             ###_  | | "); //alt code 219
+                    displayController.lcdPrint("      ###_  | | "); //alt code 219
                     break;
                     
             }
