@@ -41,6 +41,8 @@ namespace RPi_EKG_program
                         // Her ville der være en "custom" karatker for at vise batteristatus
                         //Da vi ikke kan lave specielle custom karakter, bruger vi et system med procent 0- 100.
                         batteryniveau = "25";
+                        //SKAL vise screen 8
+
 
                     }
                     break;
@@ -79,6 +81,7 @@ namespace RPi_EKG_program
         }
         public void ShowGreeting(string CPRNAVN)
         {
+
             string CPR = "";
             string Navn = "";
             //displayController.lcdDisplay();
@@ -111,8 +114,15 @@ namespace RPi_EKG_program
 
 
         }
+
+        public void StatusUpdateMeasurment()
+        {
+
+            // skal opdatere skærm 4. YEs
+        }
         public void ScreenShow(short ScreenNb)
         {
+
             switch (ScreenNb)
             {
                 case 1:
