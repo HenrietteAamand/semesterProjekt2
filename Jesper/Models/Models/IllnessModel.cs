@@ -10,6 +10,8 @@ namespace Models.Models
         private string about;
         private bool stSegmentElevated;
         private bool stSegmentDepressed;
+        private double stMax;
+        private double srMax;
 
         #endregion
 
