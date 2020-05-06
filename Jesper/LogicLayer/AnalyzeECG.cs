@@ -250,12 +250,12 @@ namespace LogicTier
             {
                 if (STSegmentDepressed)
                 {
-                    aECG.Illnes.Add(illnessList[0]);
+                    aECG.Illnes = illnessList[0];
                 }
 
                 if (STSegmentElevated)
                 {
-                    aECG.Illnes.Add(illnessList[1]);
+                    aECG.Illnes = illnessList[1];
                 }
             }
         }
