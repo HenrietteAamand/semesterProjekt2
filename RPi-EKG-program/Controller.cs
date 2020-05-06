@@ -17,20 +17,26 @@ namespace RPi_EKG_program
         {
             Display displayController = new Display();
             DatabaseIF LokalDB = new DatabaseIF();
-            
-           
+
+            SDStorage LocalStorage = new SDStorage();
+
 
             ADC ADconverter = new ADC();
             bool test = true;
             test = LokalDB.isConnected();
 
 
+
             ADconverter.isCableConnected();
-            displayController.ScreenShow(4);
+            //displayController.ScreenShow(4);
 
-            displayController.ShowGreeting("123456" + "Frederikke");
+            LocalStorage.StoreInfoLocal("080596-1234", "Emil");
 
-            displayController.updateMenuBar(LokalDB.isConnected(), CheckStorage(), ADconverter.checkBattery());
+            string CPRNAVN = LocalStorage.getInfoLocal();
+
+            displayController.ShowGreeting(CPRNAVN);
+
+            displayController.updateMenuBar(LokalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
 
             DateTime Start = DateTime.Now;
             List<double> Test = new List<double>();
