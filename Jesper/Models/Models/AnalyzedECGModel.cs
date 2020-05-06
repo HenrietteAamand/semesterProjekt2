@@ -34,12 +34,12 @@ namespace Models.Models
             private set { ecgID = value; }
         }
 
-        private List<IllnessModel> illnessList;
+        private IllnessModel illness;
 
-        public List<IllnessModel> IllnesList
+        public IllnessModel Illnes
         {
-            get { return illnessList; }
-            private set { illnessList = value; }
+            get { return illness; }
+            private set { illness = value; }
         }
 
         private List<double> stValues;
@@ -116,7 +116,7 @@ namespace Models.Models
             CPR = cpr;
             AECGID = aECGID;
             ECGID = ecgID;
-            IllnesList.Add(illness);
+            Illnes.Add(illness);
             STValues = aECGCHart;
             //Pulse = pulse;
             Date = date;
