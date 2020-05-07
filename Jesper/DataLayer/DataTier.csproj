@@ -49,6 +49,7 @@
     <Compile Include="Interfaces\IDOEDB.cs" />
     <Compile Include="Interfaces\ILocalDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Databaser\TestDB.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

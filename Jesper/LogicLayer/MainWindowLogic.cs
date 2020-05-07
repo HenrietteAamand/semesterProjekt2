@@ -21,7 +21,7 @@ namespace LogicTier
 			analyzeECG = new AnalyzeECG();
 			patientList = new List<PatientModel>();
 			aECGList = new List<AnalyzedECGModel>();
-			DB = new Database();
+			DB = new TestDB();
 			DOEDB = new DOEDB();
 			patientList = DB.GetAllPatients();
 			aECGList = DB.GetAllAnalyzedECGs();
@@ -99,6 +99,22 @@ namespace LogicTier
 			//Uploader data til DOEDB
 			//Sker når der trykkes på "Upload Til Offentlig Database"
 			//Kan kun gøres, hvis der er udfyldt et ID
+		}
+
+		public AnalyzedECGModel GetAnalyzedECG(int aECGID)
+		{
+			AnalyzedECGModel result = new AnalyzedECGModel();
+			foreach (AnalyzedECGModel aECG in aECGList)
+			{
+				if (aECG.ECGID == aECGID)
+				{
+					result = aECG;
+				}
+			}
+
+			//Sætter også isRead = true
+			//Sker når der vælges en ECG på listen
+			return result;
 		}
 
 		public List<double> GetECGValues(int ecgID)

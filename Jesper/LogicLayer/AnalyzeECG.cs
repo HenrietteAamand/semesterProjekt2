@@ -53,7 +53,7 @@ namespace LogicTier
         {
             illnessList = new List<IllnessModel>();
             patientRef = new PatientModel();
-            lDBRef = new Database();
+            lDBRef = new TestDB();
             ecgList = new List<ECGModel>();
             ecgList = lDBRef.GetAllECGs();
         }
@@ -62,7 +62,7 @@ namespace LogicTier
 
         public void CreateAnalyzedECG(string cpr, int ecgID, List<IllnessModel> illnes, List<double> aECGChart, int pulse)
         {
-
+            throw new NotImplementedException();
 
             //Der kommer en liste med alle ECG'er
             //Der laves en liste med ECG'er som er nye.
@@ -93,6 +93,11 @@ namespace LogicTier
             //Tilføjer illnesses til alle nye målinger
             AddIllnes();
 
+            foreach (AnalyzedECGModel aECG in NewAECGModelsList)
+            {
+                UploadAnalyzedECG(aECG);
+
+            }
 
 
         }
@@ -101,6 +106,7 @@ namespace LogicTier
 
         public void CalculateBaseline()
         {
+            throw new NotImplementedException();
             //Opdel ECG værdier i intervaller
             //Placer alle mælte værdier i et af intervallerne
             //Tæller hvilket interval, der har flest målte værdier
@@ -161,8 +167,9 @@ namespace LogicTier
 
         }
 
-        public List<double> CalculateST()
+        public void CalculateST()
         {
+            throw new NotImplementedException();
             //Måle R-tak
             //R-tak threshhold er sat til Baseline +1,5 mV
             //Den finder ud af, hvornår value bliver højere end threshold
@@ -245,14 +252,14 @@ namespace LogicTier
 
             //laver liste med værdier for ST-segment
             //Listen indeholder værdier fra den laveste værdi efter R-takken til den rammer en værdi der er højere end baseline.
-            throw new NotImplementedException();
+
         }
 
         public void AddIllnes()
         {
             //Tilføjer Illness til aECG-måling
             //Kaldes af CalculateST()
-
+            throw new NotImplementedException();
             foreach (AnalyzedECGModel aECG in NewAECGModelsList)
             {
                 if (STSegmentDepressed)
@@ -279,16 +286,17 @@ namespace LogicTier
 
         //}
 
-        public void UploadAnalyzedECG()
+        public void UploadAnalyzedECG(AnalyzedECGModel aECG)
         {
-            lDBRef.UploadAnalyzedECGs();
+            throw new NotImplementedException();
+            lDBRef.UploadAnalyzedECGs(aECG);
         }
 
 
         public void CalculatePuls()
         {
             //For hver ecg skal den tage det første objekt i aECG og sætte pulsen for det. Så skal både ecg og aECG gå én op.
-
+            throw new NotImplementedException();
             foreach (ECGModel ecg in newECGList)
             {
                 for (int i = 0; i < ecg.Values.Count; i++)

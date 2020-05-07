@@ -90,6 +90,10 @@ namespace Models.Models
             IsAnalyzed = isAnalyzed;
         }
 
+        public ECGModel()
+        {
+        }
+
         #endregion
 
         #region Methods
