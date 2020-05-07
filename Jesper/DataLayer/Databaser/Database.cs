@@ -11,14 +11,14 @@ using System.ComponentModel;
 
 namespace DataTier.Databaser
 {
-    public class TestDB : ILocalDatabase
+    public class Database : ILocalDatabase
     {
         private SqlConnection connection;
         private SqlDataReader reader;
         private SqlCommand command;
         private const String db = "F20ST2ITS2201908197";
 
-        public TestDB()
+        public Database()
         {
             
 

@@ -53,7 +53,7 @@ namespace LogicTier
         {
             illnessList = new List<IllnessModel>();
             patientRef = new PatientModel();
-            lDBRef = new TestDB();
+            lDBRef = new Database();
             ecgList = new List<ECGModel>();
             ecgList = lDBRef.GetAllECGs();
         }
