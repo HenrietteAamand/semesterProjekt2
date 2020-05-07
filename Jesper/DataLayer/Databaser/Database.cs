@@ -30,7 +30,7 @@ namespace DataTier.Databaser
 
             connection.Open();
 
-            string insertStringParam = @"INSERT INTO dbo.Patients (CPR, FirstName, LastName) VALUES (@CPR, @vFirstName, @vLastName)";
+            string insertStringParam = @"INSERT INTO dbo.Patient (CPR, FirstName, LastName) VALUES (@CPR, @vFirstName, @vLastName)";
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.CommandText = insertStringParam;
@@ -43,8 +43,6 @@ namespace DataTier.Databaser
             }
             
             connection.Close();
-
-            throw new NotImplementedException();
         }
 
         public List<AnalyzedECGModel> GetAllAnalyzedECGs()
@@ -54,7 +52,7 @@ namespace DataTier.Databaser
             List<AnalyzedECGModel> ameasurements = new List<AnalyzedECGModel>();
             IllnessModel illness = new IllnessModel(0, "NN", " ", 0, 0,false, false);
 
-            command = new SqlCommand("select * from dbo.Analyzed ECG", connection);
+            command = new SqlCommand("select * from dbo.AnalyzedECG", connection);
             connection.Open();
 
             reader = command.ExecuteReader();
@@ -63,9 +61,11 @@ namespace DataTier.Databaser
             while (reader.Read())
             {
                 List<byte> bytesArr = new List<byte>();
-                List<double> tal = new List<double>();
+                List<double> values = new List<double>();
+                List<byte> bytesArr1 = new List<byte>();
+                List<double> STSegmenter = new List<double>();
 
-                string selectString = $"SELECT * FROM dbo.Analyzed ECG";
+                string selectString = $"SELECT * FROM dbo.AnalyzedECG";
 
                 using (SqlCommand cmd = new SqlCommand(selectString, connection))
                 {
@@ -73,16 +73,31 @@ namespace DataTier.Databaser
                 }
                 if (reader.Read())
                 {
-                    bytesArr = (List<byte>)reader["BLOB-Values"];
+                    bytesArr = (List<byte>)reader["BLOBValues"];
                 }
                 for (int i = 0, j = 0; i < bytesArr.Count; i += 8, j++)
                 {
-                    tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
+                    values[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
                 }
 
-               
+                string selectString1 = $"SELECT * FROM dbo.AnalyzedECG";
+
+                using (SqlCommand cmd = new SqlCommand(selectString1, connection))
+                {
+                    reader = cmd.ExecuteReader();
+                }
+                if (reader.Read())
+                {
+                    bytesArr1 = (List<byte>)reader["BLOBstValues"];
+                }
+                for (int i = 0, j = 0; i < bytesArr.Count; i += 8, j++)
+                {
+                    STSegmenter[j] = BitConverter.ToDouble(bytesArr1.ToArray(), i);
+                }
+
+
                 ameasurements.Add(new AnalyzedECGModel(Convert.ToString(reader["CPR-ID"]), Convert.ToInt32(reader["ECGID"]), Convert.ToInt32(reader["AECGID"]),
-                    Convert.ToDateTime(reader["Dato"]), illness, tal, Convert.ToInt32(reader["Samplerate"]), 
+                    Convert.ToDateTime(reader["Dato"]), illness, values, Convert.ToInt32(reader["Samplerate"]), 
                     Convert.ToInt32(reader["MonitorID"]), Convert.ToBoolean(reader["IsRead"])));
                
 
@@ -101,7 +116,7 @@ namespace DataTier.Databaser
             List<ECGMonitorModel> ecgMonitors = new List<ECGMonitorModel>();
 
 
-            command = new SqlCommand("select * from dbo.ECG-Monitor", connection);
+            command = new SqlCommand("select * from dbo.ECGMonitor", connection);
             connection.Open();
 
             reader = command.ExecuteReader();
@@ -256,14 +271,14 @@ namespace DataTier.Databaser
             connection.Open();
 
            
-                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = '" + cpr + "'";
+                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = '" + ecgMonitorID + "' WHERE = cpr = '" + cpr + "'";
                 using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
                 {
                     reader = cmd.ExecuteReader();
                     reader.Read();
                 }
 
-                string insertStringParam2 = "UPDATE dbo.ECGMonitor SET inUse = 1 ";
+                string insertStringParam2 = "UPDATE dbo.ECGMonitor SET inUse = 1 WHERE = '" + ecgMonitorID + "'";
                 using (SqlCommand cmd = new SqlCommand(insertStringParam2, connection))
                 {
                     reader = cmd.ExecuteReader();
@@ -277,14 +292,14 @@ namespace DataTier.Databaser
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
-                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = NULL";
+                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = NULL WHERE LinkedECG = '" + ecgMonitorID + "'";
                 using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
                 {
                     reader = cmd.ExecuteReader();
                     reader.Read();
                 }
 
-                string insertStringParam2 = "UPDATE dbo.ECGMonitor SET inUse = 0 ";
+                string insertStringParam2 = "UPDATE dbo.ECGMonitor SET inUse = 0 WHERE ECGMonitorID = '" + ecgMonitorID + "'";
                 using (SqlCommand cmd = new SqlCommand(insertStringParam2, connection))
                 {
                     reader = cmd.ExecuteReader();
@@ -293,11 +308,32 @@ namespace DataTier.Databaser
 
             connection.Close();
 
-            throw new NotImplementedException();
+            
         }
 
-        public void UploadAnalyzedECGs()
+        public void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg)
         {
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+
+            connection.Open();
+
+            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG (AECGID, ECGID, CPR, BLOBValues, Illness, Date, BLOBstValues, Samplerate, MonitorID, IsRead) VALUES (@AECGID, @ECGID, @CPR, @BLOBValues, @Illness, @Date, @BLOBstValues, @Samplerate, @MonitorID, @IsRead)";
+            using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
+            {
+                cmd.CommandText = insertStringParam;
+                cmd.Parameters.AddWithValue("@AECGID", analyzedEcg.AECGID);
+                cmd.Parameters.AddWithValue("@ECGID", analyzedEcg.ECGID);            
+                cmd.Parameters.AddWithValue("@CPR", analyzedEcg.CPR);
+                cmd.Parameters.AddWithValue("@Illness", analyzedEcg.Illnes);
+                cmd.Parameters.AddWithValue("@Date", analyzedEcg.Date);
+                cmd.Parameters.AddWithValue("@Samplerate", analyzedEcg.SampleRate);
+                cmd.Parameters.AddWithValue("@IsRead", analyzedEcg.IsRead);
+
+                reader = cmd.ExecuteReader();
+                reader.Read();
+            }
+
+            connection.Close();
             throw new NotImplementedException();
         }
     }
