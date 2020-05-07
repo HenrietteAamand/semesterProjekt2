@@ -139,7 +139,7 @@ namespace LogicTier
 			return stValuesList;
 		}
 
-		public int getSTStartIndex(int ecgID)
+		public int GetSTStartIndex(int ecgID)
 		{
 			int stStartIndex = 0;
 
