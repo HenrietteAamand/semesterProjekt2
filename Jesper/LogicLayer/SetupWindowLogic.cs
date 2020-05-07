@@ -34,7 +34,7 @@ namespace LogicTier
             //Sker når der trykeks på "Opret patient"
         }
 
-        public void LinkECGToPatient(int ecgID, string cpr)
+        public void LinkECGToPatient(string cpr, int ecgID)
         {
             //Linker ECG-monitor til et patient objekt
             foreach (PatientModel patient in patientList)
@@ -42,6 +42,7 @@ namespace LogicTier
                 if (patient.CPR == cpr)
                 {
                     patient.ECGMonitorID = ecgID;
+                    DB.UpdateLinkECGToPatient(cpr, ecgID);
                 }
             }
 
@@ -52,6 +53,7 @@ namespace LogicTier
                     monitor.InUse = true;
                 }
             }
+            
         }
 
         public void resetECGMonitor(int ecgID)
@@ -63,6 +65,7 @@ namespace LogicTier
                 if (patient.ECGMonitorID == ecgID)
                 {
                     patient.ECGMonitorID = 0;
+                    
                 }
             }
             //Sætter InUse på ECG-monitoren til false
@@ -71,8 +74,11 @@ namespace LogicTier
                 if (monitor.ID == ecgID)
                 {
                     monitor.InUse = false;
+                    DB.UpdateResetECGMonitor(ecgID);
                 }
             }
+
+
             //Sker når der trykkes på "Nulstil EKG-måler", og når ern EKG-måler der er i brug, er valgt
         }
 
