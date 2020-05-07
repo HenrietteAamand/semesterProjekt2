@@ -13,17 +13,21 @@ namespace DataTier.Databaser
         ECGModel ecg1 = new ECGModel("123456-7890", 1,( new DateTime(2011,1,1)), 50,
             (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1, false);
         
-        AnalyzedECGModel aECG = new AnalyzedECGModel("123456-7890", 1,1, (new DateTime(2011, 1,1)),
+        AnalyzedECGModel aECG = new AnalyzedECGModel("123456-7890", 1, 1,(new DateTime(2011, 1,1)), 50,
+            (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1, false, 
             (new IllnessModel(1, "st", "not good", 2, 4, false, false)),
-            (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 50, 1, false);
+            new List<double> { 4, 4, 4, 5, 4, 3.5, 4.5, 4, 4 });
+        PatientModel patient = new PatientModel("123456-7890", "Peter", "Petersen");
+        List<PatientModel> patientList = new List<PatientModel>();
         
         List<AnalyzedECGModel> aECGList = new List<AnalyzedECGModel>();
         List<ECGModel> ecgList = new List<ECGModel>();
         public TestDB()
         {
-            
+            aECG.STStartIndex = 1;
             aECGList.Add(aECG);
             ecgList.Add(ecg1);
+            patientList.Add(patient);
         }
 
         public void CreatePatient(PatientModel patient)
@@ -53,7 +57,7 @@ namespace DataTier.Databaser
 
         public List<PatientModel> GetAllPatients()
         {
-            throw new NotImplementedException();
+            return patientList;
         }
 
         public void UpdateIsAnalyzed(int ecgID)
