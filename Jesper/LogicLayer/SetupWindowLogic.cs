@@ -101,9 +101,19 @@ namespace LogicTier
         }
 
 
-        public bool monitorInUse(ECGMonitorModel monitor)
+        public bool monitorInUse(int ecgMonitorID)
         {
-            return monitor.InUse;
+            bool result = false;
+            foreach (ECGMonitorModel monitor in ecgMonitorList)
+            {
+                
+                if (monitor.ID == ecgMonitorID)
+                {
+                    result = true;
+                }
+            }
+            return result;
+
         }
     }
 }
