@@ -271,14 +271,14 @@ namespace DataTier.Databaser
             connection.Open();
 
            
-                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = '" + ecgMonitorID + "' WHERE = cpr = '" + cpr + "'";
+                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = '" + Convert.ToString(ecgMonitorID) + "' WHERE = cpr = '" + cpr + "'";
                 using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
                 {
                     reader = cmd.ExecuteReader();
                     reader.Read();
                 }
 
-                string insertStringParam2 = "UPDATE dbo.ECGMonitor SET inUse = 1 WHERE = '" + ecgMonitorID + "'";
+                string insertStringParam2 = "UPDATE dbo.ECGMonitor SET inUse = 1 WHERE ECGMonitorID = " + ecgMonitorID;
                 using (SqlCommand cmd = new SqlCommand(insertStringParam2, connection))
                 {
                     reader = cmd.ExecuteReader();
@@ -292,7 +292,7 @@ namespace DataTier.Databaser
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
-                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = NULL WHERE LinkedECG = '" + ecgMonitorID + "'";
+                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = NULL WHERE LinkedECG = '" + ecgMonitorID + "'"; //Tror ikke man kan det her
                 using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
                 {
                     reader = cmd.ExecuteReader();
@@ -317,7 +317,7 @@ namespace DataTier.Databaser
 
             connection.Open();
 
-            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG (AECGID, ECGID, CPR, BLOBValues, Illness, Date, BLOBstValues, Samplerate, MonitorID, IsRead) VALUES (@AECGID, @ECGID, @CPR, @BLOBValues, @Illness, @Date, @BLOBstValues, @Samplerate, @MonitorID, @IsRead)";
+            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG (AECGID, ECGID, CPR, Illness, Date, BLOBstValues, Samplerate, MonitorID, IsRead) VALUES (@AECGID, @ECGID, @CPR, @BLOBValues, @Illness, @Date, @BLOBstValues, @Samplerate, @MonitorID, @IsRead)";
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.CommandText = insertStringParam;
@@ -328,13 +328,15 @@ namespace DataTier.Databaser
                 cmd.Parameters.AddWithValue("@Date", analyzedEcg.Date);
                 cmd.Parameters.AddWithValue("@Samplerate", analyzedEcg.SampleRate);
                 cmd.Parameters.AddWithValue("@IsRead", analyzedEcg.IsRead);
+                cmd.Parameters.AddWithValue("@MonitorID", analyzedEcg.MonitorID);
+                cmd.Parameters.AddWithValue("@BLOBstValues", analyzedEcg.STValues.SelectMany(value => BitConverter.GetBytes(value).ToArray()));
 
-                reader = cmd.ExecuteReader();
+                reader = cmd.ExecuteReader(); 
+                double id = (double)cmd.ExecuteScalar();
                 reader.Read();
             }
 
             connection.Close();
-            throw new NotImplementedException();
         }
     }
 }
