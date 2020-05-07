@@ -13,7 +13,7 @@ namespace RPi_EKG_program
         private static SerLCD displayController;
         
 
-        public void updateMenuBar(bool connection,byte StorageStatus, byte batteryStatus)
+        public void updateInfoBar(bool connection,byte StorageStatus, byte batteryStatus)
         {
             
             string Connect = "";
@@ -68,6 +68,7 @@ namespace RPi_EKG_program
             //displayController.lcdHome();
             displayController.lcdPrint(Convert.ToString(DateTime.Now.TimeOfDay));
             displayController.lcdGotoXY(5, 0);
+
             displayController.lcdPrint(" "+Connect + "  " + Storage + "  " + batteryniveau+"%");
             
         }
@@ -103,25 +104,22 @@ namespace RPi_EKG_program
                 Navn += CPRNAVN[i];
             }
 
-            if (Navn.Length > 12)
-            {
-                string NyNavn = "";
-                for (int i = 0; i < 12; i++)
-                {
-                    NyNavn += Navn[i];
-                }
-                Navn = NyNavn;
-            }
-            while (Navn.Length < 11)
-            {
-                Navn += " ";
-            }
+            
 
-            this.updateMenuBar(connection, storagestatus, batteryStatus);
+            this.updateInfoBar(connection, storagestatus, batteryStatus);
 
-            displayController.lcdGotoXY(0, 1);
+            
             /* + Navn + "  " + CPR*/
-            displayController.lcdPrint("     Velkommen      Du er logget ind som");
+
+            displayController.lcdGotoXY(5, 1);
+            displayController.lcdPrint("Velkommen");
+            displayController.lcdGotoXY(0, 2);
+            displayController.lcdPrint("Du er loGGet ind som");
+            displayController.lcdGotoXY(0, 3);
+            displayController.lcdPrint(Navn);
+            displayController.lcdGotoXY(14, 3);
+            displayController.lcdPrint(CPR);
+            
 
 
 

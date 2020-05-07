@@ -35,39 +35,64 @@ namespace RPi_EKG_program
             string CPRNAVN = LocalStorage.getInfoLocal();
 
 
-
-            
-
-
-           
-            display.lcdClear();
-            display.lcdHome();
             
             display.lcdDisplay();
             display.lcdClear();
 
             display.lcdHome();
+
             display.lcdPrint(Convert.ToString(DateTime.Now.TimeOfDay));
             display.lcdGotoXY(5, 0);
 
-            display.lcdPrint("   X Data:0 75%");
 
-            display.lcdGotoXY(1,1);
+            display.lcdPrint(" O  Data:8  50%");
 
+            display.lcdGotoXY(5, 1);
 
-            string velkommen = "     Velkommen      Du er logget ind somLars  080596";
-
-            display.lcdPrint(velkommen);
-
-            display.lcdGotoXY(0, 1);
-
-            display.lcdPrint("     Velkommen      Du er logget ind somLars  080596");
+            string navn = "Lars";
+            string cpr = "080596";
+            string navn2 = "123456789012345678903";
+            string navn1 = "12345678901234567893";
+            string navn3 = "123456789 0123456789";
+     
+            display.lcdPrint("Velkommen");
+            display.lcdGotoXY(0, 2);
+            display.lcdPrint("Du er loGGet ind som");
+            display.lcdGotoXY(0, 3);
+            display.lcdPrint(navn);
+            display.lcdGotoXY(14, 3);
+            display.lcdPrint(cpr);
 
             displayController.ShowGreeting(CPRNAVN, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
 
+            //display.lcdGotoXY(0, 3);
+            //display.lcdPrint("Emil");
+            //display.lcdGotoXY(14, 3);
+            //display.lcdPrint("123456");
+            //display.lcdGotoXY(0, 3);
+            //display.lcdPrint(navn2);
+            //display.lcdGotoXY(0, 3);
+            //display.lcdPrint(navn1);
+
+
+
+
+
+            //string velkommen = "     Velkommen      Du er logget ind somLars  080596";
+
+            //display.lcdGotoXY(0, 2);
+
+
+            //display.lcdPrint(velkommen);
+
+            //display.lcdGotoXY(0, 3);
+
+
+            //displayController.ShowGreeting(CPRNAVN, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+
             //displayController.ShowGreeting(CPRNAVN);
 
-            displayController.updateMenuBar(LokalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            //displayController.updateMenuBar(LokalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
 
 
             //Hvis batteri er over 5.
