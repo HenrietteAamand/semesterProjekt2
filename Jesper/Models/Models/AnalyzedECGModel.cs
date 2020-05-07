@@ -115,6 +115,14 @@ namespace Models.Models
             set { isRead = value; }
         }
 
+        private int stStartIndex;
+
+        public int STStartIndex
+        {
+            get { return stStartIndex; }
+            set { stStartIndex = value; }
+        }
+
 
 
         #endregion

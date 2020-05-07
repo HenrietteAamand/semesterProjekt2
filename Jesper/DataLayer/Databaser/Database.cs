@@ -216,52 +216,47 @@ namespace DataTier.Databaser
             
         }
 
-        public void UpdateIsAnalyzed(ECGModel ecgMearsurement, AnalyzedECGModel aEcgMeasurement)
+        public void UpdateIsAnalyzed(int ecgID)
         {
 
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
 
-            if (ecgMearsurement.ECGID == aEcgMeasurement.ECGID)
-            {
-                string insertStringParam = "UPDATE dbo.ECG SET IsAnalyzed = 1";
+                string insertStringParam = "UPDATE dbo.ECG SET IsAnalyzed = 1 WHERE ECGID =" + ecgID;
                 using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
                 {
                     reader = cmd.ExecuteReader();
                     reader.Read();
                 }
-            }
+
             connection.Close();
         }
 
-        public void UpdateIsRead(AnalyzedECGModel aEcgMeasurement)
+        public void UpdateIsRead(int aECGID)
         {
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
 
-            if (aEcgMeasurement.IsRead == true)
-            {
-                string insertStringParam = "UPDATE dbo.AnalyzedECG SET IsRead = 1";
+
+                string insertStringParam = "UPDATE dbo.AnalyzedECG SET IsRead = 1 WHERE AECGID =" + aECGID;
                 using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
                 {
                     reader = cmd.ExecuteReader();
                     reader.Read();
                 }
-            }
             connection.Close();
         }
 
-        public void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel ecgMonitor)
+        public void UpdateLinkECGToPatient(string cpr, int ecgMonitorID)
         {
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
 
-            if (ecgMonitor.ID == patient.ECGMonitorID)
-            {
-                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = '" + patient.ECGMonitorID + "'";
+           
+                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = '" + cpr + "'";
                 using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
                 {
                     reader = cmd.ExecuteReader();
@@ -274,18 +269,14 @@ namespace DataTier.Databaser
                     reader = cmd.ExecuteReader();
                     reader.Read();
                 }
-            }
             connection.Close();
         }
 
-        public void UpdateResetECGMonitor(ECGMonitorModel ecgMonitor, PatientModel patient)
+        public void UpdateResetECGMonitor(int ecgMonitorID)
         {
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
-
-            if (ecgMonitor.InUse == false)
-            {
                 string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = NULL";
                 using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
                 {
@@ -299,13 +290,13 @@ namespace DataTier.Databaser
                     reader = cmd.ExecuteReader();
                     reader.Read();
                 }
-            }
+
             connection.Close();
 
             throw new NotImplementedException();
         }
 
-        public void UpdateAnalyzedECGs()
+        public void UploadAnalyzedECGs()
         {
             throw new NotImplementedException();
         }

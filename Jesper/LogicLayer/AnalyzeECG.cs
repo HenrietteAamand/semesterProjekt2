@@ -93,6 +93,8 @@ namespace LogicTier
             //Tilføjer illnesses til alle nye målinger
             AddIllnes();
 
+
+
         }
 
         //public void CalculateIntervalR() { //Skal bruges til at lave puls, hvis det skal implementeres }
@@ -209,7 +211,12 @@ namespace LogicTier
                         STSegmentList.Add(ecg.Values[i]);
                         STSegmentIndexList.Add(i);
                     }
+
+                    //Startindexet gemmes i alle aECG's så man ved hvor grafen skal starte for ST-segmentet
+                    NewAECGModelsList[i].STStartIndex = STSegmentIndexList[0];
                 }
+
+                
 
                 //STSegmentList's længde sammenlignes med Illnesses reference værdier
                 //Hvis STSegmentList er for lang, er ST-segmentet deprimeret
@@ -274,7 +281,7 @@ namespace LogicTier
 
         public void UploadAnalyzedECG()
         {
-            lDBRef.UpdateAnalyzedECGs();
+            lDBRef.UploadAnalyzedECGs();
         }
 
 
