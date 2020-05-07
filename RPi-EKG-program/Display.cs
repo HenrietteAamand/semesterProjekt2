@@ -125,8 +125,51 @@ namespace RPi_EKG_program
 
         }
 
-        public void StatusUpdateMeasurment()
+        public void StatusUpdateMeasurment(double time, bool connection, byte storagestatus, byte batteryStatus)
         {
+
+            if(Convert.ToInt32(time) == 0 || Convert.ToInt32(time)==10|| Convert.ToInt32(time) ==20|| Convert.ToInt32(time) == 30|| Convert.ToInt32(time) == 39)
+            {
+
+                this.updateInfoBar(connection, storagestatus, batteryStatus);
+
+            }
+            displayController.lcdGotoXY(3, 1);
+
+            displayController.lcdPrint("Maaling i gang");
+
+            displayController.lcdGotoXY(2, 2);
+            displayController.lcdPrint("__________");
+            displayController.lcdGotoXY(2, 2);
+            
+
+            for (int i = 0; i < time/4; i++)
+            {
+                
+                displayController.lcdPrint("#");
+            }
+           
+
+            double procent = (time / 40) * 100;
+            if (procent > 100)
+            {
+                procent = 100;
+            }
+
+
+            displayController.lcdGotoXY(15, 2);
+            displayController.lcdPrint(Convert.ToString(Convert.ToInt32(procent))+"%");
+
+
+            displayController.lcdGotoXY(2, 3);
+
+            displayController.lcdPrint("Forhold dig i ro");
+
+           
+
+
+
+
 
             // skal opdatere skærm 4. YEs
         }
@@ -170,9 +213,7 @@ namespace RPi_EKG_program
                 case 4:
                     displayController.lcdDisplay();
                     displayController.lcdClear();
-                    displayController.lcdHome();
                     
-                    displayController.lcdPrint("      ###_  "); //alt code 219
                     break;
                     
             }

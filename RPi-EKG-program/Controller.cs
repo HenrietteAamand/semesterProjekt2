@@ -3,6 +3,7 @@ using RaspberryPiCore.ADC;
 using RaspberryPiCore.TWIST;
 using RaspberryPiCore.LCD;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace RPi_EKG_program
 {
@@ -35,35 +36,61 @@ namespace RPi_EKG_program
             string CPRNAVN = LocalStorage.getInfoLocal();
 
 
-            
-            display.lcdDisplay();
-            display.lcdClear();
-
-            display.lcdHome();
-
-            display.lcdPrint(Convert.ToString(DateTime.Now.TimeOfDay));
-            display.lcdGotoXY(5, 0);
-
-
-            display.lcdPrint(" O  Data:8  50%");
-
-            display.lcdGotoXY(5, 1);
-
-            string navn = "Lars";
-            string cpr = "080596";
-            string navn2 = "123456789012345678903";
-            string navn1 = "12345678901234567893";
-            string navn3 = "123456789 0123456789";
-     
-            display.lcdPrint("Velkommen");
-            display.lcdGotoXY(0, 2);
-            display.lcdPrint("Du er loGGet ind som");
-            display.lcdGotoXY(0, 3);
-            display.lcdPrint(navn);
-            display.lcdGotoXY(14, 3);
-            display.lcdPrint(cpr);
-
             displayController.ShowGreeting(CPRNAVN, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            Thread.Sleep(6000);
+
+            DateTime StartTime = DateTime.Now;
+            DateTime EndTime = DateTime.Now;
+            TimeSpan MeasureTime = EndTime - StartTime;
+
+
+            displayController.ScreenShow(4);
+
+            while (MeasureTime.TotalSeconds < 40)
+            {
+             
+                EndTime = DateTime.Now;
+                MeasureTime = EndTime - StartTime;
+                displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                Thread.Sleep(10);
+
+
+            }
+
+
+
+
+
+
+
+            //display.lcdDisplay();
+            //display.lcdClear();
+
+            //display.lcdHome();
+
+            //display.lcdPrint(Convert.ToString(DateTime.Now.TimeOfDay));
+            //display.lcdGotoXY(5, 0);
+
+
+            //display.lcdPrint(" O  Data:8  50%");
+
+            //display.lcdGotoXY(5, 1);
+
+            //string navn = "Lars";
+            //string cpr = "080596";
+            //string navn2 = "123456789012345678903";
+            //string navn1 = "12345678901234567893";
+            //string navn3 = "123456789 0123456789";
+
+            //display.lcdPrint("Velkommen");
+            //display.lcdGotoXY(0, 2);
+            //display.lcdPrint("Du er loGGet ind som");
+            //display.lcdGotoXY(0, 3);
+            //display.lcdPrint(navn);
+            //display.lcdGotoXY(14, 3);
+            //display.lcdPrint(cpr);
+
+            //displayController.ShowGreeting(CPRNAVN, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
 
             //display.lcdGotoXY(0, 3);
             //display.lcdPrint("Emil");
