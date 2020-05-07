@@ -209,7 +209,12 @@ namespace LogicTier
                         STSegmentList.Add(ecg.Values[i]);
                         STSegmentIndexList.Add(i);
                     }
+
+                    //Startindexet gemmes i alle aECG's så man ved hvor grafen skal starte for ST-segmentet
+                    NewAECGModelsList[i].STStartIndex = STSegmentIndexList[0];
                 }
+
+                
 
                 //STSegmentList's længde sammenlignes med Illnesses reference værdier
                 //Hvis STSegmentList er for lang, er ST-segmentet deprimeret

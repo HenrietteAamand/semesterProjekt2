@@ -67,6 +67,7 @@ namespace LogicTier
 								//Sæt skriftfarven til rød
 							}
 							//Sæt farven til blå
+							
 						}
 
 						if (aECG.Illnes != null)
@@ -76,6 +77,8 @@ namespace LogicTier
 					}
 				}
 			}
+
+			
 			//Sker når der opdateres
 		}
 
@@ -98,7 +101,7 @@ namespace LogicTier
 			//Kan kun gøres, hvis der er udfyldt et ID
 		}
 
-		public List<double> GetECGValues(int ecgID, string cpr)
+		public List<double> GetECGValues(int ecgID)
 		{
 			List<double> ecgValuesList = new List<double>();
 
@@ -108,6 +111,7 @@ namespace LogicTier
 				{
 					ecgValuesList = aECG.Values;
 					aECG.IsRead = true;
+					DB.UpdateIsRead(aECG.AECGID);
 				}
 			}
 
@@ -118,5 +122,54 @@ namespace LogicTier
 
 
 		//Metode til ST-values
+		public List<double> GetSTValues(int ecgID)
+		{
+			List<double> stValuesList = new List<double>();
+
+			foreach (AnalyzedECGModel aECG in aECGList)
+			{
+				if (aECG.ECGID == ecgID)
+				{
+					stValuesList = aECG.STValues;
+				}
+			}
+
+			//Sætter også isRead = true
+			//Sker når der vælges en ECG på listen
+			return stValuesList;
+		}
+
+		public int getSTStartIndex(int ecgID)
+		{
+			int stStartIndex = 0;
+
+			foreach (AnalyzedECGModel aECG in aECGList)
+			{
+				
+				if (aECG.ECGID == ecgID)
+				{
+					stStartIndex = aECG.STStartIndex;
+				}
+			}
+			return stStartIndex;
+		}
+
+
+
+		public PatientModel GetPatient(string cpr)
+		{
+			PatientModel patient = new PatientModel();
+
+			foreach (PatientModel pa in patientList)
+			{
+				if (pa.CPR == cpr)
+				{
+					patient = pa;
+				}
+
+			}
+
+			return patient;
+		}
 	}
 }
