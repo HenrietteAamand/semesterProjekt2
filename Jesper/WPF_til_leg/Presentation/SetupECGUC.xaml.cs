@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Threading;
+using System.Windows;
 using System.Windows.Controls;
 using LogicTier;
 using Models.Models;
@@ -13,32 +14,50 @@ namespace WPF_til_leg.Presentation
     public partial class SetupECGUC : UserControl
     {
         private SetupWindowLogic setupObj;
-        
-        
+        private ECGMonitorModel ecgModelObj;
+
 
         public SetupECGUC()
         {
             InitializeComponent();
 
             setupObj = new SetupWindowLogic();
+            
         }
 
-        //UC2 + UC4
+        
         private void LinkECGB_Click(object sender, RoutedEventArgs e)
         {
-            //LinkECGToPatient();
+            setupObj.LinkECGToPatient(ecgID, cpr);
             System.Windows.MessageBox.Show("Tilknytning gennemført.");
         }
 
         private void ResetECGB_Click(object sender, RoutedEventArgs e)
         {
-            //LinkECGToPatient();
+            setupObj.resetECGMonitor(ecgID);
             System.Windows.MessageBox.Show("Nulstilling gennemført.");
         }
 
         // Tilknyt patient eller nulstil EKG-måler:
         private void EcgCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            setupObj.getAllMonitors(monitor) = new monitorList<>;
+
+            foreach (object monitor in monitorList)
+            {
+                EcgCB.Items.Add(ecgModelObj.ID);
+            }
+
+            if (setupObj.monitorInUse(monitor) == false)
+            {
+                ResetECGB.IsEnabled = false;
+                System.Windows.MessageBox.Show("EKG-måler er ikke i brug");
+            }
+            else
+            {
+                LinkECGB.IsEnabled = true;
+                System.Windows.MessageBox.Show("EKG-måler er i brug");
+            }
             //Der skal være et item for hver måler i DB
             //Items'ne skal indeholde ID'erne for målerne i DB -> (Måler 1, 2, 3)
             //GetAllMonitors -> giver os en liste med monitors
@@ -52,20 +71,6 @@ namespace WPF_til_leg.Presentation
             //if(monitorList[4].InUse())
             //Gøre det med knapperne
 
-            //Foreach(objekt monitor in monitorList)
-            //{Create.New.ComboBox.Item -> Name = "Monitor " + monitor.ID}
-
-            //ECGMonitorModel ecgMoniter = new ECGMonitorModel(EcgCB.Text);
-            //if (setupObj.monitorInUse(EcgCB) == false)
-            //{
-            //    ResetECGB.IsEnabled = false;
-            //    System.Windows.MessageBox.Show("EKG-måler er ikke i brug");
-            //}
-            //else
-            //{
-            //    LinkECGB.IsEnabled = true;
-            //    System.Windows.MessageBox.Show("EKG-måler er i brug");
-            //}
         }
     }
 }
