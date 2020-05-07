@@ -64,10 +64,15 @@ namespace RPi_EKG_program
             }
             displayController.lcdDisplay();
             displayController.lcdClear();
+            displayController.lcdHome();
             displayController.lcdPrint("HEEEEEEEEEj");
             displayController.lcdClear();
-            displayController.lcdPrint(Convert.ToString(DateTime.Now.Hour)+":"+ Convert.ToString(DateTime.Now.Minute)+ "|" + Connect + "|" + Storage + "|" + batteryniveau);
+
+            displayController.lcdHome();
+            displayController.lcdPrint(Convert.ToString(DateTime.Now.Hour)+":"+ Convert.ToString(DateTime.Now.Minute)+ "|" + Connect + "|" + Storage + "|" +batteryniveau);
                 
+
+
 
         }
 
@@ -84,8 +89,9 @@ namespace RPi_EKG_program
 
             string CPR = "";
             string Navn = "";
-            //displayController.lcdDisplay();
+            displayController.lcdDisplay();
             displayController.lcdClear();
+            displayController.lcdHome();
 
             for (int i = 0; i < 6; i++)
             {
@@ -160,8 +166,9 @@ namespace RPi_EKG_program
                 case 4:
                     displayController.lcdDisplay();
                     displayController.lcdClear();
+                    displayController.lcdHome();
                     
-                    displayController.lcdPrint("      ###_  | | "); //alt code 219
+                    displayController.lcdPrint("      ###_  "); //alt code 219
                     break;
                     
             }
