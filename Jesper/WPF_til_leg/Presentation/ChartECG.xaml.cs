@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
+using LiveCharts;
+using LiveCharts.Wpf.Charts.Base;
+using LiveCharts.Wpf;
 
 namespace WPF_til_leg.Presentation
 {
@@ -13,7 +16,9 @@ namespace WPF_til_leg.Presentation
         private bool _stSeriesVisibility;
         AnalyzeECG analyzeLogic = new AnalyzeECG();
         MainWindowLogic mainLogic = new MainWindowLogic();
-        
+        public SeriesCollection series { get; set; }
+        //SeriesCollection series = new SeriesCollection();
+        LineSeries line = new LineSeries();
 
         
 
@@ -21,14 +26,20 @@ namespace WPF_til_leg.Presentation
         public ChartECG()
         {
             InitializeComponent();
-
+            series = new SeriesCollection();
             ECGSeriesVisibility = true;
             BaseLineSeriesVisibility = true;
             STSeriesVisibility = false;
-
             List<double> ecg = new List<double>();
             ecg = mainLogic.GetECGValues(1);
+            line.Values = new ChartValues<double>();
+            for (int i = 0; i < ecg.Count; i++)
+            {
+                line.Values.Add(ecg[i]);
+            }
+            series.Add(line);
             DataContext = this;
+            
         }
 
         public bool ECGSeriesVisibility

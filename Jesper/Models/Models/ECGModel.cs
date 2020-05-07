@@ -79,7 +79,7 @@ namespace Models.Models
         #endregion
 
         #region Constructor
-        public ECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values, string monitorId, bool isAnalyzed)
+        public ECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values, int monitorId, bool isAnalyzed)
         {
             CPR = cpr;
             ECGID = ecgID;

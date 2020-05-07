@@ -128,13 +128,13 @@ namespace Models.Models
         #endregion
 
         #region Constructors
-        public AnalyzedECGModel(string cpr, int ecgID, int aECGID, DateTime date, IllnessModel illness, List<double> aECGCHart, int samplerate, int monitorID, bool isRead)
+        public AnalyzedECGModel(string cpr, int ecgID, int aECGID, DateTime date, IllnessModel illness, List<double> values, int samplerate, int monitorID, bool isRead)
         {
             CPR = cpr;
             AECGID = aECGID;
             ECGID = ecgID;
             Illnes = illness;
-            STValues = aECGCHart;
+            Values = values;
             //Pulse = pulse;
             Date = date;
             SampleRate = samplerate;
