@@ -10,17 +10,17 @@ namespace RPi_EKG_program
     {
         //    >DebugAdapterHost.Launch /LaunchJson:"C:\Users\emils\Source\Repos\semesterProjekt2\RPi-EKG-program\launch.json" /EngineGuid:541B8A8A-6081-4506-9F0A-1CE771DEBC04
         private SDStorage LocalStorage;
-
+        private static SerLCD displayController1;
 
 
         static void Main(string[] args)
         {
             Display displayController = new Display();
             DatabaseIF LokalDB = new DatabaseIF();
-
+            SerLCD display = new SerLCD();
             SDStorage LocalStorage = new SDStorage();
 
-
+            
             ADC ADconverter = new ADC();
             bool test = true;
             test = LokalDB.isConnected();
@@ -34,7 +34,36 @@ namespace RPi_EKG_program
 
             string CPRNAVN = LocalStorage.getInfoLocal();
 
-            displayController.ScreenShow(4);
+
+
+            
+
+
+           
+            display.lcdClear();
+            display.lcdHome();
+            
+            display.lcdDisplay();
+            display.lcdClear();
+
+            display.lcdHome();
+            display.lcdPrint(Convert.ToString(DateTime.Now.TimeOfDay));
+            display.lcdGotoXY(5, 0);
+
+            display.lcdPrint("   X Data:0 75%");
+
+            display.lcdGotoXY(1,1);
+
+
+            string velkommen = "     Velkommen      Du er logget ind somLars  080596";
+
+            display.lcdPrint(velkommen);
+
+            display.lcdGotoXY(0, 1);
+
+            display.lcdPrint("     Velkommen      Du er logget ind somLars  080596");
+
+            displayController.ShowGreeting(CPRNAVN, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
 
             //displayController.ShowGreeting(CPRNAVN);
 

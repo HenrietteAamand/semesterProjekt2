@@ -15,7 +15,7 @@ namespace RPi_EKG_program
 
         public void updateMenuBar(bool connection,byte StorageStatus, byte batteryStatus)
         {
-            displayController.lcdGotoXY(0, 0);
+            
             string Connect = "";
             string Storage = "";
 
@@ -28,9 +28,9 @@ namespace RPi_EKG_program
 
             if (StorageStatus != 0)
             {
-                Storage = "Data: "+ StorageStatus;
+                Storage = "Data:"+ StorageStatus;
             }
-            else { Storage = "Data: 0"; }
+            else { Storage = "Data:0"; }
 
             string batteryniveau = "";
 
@@ -63,17 +63,13 @@ namespace RPi_EKG_program
                     break;
             }
             displayController.lcdDisplay();
-            displayController.lcdClear();
-            displayController.lcdHome();
-            displayController.lcdPrint("HEEEEEEEEEj");
-            displayController.lcdClear();
 
-            displayController.lcdHome();
-            displayController.lcdPrint(Convert.ToString(DateTime.Now.Hour)+":"+ Convert.ToString(DateTime.Now.Minute)+ "|" + Connect + "|" + Storage + "|" +batteryniveau);
-                
-
-
-
+            displayController.lcdGotoXY(0, 0);
+            //displayController.lcdHome();
+            displayController.lcdPrint(Convert.ToString(DateTime.Now.TimeOfDay));
+            displayController.lcdGotoXY(5, 0);
+            displayController.lcdPrint(" "+Connect + "  " + Storage + "  " + batteryniveau+"%");
+            
         }
 
 
@@ -83,9 +79,14 @@ namespace RPi_EKG_program
             displayController.lcdDisplay();
             displayController.lcdSetBackLight(255,255,0);
 
+            
+
+
         }
-        public void ShowGreeting(string CPRNAVN)
+        public void ShowGreeting(string CPRNAVN, bool connection,byte storagestatus, byte batteryStatus)
         {
+
+           
 
             string CPR = "";
             string Navn = "";
@@ -115,7 +116,12 @@ namespace RPi_EKG_program
             {
                 Navn += " ";
             }
-            displayController.lcdPrint("     Velkommen      Du er logget ind som"/* + Navn + "  " + CPR*/);
+
+            this.updateMenuBar(connection, storagestatus, batteryStatus);
+
+            displayController.lcdGotoXY(0, 1);
+            /* + Navn + "  " + CPR*/
+            displayController.lcdPrint("     Velkommen      Du er logget ind som");
 
 
 
