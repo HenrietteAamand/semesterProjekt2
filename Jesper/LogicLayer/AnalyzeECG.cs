@@ -53,19 +53,9 @@ namespace LogicTier
         {
             illnessList = new List<IllnessModel>();
             patientRef = new PatientModel();
-            lDBRef = new Database();
+            lDBRef = new TestDB();
             ecgList = new List<ECGModel>();
             ecgList = lDBRef.GetAllECGs();
-        }
-
-        public List<ECGModel> LoadNewECGs(PatientModel patient) { throw new NotImplementedException(); }
-
-        public void CreateAnalyzedECG(string cpr, int ecgID, List<IllnessModel> illnes, List<double> aECGChart, int pulse)
-        {
-            throw new NotImplementedException();
-
-            //Der kommer en liste med alle ECG'er
-            //Der laves en liste med ECG'er som er nye.
             newECGList = new List<ECGModel>();
             foreach (ECGModel ecg in ecgList)
             {
@@ -80,6 +70,17 @@ namespace LogicTier
             {
                 NewAECGModelsList.Add(new AnalyzedECGModel());
             }
+        }
+
+        public List<ECGModel> LoadNewECGs(PatientModel patient) { throw new NotImplementedException(); }
+
+        public void CreateAnalyzedECG(string cpr, int ecgID, List<IllnessModel> illnes, List<double> aECGChart, int pulse)
+        {
+            throw new NotImplementedException();
+
+            //Der kommer en liste med alle ECG'er
+            //Der laves en liste med ECG'er som er nye.
+            
 
             //Beregner og sætter baseline for alle nyoprettede aECG'er
             CalculateBaseline();

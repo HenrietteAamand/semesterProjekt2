@@ -66,9 +66,9 @@ namespace Models.Models
             set { isAnalyzed = value; }
         }
 
-        private string monitorId;
+        private int monitorId;
 
-        public string MonitorId
+        public int MonitorId
         {
             get { return monitorId; }
             set { monitorId = value; }

@@ -21,7 +21,7 @@ namespace LogicTier
 			analyzeECG = new AnalyzeECG();
 			patientList = new List<PatientModel>();
 			aECGList = new List<AnalyzedECGModel>();
-			DB = new Database();
+			DB = new TestDB();
 			DOEDB = new DOEDB();
 			patientList = DB.GetAllPatients();
 			aECGList = DB.GetAllAnalyzedECGs();

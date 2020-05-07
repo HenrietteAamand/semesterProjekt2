@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicTier;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
@@ -10,6 +11,8 @@ namespace WPF_til_leg.Presentation
         private bool _ECGSeriesVisibility;
         private bool _baseLineSeriesVisibility;
         private bool _stSeriesVisibility;
+        AnalyzeECG analyzeLogic = new AnalyzeECG();
+        MainWindowLogic mainLogic = new MainWindowLogic();
         
 
         
@@ -23,6 +26,8 @@ namespace WPF_til_leg.Presentation
             BaseLineSeriesVisibility = true;
             STSeriesVisibility = false;
 
+            List<double> ecg = new List<double>();
+            ecg = mainLogic.GetECGValues(1);
             DataContext = this;
         }
 
