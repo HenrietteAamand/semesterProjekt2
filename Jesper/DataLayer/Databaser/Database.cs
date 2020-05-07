@@ -296,7 +296,7 @@ namespace DataTier.Databaser
             throw new NotImplementedException();
         }
 
-        public void UpdateAnalyzedECGs()
+        public void UploadAnalyzedECGs()
         {
             throw new NotImplementedException();
         }

@@ -93,6 +93,8 @@ namespace LogicTier
             //Tilføjer illnesses til alle nye målinger
             AddIllnes();
 
+
+
         }
 
         //public void CalculateIntervalR() { //Skal bruges til at lave puls, hvis det skal implementeres }
@@ -279,7 +281,7 @@ namespace LogicTier
 
         public void UploadAnalyzedECG()
         {
-            lDBRef.UpdateAnalyzedECGs();
+            lDBRef.UploadAnalyzedECGs();
         }
 
 

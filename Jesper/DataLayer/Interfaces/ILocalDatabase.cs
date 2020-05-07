@@ -30,7 +30,7 @@ namespace DataTier.Interfaces
 
         void UpdateIsAnalyzed(int ecgID);
 
-        void UpdateAnalyzedECGs();
+        void UploadAnalyzedECGs();
 
         void UpdateIsRead(int aECGID);
 
