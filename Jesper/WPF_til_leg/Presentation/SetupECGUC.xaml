@@ -7,8 +7,8 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
              mc:Ignorable="d" 
-             Height="auto" d:DesignWidth="500" d:DataContext="{Binding SetupECGUC}">
-    
+             Height="232.667" d:DesignWidth="500" d:DataContext="{Binding SetupECGUC}">
+
     <UserControl.Resources>
         <ResourceDictionary>
             <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}">
@@ -43,21 +43,21 @@
             Header="Tilknyt EKG"
             HorizontalAlignment="Stretch"
             Padding="auto">
-            <Grid VerticalAlignment="Center">
-                       <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="*"/>
+            <Grid VerticalAlignment="Center" Height="204" Margin="0,0,0.333,0.667">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                    <Controls:MetroHeader 
+                <Controls:MetroHeader 
                         Grid.Row="1" 
                         Grid.Column="0" 
                         Grid.ColumnSpan="2" 
@@ -90,10 +90,10 @@
                             <MenuItem Header="ECG" />
                         </ContextMenu>
                     </ComboBox.ContextMenu>
-                        <ComboBoxItem Content="ECG 1" />
-                        <ComboBoxItem Content="ECG 2" />
-                        <ComboBoxItem Content="ECG 3" />
-                        <ComboBoxItem Content="ECG 4" />
+                    <ComboBoxItem Content="ECG 1" />
+                    <ComboBoxItem Content="ECG 2" />
+                    <ComboBoxItem Content="ECG 3" />
+                    <ComboBoxItem Content="ECG 4" />
                 </ComboBox>
 
                 <ComboBox x:Name="PatientIDCB"
@@ -106,16 +106,16 @@
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.Watermark="Vælg et PatientID..."
                     BorderThickness="4">
-                        <ComboBox.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem Header="PatientID" />
-                            </ContextMenu>
-                        </ComboBox.ContextMenu>
-                            <ComboBoxItem Content="PatientID 1" />
-                            <ComboBoxItem Content="PatientID 1" />
-                            <ComboBoxItem Content="PatientID 1" />
-                            <ComboBoxItem Content="PatientID 1" />
-                    </ComboBox>
+                    <ComboBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="PatientID" />
+                        </ContextMenu>
+                    </ComboBox.ContextMenu>
+                    <ComboBoxItem Content="PatientID 1" />
+                    <ComboBoxItem Content="PatientID 1" />
+                    <ComboBoxItem Content="PatientID 1" />
+                    <ComboBoxItem Content="PatientID 1" />
+                </ComboBox>
 
                 <Controls:Badged 
                     Grid.Row="4"
@@ -139,14 +139,16 @@
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconBoxIcons Margin="5" VerticalAlignment="Center" Kind="RegularUnlink" />
                             <TextBlock Margin="5" Text="Nulstil EKG"/>
+
                         </StackPanel>
                     </Button>
 
                 </Controls:Badged>
+                <TextBox x:Name="SetupTB" HorizontalAlignment="Left" Height="34" Margin="99,0,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="300" Grid.ColumnSpan="2"/>
             </Grid>
-                
+
         </GroupBox>
 
-            
+
     </Grid>
 </UserControl>

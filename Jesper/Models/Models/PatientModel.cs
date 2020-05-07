@@ -12,13 +12,13 @@ namespace Models.Models
         #endregion
 
         #region Properties
-        //private int id;
+        private int id;
 
-        //public int ID
-        //{
-        //    get { return id; }
-        //    private set { id = value; }
-        //}
+        public int ID
+        {
+            get { return id; }
+            private set { id = value; }
+        }
 
         private int ecgMonitorID;
 
