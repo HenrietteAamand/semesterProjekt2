@@ -287,22 +287,15 @@ namespace DataTier.Databaser
             connection.Close();
         }
 
-        public void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel ecgMonitor)
+        public void UpdatePatient(PatientModel patient)
         {
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
 
            
-                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = '" + Convert.ToString(ecgMonitor.ID) + "' WHERE = cpr = '" + patient.CPR + "'";
+                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = '" + Convert.ToString(patient.ECGMonitorID) + "' WHERE = cpr = '" + patient.CPR + "'";
                 using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
-                {
-                    reader = cmd.ExecuteReader();
-                    reader.Read();
-                }
-
-                string insertStringParam2 = "UPDATE dbo.ECGMonitor SET inUse = 1 WHERE ECGMonitorID = " + ecgMonitor.ID;
-                using (SqlCommand cmd = new SqlCommand(insertStringParam2, connection))
                 {
                     reader = cmd.ExecuteReader();
                     reader.Read();
@@ -310,28 +303,35 @@ namespace DataTier.Databaser
             connection.Close();
         }
 
-        public void UpdateResetECGMonitor(ECGMonitorModel ecgMonitor)
+        public void UpdateECGMonitor(ECGMonitorModel ecgMonitor)
         {
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
-                string insertStringParam = "UPDATE dbo.Patient SET LinkedECG = NULL WHERE LinkedECG = '" + ecgMonitor.ID + "'"; //Meget i tvivl
+
+                string insertStringParam = "UPDATE dbo.ECGMonitor SET inUse = " + Convert.ToByte(ecgMonitor.InUse)+ " WHERE ECGMonitorID = '" + ecgMonitor.ID + "'";
                 using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
                 {
                     reader = cmd.ExecuteReader();
                     reader.Read();
                 }
+            connection.Close();  
+        }
 
-                string insertStringParam2 = "UPDATE dbo.ECGMonitor SET inUse = 0 WHERE ECGMonitorID = '" + ecgMonitor.ID + "'";
-                using (SqlCommand cmd = new SqlCommand(insertStringParam2, connection))
-                {
-                    reader = cmd.ExecuteReader();
-                    reader.Read();
-                }
+        public void UpdateAnalyzedECG(AnalyzedECGModel analyzedEcg)
+        {
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
+            connection.Open();
+
+            string insertStringParam = "UPDATE dbo.AnalyzedECG SET STStartIndex = " + analyzedEcg.STStartIndex + ", Baseline = " + analyzedEcg.Baseline + " WHERE AECGID = " + analyzedEcg.AECGID;
+            using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
+            {
+                reader = cmd.ExecuteReader();
+                reader.Read();
+            }
             connection.Close();
 
-            
         }
 
         public void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg)
