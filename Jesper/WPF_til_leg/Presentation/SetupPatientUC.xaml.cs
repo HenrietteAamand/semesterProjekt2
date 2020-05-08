@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LogicTier;
 
 namespace WPF_til_leg.Presentation
 {
@@ -19,10 +20,46 @@ namespace WPF_til_leg.Presentation
     /// Interaction logic for SetupUC.xaml
     /// </summary>
     public partial class SetupPatientUC : UserControl
+
     {
+        private SetupWindowLogic setupObj;
+
         public SetupPatientUC()
         {
             InitializeComponent();
+            setupObj = new SetupWindowLogic();
+            PatientTB.Visibility = Visibility.Hidden;
+        }
+
+        private void OpretB_Click(object sender, RoutedEventArgs e)
+        {
+            TextRange CPRTR = new TextRange(CPRTB.Document.ContentStart,CPRTB.Document.ContentEnd);
+            TextRange FnavnTR = new TextRange(FnavnTB.Document.ContentStart, FnavnTB.Document.ContentEnd);
+            TextRange EnavnTR = new TextRange(EnavnTB.Document.ContentStart, EnavnTB.Document.ContentEnd);
+            
+
+            foreach (var CPR in setupObj.getAllPatiens()) 
+            {
+                
+            }
+
+            if (CPRTR.Text != null && FnavnTR.Text != null && EnavnTR.Text != null)
+            {
+                setupObj.newPatient(CPRTR.Text, FnavnTR.Text, EnavnTR.Text);
+                PatientTB.Visibility = Visibility.Visible;
+                PatientTB.Text = "Patient oprettet.";
+            }
+            //else if 
+            //{
+
+            //}
+            else
+            {
+                PatientTB.Visibility = Visibility.Visible;
+                PatientTB.Text = "En eller flere oplysninger er ikke udfyldt.";
+            } 
+
+                
         }
     }
 }

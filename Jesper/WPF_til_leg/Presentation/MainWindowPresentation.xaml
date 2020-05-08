@@ -97,28 +97,28 @@
             Grid.ColumnSpan="7"
             HorizontalAlignment="Stretch"
             Margin="10,0,10,0">
-            <TextBox
+            <TextBox x:Name="NavnTB"
                     Margin="0,0,5,0"
                     IsReadOnly="True"
                     Focusable="False"
                     Text="Navn: "/>
-            <TextBox 
+            <TextBox x:Name="CPRTB" 
                     Margin="0,0,5,0"
                     IsReadOnly="True"
                     Focusable="False"
                     Text="CPR: "/>
-            <TextBox
+            <TextBox x:Name="KonTB"
                     Margin="0,0,5,0"
                     IsReadOnly="True" 
                     Focusable="False"
                     Text="Køn: "/>
-            <TextBox
+            <TextBox x:Name="AlderTB"
                     Focusable="False"
                     IsReadOnly="True" 
                     Text="Alder: "/>
         </UniformGrid>
 
-        <TextBox
+        <TextBox x:Name="SoegTB"
             Grid.Row="1"
             Grid.Column="1"
                              Controls:TextBoxHelper.ClearTextButton="True"
@@ -200,7 +200,7 @@
             x:Name="uploadOffDBB"
             Margin="10,0,10,0" >
             
-            <Button>
+            <Button x:Name="UploadB" Click="UploadB_Click">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                     <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Upload" />
                     <TextBlock Margin="5" Text="Upload til Offentlig Database"/>

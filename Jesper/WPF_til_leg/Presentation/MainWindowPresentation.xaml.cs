@@ -25,13 +25,12 @@ namespace WPF_til_leg.Presentation
     /// </summary>
     public partial class MainWindowPresentation : MetroWindow
     {
-        MainWindowLogic mainLogic;
 
         public MainWindowPresentation()
         {
             InitializeComponent();
             ShowDialog();
-            mainLogic = new MainWindowLogic();
+
       
             
 
@@ -53,15 +52,12 @@ namespace WPF_til_leg.Presentation
             settingsFlyOut.IsOpen = true;
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void UploadB_Click(object sender, RoutedEventArgs e)
         {
-            //mainLogic.GetAECGListForPatient("123456-7890");
-            //mainLogic.GetAnalyzedECG(1);
-            //mainLogic.GetSTStartIndex(1);
-            //mainLogic.GetSTValues(1);
-            mainLogic.GetPatient("123456-7890");
-            mainLogic.UpdatePatientList();
-            mainLogic.UploadData("PP");
+            if (idT.Text != null)
+            {
+
+            }
         }
     }
 }

@@ -7,7 +7,7 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
              mc:Ignorable="d" 
-             Height="auto" d:DesignWidth="500">
+             Height="244" d:DesignWidth="500">
     <UserControl.Resources>
         <ResourceDictionary>
             <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}">
@@ -42,7 +42,7 @@
             Header="Opret Patient"
             HorizontalAlignment="Stretch"
             Padding="auto">
-            <Grid VerticalAlignment="Center">
+            <Grid VerticalAlignment="Center" Margin="0,2,0.333,-0.333" Height="233">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -73,7 +73,7 @@
                     </Controls:MetroHeader.HeaderTemplate>
                 </Controls:MetroHeader>
 
-                <RichTextBox Grid.Row="2" 
+                <RichTextBox x:Name="CPRTB" Grid.Row="2" 
                     Margin="10"
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.Watermark="Indtast CPR..."
@@ -81,28 +81,28 @@
                     SpellCheck.IsEnabled="True" />
 
                 <UniformGrid Grid.Row="3" Columns="2">
-                    <RichTextBox 
+                    <RichTextBox x:Name="FnavnTB" 
                     Margin="10"
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.Watermark="Indtast Fornavn..."
                     IsDocumentEnabled="True"
                     SpellCheck.IsEnabled="True" />
-                    <RichTextBox 
+                    <RichTextBox x:Name="EnavnTB" 
                     Margin="10"
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.Watermark="Indtast Efternavn..."
                     IsDocumentEnabled="True"
                     SpellCheck.IsEnabled="True" />
-                    
+
                 </UniformGrid>
-                
+
 
                 <Controls:Badged 
                     Grid.Row="4"
                     x:Name="uploadOffDBB"
                     Margin="10,0,10,10" Grid.Column="1"
                     MaxWidth="300">
-                    <Button>
+                    <Button x:Name="OpretB" Click="OpretB_Click">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconFeatherIcons Margin="5" VerticalAlignment="Center" Kind="UserPlus"/>
                             <TextBlock Margin="5" Text="Opret patient"/>
@@ -110,6 +110,7 @@
                     </Button>
 
                 </Controls:Badged>
+                <TextBox x:Name="PatientTB" HorizontalAlignment="Left" Height="29" Margin="101,0,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
             </Grid>
 
         </GroupBox>

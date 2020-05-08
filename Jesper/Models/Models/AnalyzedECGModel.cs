@@ -7,10 +7,17 @@ namespace Models.Models
     public class AnalyzedECGModel
     {
         #region Attributes
-        private int monitorId;
+
         #endregion
 
         #region Properties
+        private int monitorId;
+        public int MonitorID
+        {
+            get { return monitorId; }
+            private set { monitorId = value; }
+        }
+
         private string cpr;
         public string CPR
         {
@@ -139,7 +146,7 @@ namespace Models.Models
             //Pulse = pulse;
             Date = date;
             SampleRate = samplerate;
-            monitorId = monitorID;
+            MonitorID = monitorID;
             IsRead = isRead;
         }
 
