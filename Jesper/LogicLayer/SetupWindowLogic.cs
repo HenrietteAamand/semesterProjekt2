@@ -115,5 +115,19 @@ namespace LogicTier
             return result;
 
         }
+
+        public bool IsPatientAlreadyCreated(string cpr)
+        {
+            bool result = false;
+            foreach (PatientModel patient in patientList)
+            {
+                if (patient.CPR == cpr)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
     }
 }

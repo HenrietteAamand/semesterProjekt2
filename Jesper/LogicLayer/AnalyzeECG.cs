@@ -279,9 +279,9 @@ namespace LogicTier
 
         //}
 
-        public void UploadAnalyzedECG()
+        public void UploadAnalyzedECG(AnalyzedECGModel aECG)
         {
-            lDBRef.UploadAnalyzedECGs();
+            lDBRef.UploadAnalyzedECGs(aECG);
         }
 
 
