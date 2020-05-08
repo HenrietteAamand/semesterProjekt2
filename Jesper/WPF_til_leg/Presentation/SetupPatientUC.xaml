@@ -7,7 +7,7 @@
              xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"             
              mc:Ignorable="d" 
-             Height="244" d:DesignWidth="500">
+             Height="auto" Width="auto" >
     <UserControl.Resources>
         <ResourceDictionary>
             <Style BasedOn="{StaticResource MahApps.Styles.MetroHeader}" TargetType="{x:Type Controls:MetroHeader}">
@@ -110,7 +110,7 @@
                     </Button>
 
                 </Controls:Badged>
-                <TextBox x:Name="PatientTB" HorizontalAlignment="Left" Height="29" Margin="101,0,0,0" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+                <TextBox x:Name="PatientTB" HorizontalAlignment="Center" Background="Transparent" MinHeight="30" Margin="5" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" MinWidth="300"/>
             </Grid>
 
         </GroupBox>

@@ -56,7 +56,7 @@ namespace WPF_til_leg.Presentation
         {
             if (idT.Text != null)
             {
-
+                
             }
         }
     }

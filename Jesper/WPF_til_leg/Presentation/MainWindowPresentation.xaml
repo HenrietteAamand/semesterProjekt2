@@ -66,7 +66,7 @@
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
 
-    <Grid>
+    <Grid HorizontalAlignment="Center">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="auto" MaxWidth="420"/>
@@ -193,8 +193,18 @@
             <uc:ChartECG Margin="10" />
         </Border>
 
-        <UniformGrid Grid.Row="3" Grid.Column="1" Columns="2">
+        
+        <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
         <!--ROW 3-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <!--Visible when not pressed-->
             <Controls:Badged 
              
             x:Name="uploadOffDBB"
@@ -210,11 +220,11 @@
         </Controls:Badged>
 
             <TextBox x:Name="idT"
-            Grid.Row="1"
+            Grid.Row="0"
             Grid.Column="1"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Indtast personale ID..." Grid.ColumnSpan="1" Margin="10,0,10,0">
+                             Controls:TextBoxHelper.Watermark="Indtast personale ID..." Grid.ColumnSpan="1" Margin="10,0,10,0" VerticalAlignment="Center">
                 <TextBox.Style>
                     <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
                         <Style.Triggers>
@@ -226,10 +236,32 @@
                     </Style>
                 </TextBox.Style>
             </TextBox>
+            <UniformGrid Columns="2" Grid.ColumnSpan="2" Name="uploadPressed" Visibility="Hidden">
+            <Controls:Badged 
+            Margin="10,0,10,0" >
 
+                <Button x:Name="cancelB">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Cancel" />
+                        <TextBlock Margin="5" Text="Cancel"/>
+                    </StackPanel>
+                </Button>
 
+            </Controls:Badged>
+            <Controls:Badged 
+            Margin="10,0,10,0" 
+                Grid.Column="2">
 
-        </UniformGrid>
+                <Button x:Name="okB">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Check" />
+                        <TextBlock Margin="5" Text="Ok"/>
+                    </StackPanel>
+                </Button>
+
+            </Controls:Badged>
+            </UniformGrid>
+        </Grid>
     </Grid>
 
 </Controls:MetroWindow>

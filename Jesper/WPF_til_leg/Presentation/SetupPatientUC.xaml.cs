@@ -38,21 +38,20 @@ namespace WPF_til_leg.Presentation
             TextRange EnavnTR = new TextRange(EnavnTB.Document.ContentStart, EnavnTB.Document.ContentEnd);
             
 
-            foreach (var CPR in setupObj.getAllPatiens()) 
-            {
-                
-            }
-
             if (CPRTR.Text != null && FnavnTR.Text != null && EnavnTR.Text != null)
             {
-                setupObj.newPatient(CPRTR.Text, FnavnTR.Text, EnavnTR.Text);
-                PatientTB.Visibility = Visibility.Visible;
-                PatientTB.Text = "Patient oprettet.";
-            }
-            //else if 
-            //{
 
-            //}
+                if (setupObj.IsPatientAlreadyCreated(CPRTR.Text) == false) 
+                {
+                    setupObj.newPatient(CPRTR.Text, FnavnTR.Text, EnavnTR.Text);
+                    PatientTB.Visibility = Visibility.Visible;
+                    PatientTB.Text = "Patient oprettet.";
+                }
+                else 
+                {
+                    PatientTB.Text = "Patient allerede oprettet";
+                }
+            }
             else
             {
                 PatientTB.Visibility = Visibility.Visible;

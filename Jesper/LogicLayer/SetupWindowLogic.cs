@@ -53,7 +53,7 @@ namespace LogicTier
         //            monitor.InUse = true;
         //        }
         //    }
-            
+
         //}
 
         //public void resetECGMonitor(int ecgID)
@@ -65,7 +65,7 @@ namespace LogicTier
         //        if (patient.ECGMonitorID == ecgID)
         //        {
         //            patient.ECGMonitorID = 0;
-                    
+
         //        }
         //    }
         //    //Sætter InUse på ECG-monitoren til false
@@ -106,7 +106,7 @@ namespace LogicTier
         //    bool result = false;
         //    foreach (ECGMonitorModel monitor in ecgMonitorList)
         //    {
-                
+
         //        if (monitor.ID == ecgMonitorID)
         //        {
         //            result = true;
@@ -115,5 +115,19 @@ namespace LogicTier
         //    return result;
 
         //}
+
+        public bool IsPatientAlreadyCreated(string cpr)
+        {
+            bool result = false;
+            foreach (PatientModel patient in patientList)
+            {
+                if (patient.CPR == cpr)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
     }
 }
