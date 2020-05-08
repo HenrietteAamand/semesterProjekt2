@@ -154,7 +154,7 @@
                     BorderThickness="0.5"
                     ItemsSource="{Binding Patients}"
                     SelectedIndex="0"
-                    Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                    Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="patientsLV_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding PatientCPR}" Header="CPR" />
@@ -240,10 +240,10 @@
             <Controls:Badged 
             Margin="10,0,10,0" >
 
-                <Button x:Name="cancelB">
+                <Button x:Name="cancelB" Click="cancelB_Click">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Cancel" />
-                        <TextBlock Margin="5" Text="Cancel"/>
+                        <TextBlock Margin="5" Text="Fortryd"/>
                     </StackPanel>
                 </Button>
 
@@ -252,10 +252,10 @@
             Margin="10,0,10,0" 
                 Grid.Column="2">
 
-                <Button x:Name="okB">
+                <Button x:Name="okB" Click="okB_Click">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Check" />
-                        <TextBlock Margin="5" Text="Ok"/>
+                        <TextBlock Margin="5" Text="OK"/>
                     </StackPanel>
                 </Button>
 
