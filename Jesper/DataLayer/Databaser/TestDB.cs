@@ -66,43 +66,72 @@ namespace DataTier.Databaser
             return patientList;
         }
 
-        public void UpdateIsAnalyzed(int ecgID)
+
+        public void UpdateIsAnalyzed(ECGModel ecgID)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateIsRead(int aECGID)
-        {
-            foreach (AnalyzedECGModel aECG in aECGList)
-            {
-                if (aECG.AECGID == aECGID)
-                {
-                    aECG.IsRead = true;
-                }
-            }
-        }
-
-        public void UpdateLinkECGToPatient(PatientModel patient)
-        {
-            //Linker ECG-monitor til et patient objekt
-                foreach (PatientModel patient in patientList)
-            {
-                if (patient.CPR == cpr)
-                {
-                    patient.ECGMonitorID = ecgMonitorID;
-                }
-            }
-
-        }
-
-        public void UpdateResetECGMonitor(int ecgMonitorID)
+        public void UpdateIsRead(AnalyzedECGModel aECGID)
         {
             throw new NotImplementedException();
+        }
+
+        //public void UpdateIsRead(AnalyzedECGModel aECGID)
+        //{
+        //    foreach (AnalyzedECGModel aECG in aECGList)
+        //    {
+        //        if (aECG.AECGID == aECGID)
+        //        {
+        //            aECG.IsRead = true;
+        //        }
+        //    }
+        //}
+
+        public void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel monitor)
+        {
+            //UpdatePatient(patient);
+
+            //UpdateECGMonitor(monitor);
+            //for (int i = 0; i < monitorList.Count; i++)
+            //{
+            //    if (monitorList[i].ID == patient.ECGMonitorID)
+            //    {
+            //        monitorList[i].InUse = true;
+            //    }
+            //}
+        }
+
+        public void UpdatePatient(PatientModel patient)
+        {
+            for (int i = 0; i < patientList.Count; i++)
+            {
+                if (patientList[i].CPR == patient.CPR)
+                {
+                    patientList[i] = patient;
+                }
+            }
+        }
+
+        public void UpdateECGMonitor(ECGMonitorModel monitor)
+        {
+            for (int i = 0; i < monitorList.Count; i++)
+            {
+                if (monitorList[i].ID == monitor.ID)
+                {
+                    monitorList[i] = monitor;
+                }
+            }
         }
 
         public void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg)
         {
             throw new NotImplementedException();
         }
+
+        //public void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

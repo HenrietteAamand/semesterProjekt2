@@ -182,7 +182,18 @@ namespace LogicTier
 			return patient;
 		}
 
+		public int GetAge(string cpr)
+		{
+			throw new NotImplementedException();
+		}
 
+		public bool IsAMan(string cpr)
+		{
+			throw new NotImplementedException();
+			//bool result;
+			//cpr.ToString()
+			//if(cpr.ToString())
+		}
 
 	}
 }

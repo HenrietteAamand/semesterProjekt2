@@ -3,6 +3,7 @@ using DataTier.Interfaces;
 using Models.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace LogicTier
@@ -10,8 +11,8 @@ namespace LogicTier
     public class SetupWindowLogic
     {
 
-        
-        
+
+
         private ILocalDatabase DB;
 
         private List<ECGMonitorModel> ecgMonitorList;
@@ -26,6 +27,7 @@ namespace LogicTier
             ecgMonitorList = DB.GetAllECGMonitors();
             newPatient("112233-4455", "Jens", "Jensen");
             LinkECGToPatient("112233-4455", 1);
+            ResetECGMonitor(1);
         }
 
         public void newPatient(string cpr, string firstName, string lastName)
@@ -39,12 +41,12 @@ namespace LogicTier
         public void LinkECGToPatient(string cpr, int ecgMonitorID)
         {
             //Linker ECG-monitor til et patient objekt
-            foreach (PatientModel patient in patientList)
+            foreach (PatientModel patient in patientList.ToList())
             {
                 if (patient.CPR == cpr)
                 {
                     patient.ECGMonitorID = ecgMonitorID;
-                    DB.UpdateLinkECGToPatient(patient);
+                    DB.UpdatePatient(patient);
                 }
             }
 
@@ -53,69 +55,76 @@ namespace LogicTier
                 if (monitor.ID == ecgMonitorID)
                 {
                     monitor.InUse = true;
+                    DB.UpdateECGMonitor(monitor);
                 }
             }
 
         }
 
-        //public void resetECGMonitor(int ecgID)
-        //{
-        //    //Finder patient med pågældende ECG-monitor tilknyttet
-        //    //Fjerner ECG-monitoren fra patient objektet
-        //    foreach (PatientModel patient in patientList)
-        //    {
-        //        if (patient.ECGMonitorID == ecgID)
-        //        {
-        //            patient.ECGMonitorID = 0;
+        public void ResetECGMonitor(int ecgID)
+        {
+            //Finder patient med pågældende ECG-monitor tilknyttet
+            //Fjerner ECG-monitoren fra patient objektet
+            foreach (PatientModel patient in patientList)
+            {
+                if (patient.ECGMonitorID == ecgID)
+                {
+                    patient.ECGMonitorID = 0;
+                    DB.UpdatePatient(patient);
+                    break;
 
-        //        }
-        //    }
-        //    //Sætter InUse på ECG-monitoren til false
-        //    foreach(ECGMonitorModel monitor in ecgMonitorList)
-        //    {
-        //        if (monitor.ID == ecgID)
-        //        {
-        //            monitor.InUse = false;
-        //            DB.UpdateResetECGMonitor(ecgID);
-        //        }
-        //    }
-
-
-        //    //Sker når der trykkes på "Nulstil EKG-måler", og når ern EKG-måler der er i brug, er valgt
-        //}
-
-
-        //public List<ECGMonitorModel> getAllMonitors()
-        //{
-        //    //Henter alle ECG monitors til liste
-        //    List<ECGMonitorModel> monitorList = new List<ECGMonitorModel>();
-        //    monitorList = DB.GetAllECGMonitors();
-        //    return monitorList;
-        //}
+                }
+                break;
+            }
+            //Sætter InUse på ECG-monitoren til false
+            foreach (ECGMonitorModel monitor in ecgMonitorList)
+            {
+                if (monitor.ID == ecgID)
+                {
+                    monitor.InUse = false;
+                    DB.UpdateECGMonitor(monitor);
+                    break;
+                }
+                break;
+            }
 
 
-        //public List<PatientModel> getAllPatiens()
-        //{
-        //    //Henter alle Patient til liste
-        //    List<PatientModel> patientList = new List<PatientModel>();
-        //    patientList = DB.GetAllPatients();
-        //    return patientList;
-        //}
+            //    //Sker når der trykkes på "Nulstil EKG-måler", og når ern EKG-måler der er i brug, er valgt
+            //}
 
 
-        //public bool monitorInUse(int ecgMonitorID)
-        //{
-        //    bool result = false;
-        //    foreach (ECGMonitorModel monitor in ecgMonitorList)
-        //    {
+            //public List<ECGMonitorModel> getAllMonitors()
+            //{
+            //    //Henter alle ECG monitors til liste
+            //    List<ECGMonitorModel> monitorList = new List<ECGMonitorModel>();
+            //    monitorList = DB.GetAllECGMonitors();
+            //    return monitorList;
+            //}
 
-        //        if (monitor.ID == ecgMonitorID)
-        //        {
-        //            result = true;
-        //        }
-        //    }
-        //    return result;
 
-        //}
+            //public List<PatientModel> getAllPatiens()
+            //{
+            //    //Henter alle Patient til liste
+            //    List<PatientModel> patientList = new List<PatientModel>();
+            //    patientList = DB.GetAllPatients();
+            //    return patientList;
+            //}
+
+
+            //public bool monitorInUse(int ecgMonitorID)
+            //{
+            //    bool result = false;
+            //    foreach (ECGMonitorModel monitor in ecgMonitorList)
+            //    {
+
+            //        if (monitor.ID == ecgMonitorID)
+            //        {
+            //            result = true;
+            //        }
+            //    }
+            //    return result;
+
+            //}
+        }
     }
 }
