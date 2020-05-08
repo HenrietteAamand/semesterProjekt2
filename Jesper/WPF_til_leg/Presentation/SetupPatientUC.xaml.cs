@@ -40,13 +40,18 @@ namespace WPF_til_leg.Presentation
 
             if (CPRTR.Text != null && FnavnTR.Text != null && EnavnTR.Text != null)
             {
-                setupObj.newPatient(CPRTR.Text, FnavnTR.Text, EnavnTR.Text);
-                PatientTB.Visibility = Visibility.Visible;
-                PatientTB.Text = "Patient oprettet.";
-                // if (patient == false) {^^ herind}
-                // else {"Patient allerede oprettet"}
+
+                if (setupObj.IsPatientAlreadyCreated(CPRTR.Text) == false) 
+                {
+                    setupObj.newPatient(CPRTR.Text, FnavnTR.Text, EnavnTR.Text);
+                    PatientTB.Visibility = Visibility.Visible;
+                    PatientTB.Text = "Patient oprettet.";
+                }
+                else 
+                {
+                    PatientTB.Text = "Patient allerede oprettet";
+                }
             }
-            
             else
             {
                 PatientTB.Visibility = Visibility.Visible;

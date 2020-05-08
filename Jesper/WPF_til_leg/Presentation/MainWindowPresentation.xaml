@@ -214,7 +214,7 @@
             Grid.Column="1"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Indtast personale ID..." Grid.ColumnSpan="1" Margin="10,0,10,0">
+                             Controls:TextBoxHelper.Watermark="Indtast personale ID..." Grid.ColumnSpan="1" Margin="10,0,10,0" VerticalAlignment="Center">
                 <TextBox.Style>
                     <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
                         <Style.Triggers>

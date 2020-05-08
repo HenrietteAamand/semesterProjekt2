@@ -100,6 +100,21 @@ namespace LogicTier
             return patientList;
         }
 
+        public bool IsPatientAlreadyCreated(string cpr)
+        {
+            bool result = false;
+            foreach (PatientModel patient in patientList)
+            {
+                if (patient.CPR == cpr)
+                {
+                    result = true;
+                }
+            }
+
+            return result;
+        }
+
+
 
         public bool monitorInUse(int ecgMonitorID)
         {
