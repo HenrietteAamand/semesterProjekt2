@@ -9,168 +9,122 @@ namespace RPi_EKG_program
 {
     class Program
     {
-        //    >DebugAdapterHost.Launch /LaunchJson:"C:\Users\emils\Source\Repos\semesterProjekt2\RPi-EKG-program\launch.json" /EngineGuid:541B8A8A-6081-4506-9F0A-1CE771DEBC04
-        private SDStorage LocalStorage;
-        private static SerLCD displayController1;
+           
+        private const string MonitorID = "Måler1";
+        private static int sampleRate = 10;
 
-
+        
         static void Main(string[] args)
         {
+
             Display displayController = new Display();
-            DatabaseIF LokalDB = new DatabaseIF();
-            SerLCD display = new SerLCD();
+            DatabaseIF LocalDB = new DatabaseIF();
             SDStorage LocalStorage = new SDStorage();
-
-            
             ADC ADconverter = new ADC();
-            bool test = true;
-            test = LokalDB.isConnected();
+            Start_Button StartB = new Start_Button();
+            
 
+                                
 
-
-            ADconverter.isCableConnected();
-            //displayController.ScreenShow(4);
-
-            LocalStorage.StoreInfoLocal("080596-1234;Emil");
-
-            string CPRNAVN = LocalStorage.getInfoLocal();
-
-
-            displayController.ShowGreeting(CPRNAVN, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-            Thread.Sleep(6000);
-
-           
-
-
-            displayController.ScreenShow(2, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-            Thread.Sleep(5000);
-
-            displayController.ScreenShow(3, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-            Thread.Sleep(5000);
-
-     
-
-            displayController.ScreenShow(5, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-            Thread.Sleep(5000);
-
-            displayController.ScreenShow(6, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-            Thread.Sleep(5000);
-
-            displayController.ScreenShow(7, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-            Thread.Sleep(5000);
-
-            displayController.ScreenShow(8, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-            Thread.Sleep(5000);
-            bool Updatescreen = true;
-            DateTime StartTime = DateTime.Now;
-            DateTime EndTime = DateTime.Now;
-            TimeSpan MeasureTime = EndTime - StartTime;
-
-            while (MeasureTime.TotalSeconds < 40)
+            while (LocalStorage.getCPRLocal() == null)
             {
-             
-                EndTime = DateTime.Now;
-                MeasureTime = EndTime - StartTime;
-                if (Updatescreen)
+                displayController.ScreenShow(7, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                
+                if (LocalDB.isConnected())
                 {
-                    displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-                    Updatescreen = false;
+                    LocalStorage.StoreInfoLocal(LocalDB.RecieveData(MonitorID));
+
                 }
-                else
-                {
-                    Updatescreen = true;
-                }
-                Thread.Sleep(10);
 
             }
 
+            displayController.ShowGreeting(LocalStorage.getInfoLocal(), LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
 
-            displayController.ScreenShow(5, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
             Thread.Sleep(5000);
 
 
+            while (true)
+            {
+                if (LocalDB.isConnected() && LocalStorage.checkUnSentData()!=0)
+                {
+                    displayController.ScreenShow(6, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                    Thread.Sleep(1000);
+
+                    foreach (var item in LocalStorage.FindUnSentData())
+                    {
+                        LocalDB.sendData(item);
+                    }
+                    Thread.Sleep(5000);
+
+                }
+
+                while (ADconverter.checkBattery() == 1)
+                {
+                    displayController.ScreenShow(8, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                    Thread.Sleep(3000);
+                }
+
+                displayController.ScreenShow(3, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+
+                if (StartB.isPressed())
+                {
+                    if (ADconverter.isCableConnected() == true)
+                    {
+
+                      
+                        DateTime StartTime = DateTime.Now;
+                        DateTime EndTime = DateTime.Now;
+                        TimeSpan MeasureTime = EndTime - StartTime;
+
+                        Measurement NewMeasurement = new Measurement(LocalStorage.getCPRLocal(), new List<double>(), DateTime.Now, (sampleRate/1000),MonitorID );
+
+                        while (MeasureTime.TotalSeconds < 40)
+                        {
+                            NewMeasurement.addToList(ADconverter.measureSignal());
+                            EndTime = DateTime.Now;
+                            MeasureTime = EndTime - StartTime;
+                            displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                          
+                     
+                            Thread.Sleep(sampleRate);
+
+                        }
+
+                        LocalStorage.StoreDataLocal(NewMeasurement);
+
+                        if (LocalDB.isConnected())
+                        {
+                            displayController.ScreenShow(6, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+
+                            LocalDB.sendData(NewMeasurement);
+
+                        }
+                        else
+                        {
+
+                            displayController.ScreenShow(5, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                            Thread.Sleep(10000);
+
+                        }
+
+                        /*displayController.ScreenShow(3);*///Denne behøves ikke, da den alligevel breaker While og viser skærm 3.
 
 
 
+                    }
 
-            //display.lcdDisplay();
-            //display.lcdClear();
+                    else
+                    {
+                        displayController.ScreenShow(2, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                        Thread.Sleep(5000);
+                    }
 
-            //display.lcdHome();
-
-            //display.lcdPrint(Convert.ToString(DateTime.Now.TimeOfDay));
-            //display.lcdGotoXY(5, 0);
-
-
-            //display.lcdPrint(" O  Data:8  50%");
-
-            //display.lcdGotoXY(5, 1);
-
-            //string navn = "Lars";
-            //string cpr = "080596";
-            //string navn2 = "123456789012345678903";
-            //string navn1 = "12345678901234567893";
-            //string navn3 = "123456789 0123456789";
-
-            //display.lcdPrint("Velkommen");
-            //display.lcdGotoXY(0, 2);
-            //display.lcdPrint("Du er loGGet ind som");
-            //display.lcdGotoXY(0, 3);
-            //display.lcdPrint(navn);
-            //display.lcdGotoXY(14, 3);
-            //display.lcdPrint(cpr);
-
-            //displayController.ShowGreeting(CPRNAVN, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-
-            //display.lcdGotoXY(0, 3);
-            //display.lcdPrint("Emil");
-            //display.lcdGotoXY(14, 3);
-            //display.lcdPrint("123456");
-            //display.lcdGotoXY(0, 3);
-            //display.lcdPrint(navn2);
-            //display.lcdGotoXY(0, 3);
-            //display.lcdPrint(navn1);
+                }
 
 
+            }
 
-
-
-            //string velkommen = "     Velkommen      Du er logget ind somLars  080596";
-
-            //display.lcdGotoXY(0, 2);
-
-
-            //display.lcdPrint(velkommen);
-
-            //display.lcdGotoXY(0, 3);
-
-
-            //displayController.ShowGreeting(CPRNAVN, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-
-            //displayController.ShowGreeting(CPRNAVN);
-
-            //displayController.updateMenuBar(LokalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-
-
-            //Hvis batteri er over 5.
-
-
-
-            DateTime Start = DateTime.Now;
-            List<double> Test = new List<double>();
-            Measurement measurement = new Measurement("123456-7890", Test, Start, 0.02, "54321");
-
-            //for (int i = 0; i < /*40sek*/; i++)
-            //{
-            //    measurement.addToList(ADconverter.measureSignal());
-
-
-            //}
-
-
-            //}
-
-        
         }
+
     }
 }
