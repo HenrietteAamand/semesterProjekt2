@@ -25,15 +25,12 @@ namespace WPF_til_leg.Presentation
     /// </summary>
     public partial class MainWindowPresentation : MetroWindow
     {
-
+        SetupWindowLogic setupObj;
         public MainWindowPresentation()
         {
             InitializeComponent();
-            ShowDialog();
-
-      
-            
-
+            //ShowDialog();
+            setupObj = new SetupWindowLogic();
         }
 
         async Task ShowDialog()

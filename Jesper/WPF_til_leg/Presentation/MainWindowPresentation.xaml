@@ -38,7 +38,7 @@
                 Padding="-10" 
                 Margin="10" 
                 BadgeBackground="Red">
-                <Button Click="Button_Click_1">
+                <Button>
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconModern 
                                     Width="15" 

@@ -19,42 +19,44 @@ namespace LogicTier
 
         public SetupWindowLogic()
         {
-            //ecgMonitorList = new List<ECGMonitorModel>();
-            //patientList = new List<PatientModel>();
-            //DB = new TestDB();
-            //patientList = DB.GetAllPatients();
-            //ecgMonitorList = DB.GetAllECGMonitors();
+            ecgMonitorList = new List<ECGMonitorModel>();
+            patientList = new List<PatientModel>();
+            DB = new TestDB();
+            patientList = DB.GetAllPatients();
+            ecgMonitorList = DB.GetAllECGMonitors();
+            newPatient("112233-4455", "Jens", "Jensen");
+            LinkECGToPatient("112233-4455", 1);
         }
 
-        //public void newPatient(string cpr, string firstName, string lastName)
-        //{
-        //    //Opretter en patient, og gemmer den i databasen
-        //    //Kalder CreatePatient()
-        //    DB.CreatePatient(new PatientModel(cpr, firstName, lastName));
-        //    //Sker når der trykeks på "Opret patient"
-        //}
+        public void newPatient(string cpr, string firstName, string lastName)
+        {
+            //Opretter en patient, og gemmer den i databasen
+            //Kalder CreatePatient()
+            DB.CreatePatient(new PatientModel(cpr, firstName, lastName));
+            //Sker når der trykeks på "Opret patient"
+        }
 
-        //public void LinkECGToPatient(string cpr, int ecgID)
-        //{
-        //    //Linker ECG-monitor til et patient objekt
-        //    foreach (PatientModel patient in patientList)
-        //    {
-        //        if (patient.CPR == cpr)
-        //        {
-        //            patient.ECGMonitorID = ecgID;
-        //            DB.UpdateLinkECGToPatient(cpr, ecgID);
-        //        }
-        //    }
+        public void LinkECGToPatient(string cpr, int ecgMonitorID)
+        {
+            //Linker ECG-monitor til et patient objekt
+            foreach (PatientModel patient in patientList)
+            {
+                if (patient.CPR == cpr)
+                {
+                    patient.ECGMonitorID = ecgMonitorID;
+                    DB.UpdateLinkECGToPatient(patient);
+                }
+            }
 
-        //    foreach (ECGMonitorModel monitor in ecgMonitorList)
-        //    {
-        //        if (monitor.ID == ecgID)
-        //        {
-        //            monitor.InUse = true;
-        //        }
-        //    }
-            
-        //}
+            foreach (ECGMonitorModel monitor in ecgMonitorList)
+            {
+                if (monitor.ID == ecgMonitorID)
+                {
+                    monitor.InUse = true;
+                }
+            }
+
+        }
 
         //public void resetECGMonitor(int ecgID)
         //{
@@ -65,7 +67,7 @@ namespace LogicTier
         //        if (patient.ECGMonitorID == ecgID)
         //        {
         //            patient.ECGMonitorID = 0;
-                    
+
         //        }
         //    }
         //    //Sætter InUse på ECG-monitoren til false
@@ -106,7 +108,7 @@ namespace LogicTier
         //    bool result = false;
         //    foreach (ECGMonitorModel monitor in ecgMonitorList)
         //    {
-                
+
         //        if (monitor.ID == ecgMonitorID)
         //        {
         //            result = true;

@@ -33,31 +33,31 @@ namespace WPF_til_leg.Presentation
 
         private void OpretB_Click(object sender, RoutedEventArgs e)
         {
-            TextRange CPRTR = new TextRange(CPRTB.Document.ContentStart,CPRTB.Document.ContentEnd);
-            TextRange FnavnTR = new TextRange(FnavnTB.Document.ContentStart, FnavnTB.Document.ContentEnd);
-            TextRange EnavnTR = new TextRange(EnavnTB.Document.ContentStart, EnavnTB.Document.ContentEnd);
+            //TextRange CPRTR = new TextRange(CPRTB.Document.ContentStart,CPRTB.Document.ContentEnd);
+            //TextRange FnavnTR = new TextRange(FnavnTB.Document.ContentStart, FnavnTB.Document.ContentEnd);
+            //TextRange EnavnTR = new TextRange(EnavnTB.Document.ContentStart, EnavnTB.Document.ContentEnd);
             
 
-            foreach (var CPR in setupObj.getAllPatiens()) 
-            {
-                
-            }
-
-            if (CPRTR.Text != null && FnavnTR.Text != null && EnavnTR.Text != null)
-            {
-                setupObj.newPatient(CPRTR.Text, FnavnTR.Text, EnavnTR.Text);
-                PatientTB.Visibility = Visibility.Visible;
-                PatientTB.Text = "Patient oprettet.";
-            }
-            //else if 
+            //foreach (var CPR in setupObj.getAllPatiens()) 
             //{
-
+                
             //}
-            else
-            {
-                PatientTB.Visibility = Visibility.Visible;
-                PatientTB.Text = "En eller flere oplysninger er ikke udfyldt.";
-            } 
+
+            //if (CPRTR.Text != null && FnavnTR.Text != null && EnavnTR.Text != null)
+            //{
+            //    setupObj.newPatient(CPRTR.Text, FnavnTR.Text, EnavnTR.Text);
+            //    PatientTB.Visibility = Visibility.Visible;
+            //    PatientTB.Text = "Patient oprettet.";
+            //}
+            ////else if 
+            ////{
+
+            ////}
+            //else
+            //{
+            //    PatientTB.Visibility = Visibility.Visible;
+            //    PatientTB.Text = "En eller flere oplysninger er ikke udfyldt.";
+            //} 
 
                 
         }

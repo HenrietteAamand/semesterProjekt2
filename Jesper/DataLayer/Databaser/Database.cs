@@ -60,45 +60,45 @@ namespace DataTier.Databaser
             
             while (reader.Read())
             {
-                List<byte> bytesArr = new List<byte>();
-                List<double> values = new List<double>();
-                List<byte> bytesArr1 = new List<byte>();
-                List<double> STSegmenter = new List<double>();
+                //List<byte> bytesArr = new List<byte>();
+                //List<double> values = new List<double>();
+                //List<byte> bytesArr1 = new List<byte>();
+                //List<double> STSegmenter = new List<double>();
 
-                string selectString = $"SELECT * FROM dbo.AnalyzedECG";
+                //string selectString = $"SELECT * FROM dbo.AnalyzedECG";
 
-                using (SqlCommand cmd = new SqlCommand(selectString, connection))
-                {
-                    reader = cmd.ExecuteReader();
-                }
-                if (reader.Read())
-                {
-                    bytesArr = (List<byte>)reader["BLOBValues"];
-                }
-                for (int i = 0, j = 0; i < bytesArr.Count; i += 8, j++)
-                {
-                    values[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
-                }
+                //using (SqlCommand cmd = new SqlCommand(selectString, connection))
+                //{
+                //    reader = cmd.ExecuteReader();
+                //}
+                //if (reader.Read())
+                //{
+                //    bytesArr = (List<byte>)reader["BLOBValues"];
+                //}
+                //for (int i = 0, j = 0; i < bytesArr.Count; i += 8, j++)
+                //{
+                //    values[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
+                //}
 
-                string selectString1 = $"SELECT * FROM dbo.AnalyzedECG";
+                //string selectString1 = $"SELECT * FROM dbo.AnalyzedECG";
 
-                using (SqlCommand cmd = new SqlCommand(selectString1, connection))
-                {
-                    reader = cmd.ExecuteReader();
-                }
-                if (reader.Read())
-                {
-                    bytesArr1 = (List<byte>)reader["BLOBstValues"];
-                }
-                for (int i = 0, j = 0; i < bytesArr.Count; i += 8, j++)
-                {
-                    STSegmenter[j] = BitConverter.ToDouble(bytesArr1.ToArray(), i);
-                }
+                //using (SqlCommand cmd = new SqlCommand(selectString1, connection))
+                //{
+                //    reader = cmd.ExecuteReader();
+                //}
+                //if (reader.Read())
+                //{
+                //    bytesArr1 = (List<byte>)reader["BLOBstValues"];
+                //}
+                //for (int i = 0, j = 0; i < bytesArr.Count; i += 8, j++)
+                //{
+                //    STSegmenter[j] = BitConverter.ToDouble(bytesArr1.ToArray(), i);
+                //}
 
 
-                ameasurements.Add(new AnalyzedECGModel(Convert.ToString(reader["CPR-ID"]), Convert.ToInt32(reader["ECGID"]), Convert.ToInt32(reader["AECGID"]),
-                    Convert.ToDateTime(reader["Dato"]), illness, values, Convert.ToInt32(reader["Samplerate"]), 
-                    Convert.ToInt32(reader["MonitorID"]), Convert.ToBoolean(reader["IsRead"])));
+                //ameasurements.Add(new AnalyzedECGModel(Convert.ToString(reader["CPR-ID"]), Convert.ToInt32(reader["ECGID"]), Convert.ToInt32(reader["AECGID"]),
+                //    Convert.ToDateTime(reader["Dato"]), illness, values, Convert.ToInt32(reader["Samplerate"]), 
+                //    Convert.ToInt32(reader["MonitorID"]), Convert.ToBoolean(reader["IsRead"])));
                
 
             }
@@ -149,28 +149,28 @@ namespace DataTier.Databaser
 
             while (reader.Read())
             {
-                List<byte> bytesArr = new List<byte>();
-                List<double> tal = new List<double>();
+                //List<byte> bytesArr = new List<byte>();
+                //List<double> tal = new List<double>();
 
-                string selectString = $"SELECT * FROM dbo.ECG";
+                //string selectString = $"SELECT * FROM dbo.ECG";
 
-                using (SqlCommand cmd = new SqlCommand(selectString, connection))
-                {
-                    reader = cmd.ExecuteReader();
-                }
-                if (reader.Read())
-                {
-                    bytesArr = (List<byte>)reader["BLOB-Values"];
-                }
-                for (int i = 0, j = 0; i < bytesArr.Count; i += 8, j++)
-                {
-                    tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
-                }
+                //using (SqlCommand cmd = new SqlCommand(selectString, connection))
+                //{
+                //    reader = cmd.ExecuteReader();
+                //}
+                //if (reader.Read())
+                //{
+                //    bytesArr = (List<byte>)reader["BLOB-Values"];
+                //}
+                //for (int i = 0, j = 0; i < bytesArr.Count; i += 8, j++)
+                //{
+                //    tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
+                //}
 
 
-                measurements.Add(new ECGModel(Convert.ToString(reader["CPRID"]),Convert.ToInt32(reader["Id"]),
-                    Convert.ToDateTime(reader["Date"]), Convert.ToInt32(reader["Samplerate"]),tal, Convert.ToString(reader["MonitorID"]), 
-                    Convert.ToBoolean(reader["IsAnalyzed"])));
+                //measurements.Add(new ECGModel(Convert.ToString(reader["CPRID"]),Convert.ToInt32(reader["Id"]),
+                //    Convert.ToDateTime(reader["Date"]), Convert.ToInt32(reader["Samplerate"]),tal, Convert.ToString(reader["MonitorID"]), 
+                //    Convert.ToBoolean(reader["IsAnalyzed"])));
 
             }
             reader.Close();

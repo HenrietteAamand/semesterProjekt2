@@ -10,29 +10,35 @@ namespace DataTier.Databaser
 {
     public class TestDB : ILocalDatabase
     {
-        ECGModel ecg1 = new ECGModel("123456-7890", 1,( new DateTime(2011,1,1)), 50,
+        ECGModel ecg1 = new ECGModel("123456-7890", 1, (new DateTime(2011, 1, 1)), 50,
             (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1, false);
-        
-        AnalyzedECGModel aECG = new AnalyzedECGModel("123456-7890", 1, 1,(new DateTime(2011, 1,1)), 50,
-            (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1, false, 
+
+        AnalyzedECGModel aECG = new AnalyzedECGModel("123456-7890", 1, 1, (new DateTime(2011, 1, 1)), 50,
+            (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1, false,
             (new IllnessModel(1, "st", "not good", 2, 4, false, false)),
             new List<double> { 4, 4, 4, 5, 4, 3.5, 4.5, 4, 4 });
+        ECGMonitorModel monitor = new ECGMonitorModel(1, false);
         PatientModel patient = new PatientModel("123456-7890", "Peter", "Petersen");
+        IllnessModel illness = new IllnessModel(1, "st", "not good", 2, 4, false, false);
         List<PatientModel> patientList = new List<PatientModel>();
-        
+
         List<AnalyzedECGModel> aECGList = new List<AnalyzedECGModel>();
         List<ECGModel> ecgList = new List<ECGModel>();
+        List<ECGMonitorModel> monitorList = new List<ECGMonitorModel>();
+        List<IllnessModel> illnessList = new List<IllnessModel>();
         public TestDB()
         {
             aECG.STStartIndex = 1;
             aECGList.Add(aECG);
             ecgList.Add(ecg1);
             patientList.Add(patient);
+            monitorList.Add(monitor);
+            illnessList.Add(illness);
         }
 
         public void CreatePatient(PatientModel patient)
         {
-            throw new NotImplementedException();
+            patientList.Add(patient);
         }
 
         public List<AnalyzedECGModel> GetAllAnalyzedECGs()
@@ -42,7 +48,7 @@ namespace DataTier.Databaser
 
         public List<ECGMonitorModel> GetAllECGMonitors()
         {
-            throw new NotImplementedException();
+            return monitorList;
         }
 
         public List<ECGModel> GetAllECGs()
@@ -52,7 +58,7 @@ namespace DataTier.Databaser
 
         public List<IllnessModel> GetAllIllnesses()
         {
-            throw new NotImplementedException();
+            return illnessList;
         }
 
         public List<PatientModel> GetAllPatients()
@@ -67,12 +73,26 @@ namespace DataTier.Databaser
 
         public void UpdateIsRead(int aECGID)
         {
-            throw new NotImplementedException();
+            foreach (AnalyzedECGModel aECG in aECGList)
+            {
+                if (aECG.AECGID == aECGID)
+                {
+                    aECG.IsRead = true;
+                }
+            }
         }
 
-        public void UpdateLinkECGToPatient(string cpr, int ecgMonitorID)
+        public void UpdateLinkECGToPatient(PatientModel patient)
         {
-            throw new NotImplementedException();
+            //Linker ECG-monitor til et patient objekt
+                foreach (PatientModel patient in patientList)
+            {
+                if (patient.CPR == cpr)
+                {
+                    patient.ECGMonitorID = ecgMonitorID;
+                }
+            }
+
         }
 
         public void UpdateResetECGMonitor(int ecgMonitorID)
