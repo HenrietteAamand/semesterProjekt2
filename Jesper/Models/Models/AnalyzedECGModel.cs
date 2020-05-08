@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Models.Models
 {
-    public class AnalyzedECGModel
+    public class AnalyzedECGModel : ECGModel
     {
         #region Attributes
 
@@ -18,12 +18,6 @@ namespace Models.Models
             private set { monitorId = value; }
         }
 
-        private string cpr;
-        public string CPR
-        {
-            get { return cpr; }
-            private set { cpr = value; }
-        }
 
         private int aECGID;
 
@@ -33,13 +27,7 @@ namespace Models.Models
             private set { aECGID = value; }
         }
 
-        private int ecgID;
 
-        public int ECGID
-        {
-            get { return ecgID; }
-            private set { ecgID = value; }
-        }
 
         private IllnessModel illness;
 
@@ -57,14 +45,6 @@ namespace Models.Models
             private set { stValues = value; }
         }
 
-        private List<double> values;
-
-        public List<double> Values
-        {
-            get { return values; }
-            set { values = value; }
-        }
-
 
         private int pulse;
 
@@ -74,13 +54,6 @@ namespace Models.Models
             set { pulse = value; }
         }
 
-        private DateTime date;
-
-        public DateTime Date
-        {
-            get { return date; }
-            private set { date = value; }
-        }
 
         private double baseline;
 
@@ -106,13 +79,6 @@ namespace Models.Models
             set { stDepressed = value; }
         }
 
-        private int sampleRate;
-
-        public int SampleRate
-        {
-            get { return sampleRate; }
-            private set { sampleRate = value; }
-        }
 
         private bool isRead;
 
@@ -135,26 +101,26 @@ namespace Models.Models
         #endregion
 
         #region Constructors
-        public AnalyzedECGModel(string cpr, int ecgID, int aECGID, DateTime date, int samplerate, List<double> values, int monitorID, bool isRead,IllnessModel illness, List<double> stValues)
-        {
-            CPR = cpr;
-            AECGID = aECGID;
-            ECGID = ecgID;
-            Illnes = illness;
-            Values = values;
-            STValues = stValues;
-            //Pulse = pulse;
-            Date = date;
-            SampleRate = samplerate;
-            MonitorID = monitorID;
-            IsRead = isRead;
-        }
+        //public AnalyzedECGModel(string cpr, int ecgID, int aECGID, DateTime date, int samplerate, List<double> values, int monitorID, bool isRead,IllnessModel illness, List<double> stValues)
+        //{
+        //    AECGID = aECGID;
+        //    Illnes = illness;
+        //    STValues = stValues;
+        //    //Pulse = pulse;
+        //    MonitorID = monitorID;
+        //    IsRead = isRead;
+        //}
 
         public AnalyzedECGModel() { }
+
+        public AnalyzedECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values, int monitorId, bool isAnalyzed) 
+            : base(cpr, ecgID, date, sampleRate, values, monitorId, isAnalyzed)
+        {
+        }
         #endregion
 
         #region Methods
 
-            #endregion
+        #endregion
     }
 }

@@ -51,25 +51,25 @@ namespace LogicTier
 
         public AnalyzeECG()
         {
-            //illnessList = new List<IllnessModel>();
-            //patientRef = new PatientModel();
-            //lDBRef = new TestDB();
-            //ecgList = new List<ECGModel>();
-            //ecgList = lDBRef.GetAllECGs();
-            //newECGList = new List<ECGModel>();
-            //foreach (ECGModel ecg in ecgList)
-            //{
-            //    if (!ecg.IsAnalyzed)
-            //    {
-            //        newECGList.Add(ecg);
-            //    }
-            //}
+            illnessList = new List<IllnessModel>();
+            patientRef = new PatientModel();
+            lDBRef = new TestDB();
+            ecgList = new List<ECGModel>();
+            ecgList = lDBRef.GetAllECGs();
+            newECGList = new List<ECGModel>();
+            foreach (ECGModel ecg in ecgList)
+            {
+                if (!ecg.IsAnalyzed)
+                {
+                    newECGList.Add(ecg);
+                }
+            }
 
-            ////Der oprettes nye aECG for alle nye ECG'er
-            //foreach (ECGModel ecg in newECGList)
-            //{
-            //    NewAECGModelsList.Add(new AnalyzedECGModel());
-            //}
+            //Der oprettes nye aECG for alle nye ECG'er
+            foreach (ECGModel ecg in newECGList)
+            {
+                NewAECGModelsList.Add(new AnalyzedECGModel());
+            }
         }
 
         //public List<ECGModel> LoadNewECGs(PatientModel patient) { throw new NotImplementedException(); }

@@ -88,19 +88,19 @@ namespace DataTier.Databaser
         //    }
         //}
 
-        public void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel monitor)
-        {
-            //UpdatePatient(patient);
+        //public void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel monitor)
+        //{
+        //    //UpdatePatient(patient);
 
-            //UpdateECGMonitor(monitor);
-            //for (int i = 0; i < monitorList.Count; i++)
-            //{
-            //    if (monitorList[i].ID == patient.ECGMonitorID)
-            //    {
-            //        monitorList[i].InUse = true;
-            //    }
-            //}
-        }
+        //    //UpdateECGMonitor(monitor);
+        //    //for (int i = 0; i < monitorList.Count; i++)
+        //    //{
+        //    //    if (monitorList[i].ID == patient.ECGMonitorID)
+        //    //    {
+        //    //        monitorList[i].InUse = true;
+        //    //    }
+        //    //}
+        //}
 
         public void UpdatePatient(PatientModel patient)
         {
@@ -128,10 +128,5 @@ namespace DataTier.Databaser
         {
             throw new NotImplementedException();
         }
-
-        //public void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }

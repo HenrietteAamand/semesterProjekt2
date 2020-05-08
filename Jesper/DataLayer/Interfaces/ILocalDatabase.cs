@@ -22,7 +22,7 @@ namespace DataTier.Interfaces
 
 
         //Gem
-        void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel monitor);
+        //void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel monitor);
 
         void CreatePatient(PatientModel patient);
 
