@@ -39,24 +39,54 @@ namespace RPi_EKG_program
             displayController.ShowGreeting(CPRNAVN, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
             Thread.Sleep(6000);
 
+           
+
+
+            displayController.ScreenShow(2, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            Thread.Sleep(5000);
+
+            displayController.ScreenShow(3, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            Thread.Sleep(5000);
+
+     
+
+            displayController.ScreenShow(5, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            Thread.Sleep(5000);
+
+            displayController.ScreenShow(6, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            Thread.Sleep(5000);
+
+            displayController.ScreenShow(7, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            Thread.Sleep(5000);
+
+            displayController.ScreenShow(8, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            Thread.Sleep(5000);
+            bool Updatescreen = true;
             DateTime StartTime = DateTime.Now;
             DateTime EndTime = DateTime.Now;
             TimeSpan MeasureTime = EndTime - StartTime;
-
-
-            displayController.ScreenShow(4);
 
             while (MeasureTime.TotalSeconds < 40)
             {
              
                 EndTime = DateTime.Now;
                 MeasureTime = EndTime - StartTime;
-                displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                if (Updatescreen)
+                {
+                    displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                    Updatescreen = false;
+                }
+                else
+                {
+                    Updatescreen = true;
+                }
                 Thread.Sleep(10);
-
 
             }
 
+
+            displayController.ScreenShow(5, test, LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            Thread.Sleep(5000);
 
 
 
