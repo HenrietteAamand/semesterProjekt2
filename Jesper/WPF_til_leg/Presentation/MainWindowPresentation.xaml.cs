@@ -52,5 +52,12 @@ namespace WPF_til_leg.Presentation
             settingsFlyOut.IsOpen = true;
         }
 
+        private void UploadB_Click(object sender, RoutedEventArgs e)
+        {
+            if (idT.Text != null)
+            {
+
+            }
+        }
     }
 }
