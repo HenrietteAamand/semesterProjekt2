@@ -3,63 +3,128 @@ using RaspberryPiCore.ADC;
 using RaspberryPiCore.TWIST;
 using RaspberryPiCore.LCD;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace RPi_EKG_program
 {
     class Program
     {
-        //    >DebugAdapterHost.Launch /LaunchJson:"C:\Users\emils\Source\Repos\semesterProjekt2\RPi-EKG-program\launch.json" /EngineGuid:541B8A8A-6081-4506-9F0A-1CE771DEBC04
-        private SDStorage LocalStorage;
-
-
-
-        static void Main(string[] args)
-        {
-            Display displayController = new Display();
-            DatabaseIF LokalDB = new DatabaseIF();
-
-            SDStorage LocalStorage = new SDStorage();
-
-
-            ADC ADconverter = new ADC();
-            bool test = true;
-            test = LokalDB.isConnected();
-
-
-
-            ADconverter.isCableConnected();
-            //displayController.ScreenShow(4);
-
-            LocalStorage.StoreInfoLocal("080596-1234;Emil");
-
-            string CPRNAVN = LocalStorage.getInfoLocal();
-
-            displayController.ScreenShow(4);
-
-            //displayController.ShowGreeting(CPRNAVN);
-
-            displayController.updateMenuBar(LokalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
-
-
-            //Hvis batteri er over 5.
-
-
-
-            DateTime Start = DateTime.Now;
-            List<double> Test = new List<double>();
-            Measurement measurement = new Measurement("123456-7890", Test, Start, 0.02, "54321");
-
-            //for (int i = 0; i < /*40sek*/; i++)
-            //{
-            //    measurement.addToList(ADconverter.measureSignal());
-
-
-            //}
-
-
-            //}
+           
+        private const string MonitorID = "Måler1";
+        private static int sampleRate = 10;
 
         
+        static void Main(string[] args)
+        {
+
+            Display displayController = new Display();
+            DatabaseIF LocalDB = new DatabaseIF();
+            SDStorage LocalStorage = new SDStorage();
+            ADC ADconverter = new ADC();
+            Start_Button StartB = new Start_Button();
+            
+
+                                
+
+            while (LocalStorage.getCPRLocal() == null)
+            {
+                displayController.ScreenShow(7, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                
+                if (LocalDB.isConnected())
+                {
+                    LocalStorage.StoreInfoLocal(LocalDB.RecieveData(MonitorID));
+
+                }
+
+            }
+
+            displayController.ShowGreeting(LocalStorage.getInfoLocal(), LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+
+            Thread.Sleep(5000);
+
+
+            while (true)
+            {
+                if (LocalDB.isConnected() && LocalStorage.checkUnSentData()!=0)
+                {
+                    displayController.ScreenShow(6, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                    Thread.Sleep(1000);
+
+                    foreach (var item in LocalStorage.FindUnSentData())
+                    {
+                        LocalDB.sendData(item);
+                    }
+                    Thread.Sleep(5000);
+
+                }
+
+                while (ADconverter.checkBattery() == 1)
+                {
+                    displayController.ScreenShow(8, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                    Thread.Sleep(3000);
+                }
+
+                displayController.ScreenShow(3, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+
+                if (StartB.isPressed())
+                {
+                    if (ADconverter.isCableConnected() == true)
+                    {
+
+                      
+                        DateTime StartTime = DateTime.Now;
+                        DateTime EndTime = DateTime.Now;
+                        TimeSpan MeasureTime = EndTime - StartTime;
+
+                        Measurement NewMeasurement = new Measurement(LocalStorage.getCPRLocal(), new List<double>(), DateTime.Now, (sampleRate/1000),MonitorID );
+
+                        while (MeasureTime.TotalSeconds < 40)
+                        {
+                            NewMeasurement.addToList(ADconverter.measureSignal());
+                            EndTime = DateTime.Now;
+                            MeasureTime = EndTime - StartTime;
+                            displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                          
+                     
+                            Thread.Sleep(sampleRate);
+
+                        }
+
+                        LocalStorage.StoreDataLocal(NewMeasurement);
+
+                        if (LocalDB.isConnected())
+                        {
+                            displayController.ScreenShow(6, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+
+                            LocalDB.sendData(NewMeasurement);
+
+                        }
+                        else
+                        {
+
+                            displayController.ScreenShow(5, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                            Thread.Sleep(10000);
+
+                        }
+
+                        /*displayController.ScreenShow(3);*///Denne behøves ikke, da den alligevel breaker While og viser skærm 3.
+
+
+
+                    }
+
+                    else
+                    {
+                        displayController.ScreenShow(2, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                        Thread.Sleep(5000);
+                    }
+
+                }
+
+
+            }
+
         }
+
     }
 }
