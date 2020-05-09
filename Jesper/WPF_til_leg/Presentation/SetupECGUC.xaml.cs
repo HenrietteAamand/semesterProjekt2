@@ -21,7 +21,7 @@ namespace WPF_til_leg.Presentation
         
         private List<ECGMonitorModel> monitorList;
         private List<PatientModel> patientList;
-
+       
 
         public SetupECGUC()
         {
@@ -46,13 +46,14 @@ namespace WPF_til_leg.Presentation
                 string item = $"PatientID {patient.ID}";
                 PatientIDCB.Items.Add(item);
             }
+            PatientIDCB.IsEnabled = false;
 
         }
 
         //Trykker på Tilknyt knappen:
         private void LinkECGB_Click(object sender, RoutedEventArgs e)
         {
-            string patientIDString = EcgCB.SelectedItem.ToString().Remove(0,9);
+            string patientIDString = PatientIDCB.SelectedItem.ToString().Remove(0,9);
             
             int ecgMonitorID = 0;
             string ecgMonitorString = EcgCB.SelectedItem.ToString();
@@ -89,6 +90,7 @@ namespace WPF_til_leg.Presentation
                 
                 SetupTB.Visibility = Visibility.Visible;
                 SetupTB.Text = "EKG-måler er ikke i brug.";
+                PatientIDCB.IsEnabled = true;
             }
             else
             {

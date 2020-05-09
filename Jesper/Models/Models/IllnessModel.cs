@@ -5,7 +5,7 @@ namespace Models.Models
     public class IllnessModel
     {
         #region Attributes
-        private int id;
+        
         private string name;
         private string about;
         private bool stSegmentElevated;
@@ -16,13 +16,20 @@ namespace Models.Models
         #endregion
 
         #region Properties
+        private int id;
+
+        public int Id
+        {
+            get { return id; }
+            set { id = value; }
+        }
 
         #endregion
 
         #region Constructor
         public IllnessModel(int id, string name, string about, double stMax, double srMax, bool stSegmentElevated, bool stSegmentDepressed)
         {
-            this.id = id;
+            Id = id;
             this.name = name;
             this.about = about;
             this.stMax = stMax;

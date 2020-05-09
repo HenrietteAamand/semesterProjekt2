@@ -25,15 +25,21 @@ namespace WPF_til_leg.Presentation
     /// </summary>
     public partial class MainWindowPresentation : MetroWindow
     {
+        private MainWindowLogic mainObj;
+        private ChartECG chartObj;
 
         public MainWindowPresentation()
         {
             InitializeComponent();
             ShowDialog();
 
-      
-            
+            while (idT.Text == null)
+            {
+                UploadB.IsEnabled = false;
+            }
 
+            mainObj = new MainWindowLogic();
+            chartObj = new ChartECG();
         }
 
         async Task ShowDialog()
@@ -54,10 +60,48 @@ namespace WPF_til_leg.Presentation
 
         private void UploadB_Click(object sender, RoutedEventArgs e)
         {
-            if (idT.Text != null)
-            {
-                
-            }
+            uploadPressed.Visibility = Visibility.Hidden;
+            okB.Visibility = Visibility.Visible;
+            cancelB.Visibility = Visibility.Visible;
+        }
+
+        private void cancelB_Click(object sender, RoutedEventArgs e)
+        {
+            uploadPressed.Visibility = Visibility.Visible;
+            okB.Visibility = Visibility.Hidden;
+            cancelB.Visibility = Visibility.Hidden;
+            idT.Clear();
+        }
+
+        private void okB_Click(object sender, RoutedEventArgs e)
+        {
+            uploadPressed.Visibility = Visibility.Visible;
+            okB.Visibility = Visibility.Hidden;
+            cancelB.Visibility = Visibility.Hidden;
+                        
+            mainObj.UploadData(idT.Text);
+
+            idT.Text = "Måling uploaded.";
+
+        }
+
+        private void patientsLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            String cpr = patientsLV.SelectedItem.ToString();
+
+            CPRTB.Text = cpr;
+            NavnTB.Text = mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
+            //AlderTB.Text = mainObj.GetAge(cpr).Age;
+            //KonTB.Text = mainObj.GetIsAMan(cpr).Gender;
+            ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
+
+        }
+
+        private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            String ecg = ecgLV.SelectedItem.ToString();
+            chartObj.MakeChart(mainObj.GetECGValues(Convert.ToInt32(ecg)));
         }
     }
 }

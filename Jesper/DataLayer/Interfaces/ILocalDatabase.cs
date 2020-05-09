@@ -20,19 +20,21 @@ namespace DataTier.Interfaces
 
         List<IllnessModel> GetAllIllnesses();
 
+        IllnessModel getIllness(int id);
+
 
         //Gem
-        void UpdateLinkECGToPatient(string cpr, int ecgMonitorID);
+        void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel ecgMonitor);
 
         void CreatePatient(PatientModel patient);
 
-        void UpdateResetECGMonitor(int ecgMonitorID);
+        void UpdateResetECGMonitor(ECGMonitorModel ecgMonitor);
 
-        void UpdateIsAnalyzed(int ecgID);
+        void UpdateIsAnalyzed(ECGModel ecgID);
 
         void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg);
 
-        void UpdateIsRead(int aECGID);
+        void UpdateIsRead(AnalyzedECGModel analyzedECG);
 
 
 
