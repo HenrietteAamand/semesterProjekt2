@@ -26,6 +26,7 @@ namespace WPF_til_leg.Presentation
     public partial class MainWindowPresentation : MetroWindow
     {
         private MainWindowLogic mainObj;
+        private ChartECG chartObj;
 
         public MainWindowPresentation()
         {
@@ -38,7 +39,7 @@ namespace WPF_til_leg.Presentation
             }
 
             mainObj = new MainWindowLogic();
-
+            chartObj = new ChartECG();
         }
 
         async Task ShowDialog()
@@ -99,7 +100,8 @@ namespace WPF_til_leg.Presentation
 
         private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            // Vis graf for valgte måling
+            String ecg = ecgLV.SelectedItem.ToString();
+            chartObj.MakeChart(mainObj.GetECGValues(Convert.ToInt32(ecg)));
         }
     }
 }

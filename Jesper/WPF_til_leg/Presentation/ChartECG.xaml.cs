@@ -26,20 +26,25 @@ namespace WPF_til_leg.Presentation
         public ChartECG()
         {
             InitializeComponent();
+            
+            
+        }
+
+        public void MakeChart(List<double> ecg)
+        {
             series = new SeriesCollection();
             ECGSeriesVisibility = true;
             BaseLineSeriesVisibility = true;
             STSeriesVisibility = false;
-            List<double> ecg = new List<double>();
-            ecg = mainLogic.GetECGValues(1);
+            List<double >ecg1 = new List<double>();
+            ecg1 = ecg;
             line.Values = new ChartValues<double>();
-            for (int i = 0; i < ecg.Count; i++)
+            for (int i = 0; i < ecg1.Count; i++)
             {
-                line.Values.Add(ecg[i]);
+                line.Values.Add(ecg1[i]);
             }
             series.Add(line);
             DataContext = this;
-            
         }
 
         public bool ECGSeriesVisibility
