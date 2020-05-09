@@ -74,14 +74,13 @@ namespace WPF_til_leg.Presentation
 
         private void okB_Click(object sender, RoutedEventArgs e)
         {
-            uploadPressed.Visibility = Visibility.Hidden;
-            okB.Visibility = Visibility.Visible;
+            uploadPressed.Visibility = Visibility.Visible;
+            okB.Visibility = Visibility.Hidden;
             cancelB.Visibility = Visibility.Hidden;
-            okB.IsEnabled = false;
-            idT.Visibility = Visibility.Visible;
-            idT.Text = "Måling uploaded.";
+                        
+            mainObj.UploadData(idT.Text);
 
-            // Databinding med den valgte måling -> UploadData();
+            idT.Text = "Måling uploaded.";
 
         }
 
@@ -94,6 +93,13 @@ namespace WPF_til_leg.Presentation
             NavnTB.Text = mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
             //AlderTB.Text = mainObj.GetAge(cpr).Age;
             //KonTB.Text = mainObj.GetIsAMan(cpr).Gender;
+            ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
+
+        }
+
+        private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // Vis graf for valgte måling
         }
     }
 }

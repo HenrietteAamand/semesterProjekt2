@@ -168,7 +168,7 @@
                     BorderThickness="0.5"
                     SelectedIndex="0"
                     Width="200"
-                    Style="{StaticResource MahApps.Styles.ListView.Virtualized}">
+                    Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="ecgLV_SelectionChanged">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Målinger" />
