@@ -182,7 +182,30 @@ namespace LogicTier
 			return patient;
 		}
 
+		public int GetAge(string cpr)
+		{
+			cpr = cpr.Replace("-", "");
+			cpr = cpr.Remove(6);
+			DateTime birthday = DateTime.ParseExact(cpr, "ddmmyy", null);
+			int result = new DateTime(DateTime.Now.Subtract(birthday).Ticks).Year - 1;
+			if (result > 110)
+			{
+				result = -100;
+			}
+			return result;
+		}
 
+		public bool IsAMan(string cpr)
+		{
+			bool result = false;
+
+			int tal = Convert.ToInt32(cpr.Remove(0, 10));
+			if (tal % 2 != 0)
+			{
+				result = true;
+			}
+			return result;
+		}
 
 	}
 }
