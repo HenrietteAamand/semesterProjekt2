@@ -13,10 +13,10 @@ namespace DataTier.Databaser
         ECGModel ecg1 = new ECGModel("123456-7890", 1, (new DateTime(2011, 1, 1)), 50,
             (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1, false);
 
-        AnalyzedECGModel aECG = new AnalyzedECGModel("123456-7890", 1, 1, (new DateTime(2011, 1, 1)), 50,
-            (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1, false,
-            (new IllnessModel(1, "st", "not good", 2, 4, false, false)),
-            new List<double> { 4, 4, 4, 5, 4, 3.5, 4.5, 4, 4 });
+        //AnalyzedECGModel aECG = new AnalyzedECGModel("123456-7890", 1, 1, (new DateTime(2011, 1, 1)), 50,
+        //    (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1, false,
+        //    (new IllnessModel(1, "st", "not good", 2, 4, false, false)),
+        //    new List<double> { 4, 4, 4, 5, 4, 3.5, 4.5, 4, 4 });
         ECGMonitorModel monitor = new ECGMonitorModel(1, false);
         PatientModel patient = new PatientModel("123456-7890", "Peter", "Petersen");
         IllnessModel illness = new IllnessModel(1, "st", "not good", 2, 4, false, false);
@@ -28,8 +28,8 @@ namespace DataTier.Databaser
         List<IllnessModel> illnessList = new List<IllnessModel>();
         public TestDB()
         {
-            aECG.STStartIndex = 1;
-            aECGList.Add(aECG);
+            //aECG.STStartIndex = 1;
+            //aECGList.Add(aECG);
             ecgList.Add(ecg1);
             patientList.Add(patient);
             monitorList.Add(monitor);

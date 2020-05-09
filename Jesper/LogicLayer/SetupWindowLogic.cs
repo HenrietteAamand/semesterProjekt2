@@ -25,12 +25,12 @@ namespace LogicTier
             DB = new TestDB();
             patientList = DB.GetAllPatients();
             ecgMonitorList = DB.GetAllECGMonitors();
-            newPatient("112233-4455", "Jens", "Jensen");
-            LinkECGToPatient("112233-4455", 1);
-            ResetECGMonitor(1);
-            getAllMonitors();
-            getAllPatiens();
-            monitorInUse(1);
+            //newPatient("112233-4455", "Jens", "Jensen");
+            //LinkECGToPatient("112233-4455", 1);
+            //ResetECGMonitor(1);
+            //getAllMonitors();
+            //getAllPatiens();
+            //monitorInUse(1);
         }
 
         public void newPatient(string cpr, string firstName, string lastName)

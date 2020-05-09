@@ -25,6 +25,8 @@ namespace LogicTier
 			DOEDB = new DOEDB();
 			patientList = DB.GetAllPatients();
 			aECGList = DB.GetAllAnalyzedECGs();
+			GetAge("010156-7890");
+			IsAMan("123456-7890");
 		}
 
 		public List<AnalyzedECGModel> GetAECGListForPatient(string cpr)
@@ -184,15 +186,27 @@ namespace LogicTier
 
 		public int GetAge(string cpr)
 		{
-			throw new NotImplementedException();
+			cpr = cpr.Replace("-", "");
+			cpr= cpr.Remove(6);
+			DateTime birthday = DateTime.ParseExact(cpr, "ddmmyy", null);
+			int result = new DateTime(DateTime.Now.Subtract(birthday).Ticks).Year - 1;
+			if (result>110)
+			{
+				result =- 100;
+			}
+			return result;
 		}
 
 		public bool IsAMan(string cpr)
 		{
-			throw new NotImplementedException();
-			//bool result;
-			//cpr.ToString()
-			//if(cpr.ToString())
+			bool result = false;
+
+			int tal = Convert.ToInt32(cpr.Remove(0, 10));
+			if (tal%2!=0)
+			{
+				result = true;
+			}
+			return result;
 		}
 
 	}
