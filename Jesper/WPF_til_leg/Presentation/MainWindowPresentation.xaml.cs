@@ -52,7 +52,6 @@ namespace WPF_til_leg.Presentation
             }
 
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             settingsFlyOut.IsOpen = true;
@@ -89,11 +88,11 @@ namespace WPF_til_leg.Presentation
         {
 
             String cpr = patientsLV.SelectedItem.ToString();
-
+           
             CPRTB.Text = cpr;
             NavnTB.Text = mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
-            //AlderTB.Text = mainObj.GetAge(cpr).Age;
-            //KonTB.Text = mainObj.GetIsAMan(cpr).Gender;
+            AlderTB.Text = Convert.ToString(mainObj.GetAge(cpr));
+            KonTB.Text = Convert.ToString(mainObj.IsAMan(cpr));
             ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
 
         }
