@@ -34,9 +34,9 @@ namespace Models.Models
             private set { date = value; }
         }
 
-        private int sampleRate;
+        private double sampleRate;
 
-        public int SampleRate
+        public double SampleRate
         {
             get { return sampleRate; }
             private set { sampleRate = value; }
@@ -66,9 +66,9 @@ namespace Models.Models
             set { isAnalyzed = value; }
         }
 
-        private int monitorId;
+        private string monitorId;
 
-        public int MonitorId
+        public string MonitorId
         {
             get { return monitorId; }
             set { monitorId = value; }
@@ -79,7 +79,7 @@ namespace Models.Models
         #endregion
 
         #region Constructor
-        public ECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values, int monitorId, bool isAnalyzed)
+        public ECGModel(string cpr, int ecgID, DateTime date, double sampleRate, List<double> values, string monitorId, bool isAnalyzed)
         {
             CPR = cpr;
             ECGID = ecgID;

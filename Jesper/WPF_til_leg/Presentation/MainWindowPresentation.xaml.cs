@@ -17,6 +17,10 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using WPF_til_leg;
 using LogicTier;
+using DataTier;
+using DataTier.Interfaces;
+using DataTier.Databaser;
+using Models.Models;
 
 namespace WPF_til_leg.Presentation
 {
@@ -25,12 +29,14 @@ namespace WPF_til_leg.Presentation
     /// </summary>
     public partial class MainWindowPresentation : MetroWindow
     {
+        private ILocalDatabase DB;
 
         public MainWindowPresentation()
         {
             InitializeComponent();
             ShowDialog();
 
+            DB = new Database();
       
             
 
@@ -52,12 +58,25 @@ namespace WPF_til_leg.Presentation
             settingsFlyOut.IsOpen = true;
         }
 
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            settingsFlyOut.IsOpen = true;
+        }
+
         private void UploadB_Click(object sender, RoutedEventArgs e)
         {
-            if (idT.Text != null)
-            {
+            DateTime date = new DateTime(2019, 05, 05);
+            IllnessModel illness = new IllnessModel(1, "prove", "Nothing", 2, 3, false, false);
+            List<double> values = new List<double>() { 1.3, 2.3, 3.3 };
+            List<double> stvalues = new List<double>() { 5.4, 6.4, 7.4 };
+            AnalyzedECGModel aECG = new AnalyzedECGModel("121212-1212", 10, 2, date, 0.002, values, "Måler2", false, illness, stvalues, true);
+
+            DB.UploadAnalyzedECGs(aECG);
+
+            //if (idT.Text != null)
+            //{
                 
-            }
+            //}
         }
     }
 }

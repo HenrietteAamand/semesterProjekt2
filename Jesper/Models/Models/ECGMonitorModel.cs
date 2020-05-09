@@ -18,9 +18,9 @@ namespace Models.Models
             set { inUse = value; }
         }
 
-        private int id;
+        private string id;
 
-        public int ID
+        public string ID
         {
             get { return id; }
             private set { id = value; }
@@ -31,9 +31,9 @@ namespace Models.Models
         #endregion
 
         #region Constructor
-        public ECGMonitorModel(int id, bool inUse)
+        public ECGMonitorModel(string id, bool inUse)
         {
-            this.id = id;
+            ID = id;
             InUse = inUse;
         }
 
