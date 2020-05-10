@@ -69,9 +69,10 @@ namespace WPF_til_leg.Presentation
             IllnessModel illness = new IllnessModel(1, "prove", "Nothing", 2, 3, false, false);
             List<double> values = new List<double>() { 1.3, 2.3, 3.3 };
             List<double> stvalues = new List<double>() { 5.4, 6.4, 7.4 };
-            AnalyzedECGModel aECG = new AnalyzedECGModel("121212-1212", 10, 2, date, 0.002, values, "Måler2", false, illness, stvalues, true);
+            ECGModel ECG = new ECGModel("121212-1212", 10, date, 0.002, values, "Måler2", true);
+            
 
-            DB.UploadAnalyzedECGs(aECG);
+            DB.UpdateIsAnalyzed(ECG);
 
             //if (idT.Text != null)
             //{

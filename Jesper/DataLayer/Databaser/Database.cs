@@ -43,7 +43,7 @@ namespace DataTier.Databaser
             }
             
             connection.Close();
-        } //virker
+        } //virker - burde måske laves om til executenonquery
 
         public IllnessModel getIllness(int id)
         {
@@ -234,15 +234,14 @@ namespace DataTier.Databaser
 
             connection.Open();
 
-                string insertStringParam = "UPDATE dbo.ECG SET IsAnalyzed = " + ecg.IsAnalyzed + " WHERE ECGID =" + ecg.ECGID;
-                using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
-                {
-                    reader = cmd.ExecuteReader();
-                    reader.Read();
-                }
+            string insertStringParam = "UPDATE dbo.ECG SET IsAnalyzed = " + Convert.ToByte(ecg.IsAnalyzed) + " WHERE ECGID =" + ecg.ECGID;
+            using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
 
             connection.Close();
-        }
+        } //virker
 
         public void UpdateIsRead(AnalyzedECGModel analyzedECG)
         {
@@ -276,7 +275,7 @@ namespace DataTier.Databaser
                 reader.Read();    
             }
             connection.Close();
-        } // virker
+        } // virker - burde måske laves om til executenonquery
 
         public void UpdateECGMonitor(ECGMonitorModel ecgMonitor)
         {
@@ -290,8 +289,8 @@ namespace DataTier.Databaser
                     reader = cmd.ExecuteReader();
                     reader.Read();
                 }
-            connection.Close();  
-        } //Virker
+            connection.Close();
+        } //Virker - burde måske laves om til executenonquery
 
         public void UpdateAnalyzedECG(AnalyzedECGModel analyzedEcg)
         {
@@ -299,23 +298,27 @@ namespace DataTier.Databaser
 
             connection.Open();
 
-            string insertStringParam = "UPDATE dbo.AnalyzedECG SET STStartIndex = " + analyzedEcg.STStartIndex + ", Baseline = " + analyzedEcg.Baseline + ", IsRead = " + analyzedEcg.IsRead + " WHERE AECGID = " + analyzedEcg.AECGID;
+            string insertStringParam = "UPDATE dbo.AnalyzedECG SET STStartIndex = " + analyzedEcg.STStartIndex + ", Baseline = " + analyzedEcg.Baseline + ", IsRead = " + Convert.ToByte(analyzedEcg.IsRead) + " WHERE AECGID = " + analyzedEcg.AECGID;
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
-                reader = cmd.ExecuteReader();
-                reader.Read();
+                cmd.ExecuteNonQuery();
+                
             }
             connection.Close();
 
-        }
+        } // virker
 
         public void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg)
         {
+            double[] values = (analyzedEcg.Values).ToArray();
+            double[] stvalues = (analyzedEcg.STValues).ToArray();
+            DateTime date = Convert.ToDateTime(analyzedEcg.Date);
+
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
 
-            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG (AECGID, ECGID, CPR, Illness, Date, BLOBstValues, Samplerate, MonitorID, IsRead) VALUES (@AECGID, @ECGID, @CPR, @BLOBValues, @Illness, @Date, @BLOBstValues, @Samplerate, @MonitorID, @IsRead)";
+            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG (AECGID, ECGID, CPR, BLOBValues,Illness, Date, BLOBstValues, Samplerate, MonitorID, IsRead) VALUES (@AECGID, @ECGID, @CPR, @BLOBValues, @Illness, @Date, @BLOBstValues, @Samplerate, @MonitorID, @IsRead)";
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.CommandText = insertStringParam;
@@ -323,21 +326,21 @@ namespace DataTier.Databaser
                 cmd.Parameters.AddWithValue("@ECGID", analyzedEcg.ECGID);            
                 cmd.Parameters.AddWithValue("@CPR", analyzedEcg.CPR);
                 cmd.Parameters.AddWithValue("@Illness", analyzedEcg.Illnes.Id);
-                cmd.Parameters.AddWithValue("@Date", (analyzedEcg.Date).ToLongDateString());
+                cmd.Parameters.AddWithValue("@Date", date);
                 cmd.Parameters.AddWithValue("@Samplerate", analyzedEcg.SampleRate);
                 cmd.Parameters.AddWithValue("@IsRead", analyzedEcg.IsRead);
                 cmd.Parameters.AddWithValue("@MonitorID", analyzedEcg.MonitorID);
-                cmd.Parameters.AddWithValue("@BLOBValues", analyzedEcg.Values.SelectMany(value => BitConverter.GetBytes(value).ToList()).ToArray());
-                cmd.Parameters.AddWithValue("@BLOBstValues", analyzedEcg.STValues.SelectMany(value => BitConverter.GetBytes(value).ToList()).ToArray());
+                cmd.Parameters.AddWithValue("@BLOBValues", values.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
+                cmd.Parameters.AddWithValue("@BLOBstValues", stvalues.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
 
                 
 
-                reader = cmd.ExecuteReader(); 
+                cmd.ExecuteNonQuery(); 
                 
-                reader.Read();
+                
             }
 
             connection.Close();
-        }
+        } //Virker
     }
 }
