@@ -16,11 +16,11 @@ namespace RPi_EKG_program
 
         public DatabaseIF()
         {
-            connection = new SqlConnection("Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + "; User ID=" + db + ";Password=" + db + "");
-
-
+            //connection = new SqlConnection("Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + "; User ID=" + db + ";Password=" + db + "");
+            connection = new SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\PrivateDatabase.mdf;Integrated Security=True");
+            //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\emils\source\repos\semesterProjekt2\RPi - EKG - program\PrivateDatabase.mdf; Integrated Security = True
+            //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\EMILS\SOURCE\REPOS\SEMESTERPROJEKT2\RPI-EKG-PROGRAM\PRIVATEDATABASE.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
         }
-
 
 
         public bool isConnected()

@@ -21,6 +21,25 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Table\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="PrivateDatabaseDataSet.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>PrivateDatabaseDataSet.xsd</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="PrivateDatabaseDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>PrivateDatabaseDataSet.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
   <Target Name="LinuxDeployment" AfterTargets="PostBuildEvent">
     <Message Importance="high" Text="Linux deployment locally after VS Build of $(ProjectName)" />
     <MSBuild Condition="'$(DeployOnBuild)'!='true'" Projects="$(MSBuildProjectFullPath)" Properties="DeployOnBuild=true;PublishProfile=RPi;" />
