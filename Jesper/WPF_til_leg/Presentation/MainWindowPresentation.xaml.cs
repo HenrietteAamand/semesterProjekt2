@@ -77,7 +77,7 @@ namespace WPF_til_leg.Presentation
             uploadPressed.Visibility = Visibility.Visible;
             okB.Visibility = Visibility.Hidden;
             cancelB.Visibility = Visibility.Hidden;
-                        
+
             mainObj.UploadData(idT.Text);
 
             idT.Text = "Måling uploaded.";
@@ -88,7 +88,7 @@ namespace WPF_til_leg.Presentation
         {
 
             String cpr = patientsLV.SelectedItem.ToString();
-           
+
             CPRTB.Text = cpr;
             NavnTB.Text = mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
             AlderTB.Text = Convert.ToString(mainObj.GetAge(cpr));

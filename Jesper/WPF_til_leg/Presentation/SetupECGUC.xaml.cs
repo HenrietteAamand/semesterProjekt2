@@ -51,6 +51,7 @@ namespace WPF_til_leg.Presentation
         }
 
         //Trykker på Tilknyt knappen:
+        //PatientId tilknyttes til et ekgId:
         private void LinkECGB_Click(object sender, RoutedEventArgs e)
         {
             string patientIDString = PatientIDCB.SelectedItem.ToString().Remove(0,9);
