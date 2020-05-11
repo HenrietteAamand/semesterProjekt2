@@ -22,9 +22,12 @@ namespace RPi_EKG_program
             SDStorage LocalStorage = new SDStorage();
             ADC ADconverter = new ADC();
             Start_Button StartB = new Start_Button();
-            
 
-                                
+         
+            LocalDB.isConnected();
+
+
+
 
             while (LocalStorage.getCPRLocal() == null)
             {
@@ -71,10 +74,16 @@ namespace RPi_EKG_program
                     if (ADconverter.isCableConnected() == true)
                     {
 
-                      
+                        bool connection = LocalDB.isConnected();
+                       
+                        Byte lokalUnSent = LocalStorage.checkUnSentData();
+                        byte battery = ADconverter.checkBattery();
+
                         DateTime StartTime = DateTime.Now;
                         DateTime EndTime = DateTime.Now;
                         TimeSpan MeasureTime = EndTime - StartTime;
+
+                        
 
                         Measurement NewMeasurement = new Measurement(LocalStorage.getCPRLocal(), new List<double>(), DateTime.Now, (sampleRate/1000),MonitorID );
 
@@ -83,7 +92,7 @@ namespace RPi_EKG_program
                             NewMeasurement.addToList(ADconverter.measureSignal());
                             EndTime = DateTime.Now;
                             MeasureTime = EndTime - StartTime;
-                            displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                            displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, connection, lokalUnSent, battery);
                           
                      
                             Thread.Sleep(sampleRate);

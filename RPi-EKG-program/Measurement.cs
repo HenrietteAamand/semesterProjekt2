@@ -4,8 +4,10 @@ using System.Text;
 
 namespace RPi_EKG_program
 {
+    [Serializable]
     class Measurement
     {
+       
         public string CPRNr { get; private set; }
         public List<double> Measurements { get; private set; }
         public DateTime Dato { get; private set; }
