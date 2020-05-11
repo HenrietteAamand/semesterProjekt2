@@ -71,7 +71,7 @@ namespace WPF_til_leg.Presentation
             string ecgMonitorString = EcgCB.SelectedItem.ToString();
             ecgMonitorID = Convert.ToInt32(ecgMonitorString.Remove(0, 5));
 
-            setupObj.resetECGMonitor(ecgMonitorID);
+            setupObj.ResetECGMonitor(ecgMonitorID);
             SetupTB.Visibility = Visibility.Visible;
             SetupTB.Text = "Nulstilling gennemført.";
         }
