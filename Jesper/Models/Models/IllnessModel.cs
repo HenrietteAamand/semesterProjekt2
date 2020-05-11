@@ -10,8 +10,7 @@ namespace Models.Models
         private string about;
         private bool stSegmentElevated;
         private bool stSegmentDepressed;
-        private double stMax;
-        private double srMax;
+       
 
         #endregion
 
@@ -23,6 +22,24 @@ namespace Models.Models
             get { return id; }
             set { id = value; }
         }
+
+        private double stMax;
+
+        public double STMax
+        {
+            get { return stMax; }
+            private set { stMax = value; }
+        }
+
+        private double srMax;
+
+        public double SRMax
+        {
+            get { return srMax; }
+            private set { srMax = value; }
+        }
+
+
 
         #endregion
 

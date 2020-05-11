@@ -19,31 +19,61 @@ namespace WPF_til_leg.Presentation
         public SeriesCollection series { get; set; }
         //SeriesCollection series = new SeriesCollection();
         LineSeries line = new LineSeries();
+        public SeriesCollection series2 { get; set; }
+        //SeriesCollection series = new SeriesCollection();
+        LineSeries line2 = new LineSeries();
 
-        
+
 
 
         public ChartECG()
         {
             InitializeComponent();
-            
-            
+            analyzeLogic.CreateAnalyzedECGs();
+
+            series = new SeriesCollection();
+
+            MakeChart2(analyzeLogic.NewAECGModelsList[0].Values);
+            MakeST(analyzeLogic.NewAECGModelsList[0].Values, analyzeLogic.NewAECGModelsList[0].STValues.Count, analyzeLogic.NewAECGModelsList[0].STStartIndex);
+
+
         }
 
-        public void MakeChart(List<double> ecg)
+        public void MakeST(List<double> ecg, int length, int startIndex)
         {
-            series = new SeriesCollection();
             ECGSeriesVisibility = true;
             BaseLineSeriesVisibility = true;
             STSeriesVisibility = false;
             List<double >ecg1 = new List<double>();
             ecg1 = ecg;
+            for (int i = 0; i < ecg1.Count; i++)
+            {
+                if (i<startIndex || i>startIndex+length)
+                {
+                    ecg1[i] = double.NaN;
+                }
+            }
             line.Values = new ChartValues<double>();
             for (int i = 0; i < ecg1.Count; i++)
             {
                 line.Values.Add(ecg1[i]);
             }
             series.Add(line);
+            DataContext = this;
+        }
+        public void MakeChart2(List<double> ecg)
+        {
+            ECGSeriesVisibility = true;
+            BaseLineSeriesVisibility = true;
+            STSeriesVisibility = false;
+            List<double> ecg2 = new List<double>();
+            ecg2 = ecg;
+            line2.Values = new ChartValues<double>();
+            for (int i = 0; i < ecg2.Count; i++)
+            {
+                line2.Values.Add(ecg2[i]);
+            }
+            series.Add(line2);
             DataContext = this;
         }
 

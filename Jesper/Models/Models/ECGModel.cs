@@ -15,7 +15,7 @@ namespace Models.Models
         public string CPR
         {
             get { return cpr; }
-            private set { cpr = value; }
+            protected set { cpr = value; }
         }
 
         private int ecgID;
@@ -23,7 +23,7 @@ namespace Models.Models
         public int ECGID
         {
             get { return ecgID; }
-            private set { ecgID = value; }
+            protected set { ecgID = value; }
         }
 
         private DateTime date;
@@ -31,7 +31,7 @@ namespace Models.Models
         public DateTime Date
         {
             get { return date; }
-            private set { date = value; }
+            protected set { date = value; }
         }
 
         private int sampleRate;
@@ -39,7 +39,7 @@ namespace Models.Models
         public int SampleRate
         {
             get { return sampleRate; }
-            private set { sampleRate = value; }
+            protected set { sampleRate = value; }
         }
 
         private List<double> values;
@@ -47,7 +47,7 @@ namespace Models.Models
         public List<double> Values
         {
             get { return values; }
-            private set { values = value; }
+            protected set { values = value; }
         }
 
         private bool isAnalyzed;

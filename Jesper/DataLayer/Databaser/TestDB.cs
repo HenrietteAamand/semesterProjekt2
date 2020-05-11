@@ -126,7 +126,7 @@ namespace DataTier.Databaser
 
         public void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg)
         {
-            throw new NotImplementedException();
+            aECGList.Add(analyzedEcg);
         }
     }
 }

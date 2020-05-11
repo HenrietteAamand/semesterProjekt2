@@ -99,8 +99,8 @@ namespace WPF_til_leg.Presentation
 
         private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            String ecg = ecgLV.SelectedItem.ToString();
-            chartObj.MakeChart(mainObj.GetECGValues(Convert.ToInt32(ecg)));
+            //String ecg = ecgLV.SelectedItem.ToString();
+            //chartObj.MakeChart(mainObj.GetECGValues(Convert.ToInt32(ecg)));
         }
     }
 }

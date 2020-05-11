@@ -19,12 +19,16 @@ namespace Models.Models
         }
 
 
-        private int aECGID;
+        private int aECGID = 1;
 
         public int AECGID
         {
             get { return aECGID; }
-            private set { aECGID = value; }
+            private set
+            {
+                aECGID = value;
+                aECGID++;
+            }
         }
 
 
@@ -42,7 +46,7 @@ namespace Models.Models
         public List<double> STValues
         {
             get { return stValues; }
-            private set { stValues = value; }
+            set { stValues = value; }
         }
 
 
@@ -101,22 +105,24 @@ namespace Models.Models
         #endregion
 
         #region Constructors
-        //public AnalyzedECGModel(string cpr, int ecgID, int aECGID, DateTime date, int samplerate, List<double> values, int monitorID, bool isRead,IllnessModel illness, List<double> stValues)
-        //{
-        //    AECGID = aECGID;
-        //    Illnes = illness;
-        //    STValues = stValues;
-        //    //Pulse = pulse;
-        //    MonitorID = monitorID;
-        //    IsRead = isRead;
-        //}
+        public AnalyzedECGModel(string cpr, int ecgID, int aECGID, DateTime date, int samplerate, List<double> values, int monitorID)
+        {
+            CPR = cpr;
+            ECGID = ecgID;
+            AECGID = aECGID;
+            Date = date;
+            SampleRate = samplerate;
+            Values = values;
+            MonitorID = monitorID;
+            IsRead = false;
+        }
 
         public AnalyzedECGModel() { }
 
-        public AnalyzedECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values, int monitorId, bool isAnalyzed) 
-            : base(cpr, ecgID, date, sampleRate, values, monitorId, isAnalyzed)
-        {
-        }
+        //public AnalyzedECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values, int monitorId, bool isAnalyzed) 
+        //    : base(cpr, ecgID, date, sampleRate, values, monitorId, isAnalyzed)
+        //{
+        //}
         #endregion
 
         #region Methods

@@ -99,6 +99,7 @@ namespace LogicTier
 
 		public AnalyzedECGModel GetAnalyzedECG(int aECGID)
 		{
+			aECGList = DB.GetAllAnalyzedECGs();
 			AnalyzedECGModel result = new AnalyzedECGModel();
 			foreach (AnalyzedECGModel aECG in aECGList)
 			{
