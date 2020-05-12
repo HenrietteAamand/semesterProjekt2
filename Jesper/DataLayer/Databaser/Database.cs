@@ -38,12 +38,12 @@ namespace DataTier.Databaser
                 cmd.Parameters.AddWithValue("@FirstName", patient.FirstName);
                 cmd.Parameters.AddWithValue("@LastName", patient.LastName);
 
-                reader = cmd.ExecuteReader();
-                reader.Read();
+                cmd.ExecuteNonQuery();
+                
             }
             
             connection.Close();
-        } //virker - burde måske laves om til executenonquery
+        } //virker /
 
         public IllnessModel getIllness(int id)
         {
@@ -57,7 +57,7 @@ namespace DataTier.Databaser
             reader = command.ExecuteReader();
 
 
-            if (reader.Read()) //kunne godt laves om til if
+            if (reader.Read())
             {
 
                 illness = new IllnessModel(Convert.ToInt32(reader["ID"]), Convert.ToString(reader["Name"]),
@@ -68,7 +68,7 @@ namespace DataTier.Databaser
 
             connection.Close();
             return illness;
-        } //virker
+        } //virker /
 
         public List<AnalyzedECGModel> GetAllAnalyzedECGs()
         {
@@ -137,7 +137,7 @@ namespace DataTier.Databaser
             connection.Close();
             return ecgMonitors;
 
-        } // virker
+        } // virker /
 
         public List<ECGModel> GetAllECGs()
         {
@@ -172,7 +172,7 @@ namespace DataTier.Databaser
             reader.Close();
             connection.Close();
             return measurements;
-        } // virker
+        } // virker /
 
         public List<IllnessModel> GetAllIllnesses()
         {
@@ -199,7 +199,7 @@ namespace DataTier.Databaser
             connection.Close();
             return illness;
 
-        } //virker
+        } //virker /
 
         public List<PatientModel> GetAllPatients()
         {
@@ -225,7 +225,7 @@ namespace DataTier.Databaser
             connection.Close();
             return patients;
             
-        } //Virker 
+        } //Virker /
 
         public void UpdateIsAnalyzed(ECGModel ecg)
         {
@@ -242,23 +242,7 @@ namespace DataTier.Databaser
 
             connection.Close();
         } //virker
-
-        public void UpdateIsRead(AnalyzedECGModel analyzedECG)
-        {
-            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
-
-            connection.Open();
-
-
-                string insertStringParam = "UPDATE dbo.AnalyzedECG SET IsRead = 1 WHERE AECGID =" + analyzedECG.AECGID;
-                using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
-                {
-                    reader = cmd.ExecuteReader();
-                    reader.Read();
-                }
-            connection.Close();
-        } // skal ikke være der
-
+       
         public void UpdatePatient(PatientModel patient)
         {
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
@@ -271,11 +255,10 @@ namespace DataTier.Databaser
                 cmd.CommandText = insertStringParam;
                 cmd.Parameters.AddWithValue("@LinkedECG", patient.ECGMonitorID);
 
-                reader = cmd.ExecuteReader();
-                reader.Read();    
+                cmd.ExecuteNonQuery();    
             }
             connection.Close();
-        } // virker - burde måske laves om til executenonquery
+        } // virker /
 
         public void UpdateECGMonitor(ECGMonitorModel ecgMonitor)
         {
@@ -283,14 +266,13 @@ namespace DataTier.Databaser
 
             connection.Open();
 
-                string insertStringParam = "UPDATE dbo.ECGMonitor SET inUse = " + Convert.ToByte(ecgMonitor.InUse)+ " WHERE ECGMonitorID = '" + ecgMonitor.ID + "'";
-                using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
-                {
-                    reader = cmd.ExecuteReader();
-                    reader.Read();
-                }
+            string insertStringParam = "UPDATE dbo.ECGMonitor SET inUse = " + Convert.ToByte(ecgMonitor.InUse)+ " WHERE ECGMonitorID = '" + ecgMonitor.ID + "'";
+            using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
+            {
+                cmd.ExecuteNonQuery();
+            }
             connection.Close();
-        } //Virker - burde måske laves om til executenonquery
+        } //Virker /
 
         public void UpdateAnalyzedECG(AnalyzedECGModel analyzedEcg)
         {
@@ -306,7 +288,7 @@ namespace DataTier.Databaser
             }
             connection.Close();
 
-        } // virker
+        } // virker /
 
         public void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg)
         {
@@ -341,6 +323,6 @@ namespace DataTier.Databaser
             }
 
             connection.Close();
-        } //Virker
+        } //Virker /
     }
 }

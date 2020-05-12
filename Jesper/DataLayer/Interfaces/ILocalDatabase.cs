@@ -34,8 +34,6 @@ namespace DataTier.Interfaces
 
         void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg);
 
-        void UpdateIsRead(AnalyzedECGModel analyzedECG);
-
         void UpdateAnalyzedECG(AnalyzedECGModel analyzedEcg);
 
 
