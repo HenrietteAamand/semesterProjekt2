@@ -20,9 +20,9 @@ namespace Models.Models
             private set { id = value; }
         }
 
-        private int ecgMonitorID;
+        private string ecgMonitorID;
 
-        public int ECGMonitorID
+        public string ECGMonitorID
         {
             get { return ecgMonitorID; }
             set { ecgMonitorID = value; }
@@ -52,7 +52,7 @@ namespace Models.Models
             set { lastName = value; }
         }
 
-        private List<ECGModel> ecgList;
+        //private List<ECGModel> ecgList;
 
         //public List<ECGModel> ECGList
         //{
@@ -77,7 +77,7 @@ namespace Models.Models
 
         }
 
-        public PatientModel(int ecgMonitorID, string cpr, string firstName, string lastName)
+        public PatientModel(string ecgMonitorID, string cpr, string firstName, string lastName)
         {
             //ID = id;
             ECGMonitorID = ecgMonitorID;
