@@ -47,7 +47,7 @@ namespace RPi_EKG_program
             {
                 if (LocalDB.isConnected() && LocalStorage.checkUnSentData()!=0)
                 {
-                    displayController.ScreenShow(6, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                    displayController.ScreenShow(9, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
                     Thread.Sleep(1000);
 
                     foreach (var item in LocalStorage.FindUnSentData())

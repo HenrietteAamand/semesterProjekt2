@@ -181,18 +181,7 @@ namespace RPi_EKG_program
 
             switch (ScreenNb)
             {
-                case 1:
-                    {
-                        displayController.lcdClear();
-                        this.updateInfoBar(connection, storagestatus, batteryStatus);
-
-                        displayController.lcdGotoXY(3, 2);
-                        displayController.lcdPrint("Sender gamle");
-                        displayController.lcdGotoXY(4, 3);
-                        displayController.lcdPrint("maalinger");
-
-                    }
-                break;
+                
 
                 case 2:
                     {
@@ -268,6 +257,18 @@ namespace RPi_EKG_program
 
                     displayController.lcdPrint("Tilslut oplader");
 
+                    break;
+                case 1:
+                    {
+                        displayController.lcdClear();
+                        this.updateInfoBar(connection, storagestatus, batteryStatus);
+
+                        displayController.lcdGotoXY(3, 2);
+                        displayController.lcdPrint("Sender gamle");
+                        displayController.lcdGotoXY(4, 3);
+                        displayController.lcdPrint("maalinger");
+
+                    }
                     break;
             }
 
