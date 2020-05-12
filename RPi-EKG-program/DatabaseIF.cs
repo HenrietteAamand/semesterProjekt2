@@ -16,7 +16,7 @@ namespace RPi_EKG_program
 
         public DatabaseIF()
         {
-            connection = new SqlConnection("Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + "; User ID=" + db + ";Password=" + db + "");
+            //connection = new SqlConnection("Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + "; User ID=" + db + ";Password=" + db + "");
             //connection = new SqlConnection("Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\PrivateDatabase.mdf;Integrated Security=True");
             //Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = C:\Users\emils\source\repos\semesterProjekt2\RPi - EKG - program\PrivateDatabase.mdf; Integrated Security = True
             //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\EMILS\SOURCE\REPOS\SEMESTERPROJEKT2\RPI-EKG-PROGRAM\PRIVATEDATABASE.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
@@ -25,7 +25,8 @@ namespace RPi_EKG_program
             //NY
             //DEN FRA DATA SOURCE//Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=|DataDirectory|\PrivateDataBase1v.mdf;Integrated Security=True
             //String fra properties //Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=C:\USERS\EMILS\SOURCE\REPOS\SEMESTERPROJEKT2\RPI-EKG-PROGRAM\PRIVATEDATABASE1V.MDF;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False
-            //connection = new SqlConnection(@"Data Source=SNDERGAARD\PRIVATESQLDB;Initial Catalog=master;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+           //connection = new SqlConnection(@"Data Source=SNDERGAARD\PRIVATESQLDB;User ID="+db+";Password="+db+";Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            connection=new SqlConnection("Data Source=SNDERGAARD\\PRIVATESQLDB;Initial Catalog="+db+";User ID="+db+";Password="+db+";Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
 
 
