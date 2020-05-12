@@ -69,6 +69,7 @@ namespace LogicTier
             
             patientRef = new PatientModel();
             lDBRef = new Database();
+            aECGList = new List<AnalyzedECGModel>();
             
             illnessList = lDBRef.GetAllIllnesses();
             ecgList = new List<ECGModel>();
@@ -83,13 +84,12 @@ namespace LogicTier
                 }
             }
 
-            FindNextID();
-
+     
             //Der oprettes nye aECG for alle nye ECG'er
             foreach (ECGModel ecg in newECGList)
             {
+                FindNextID();
                 NewAECGModelsList.Add(new AnalyzedECGModel(ecg.CPR, ecg.ECGID, NextID, ecg.Date, ecg.SampleRate, ecg.Values, ecg.MonitorId));
-                NextID++;
             }
         }
 
@@ -151,6 +151,7 @@ namespace LogicTier
 
                 for (int i = 0; i < intervalHistogram; i++)
                 {
+
                     listOfListOfIntervals.Add(new List<double>());
                     //Tage alle værdier fra newECGList som er mellem i*x og (((i+1)*(100/x%))/100) og putte ind den ny liste
                     foreach (double value in ecg.Values)
@@ -374,6 +375,7 @@ namespace LogicTier
 
         public void FindNextID()
         {
+            AECGIDS = new List<int>();
             //Putter alle ID's ind i aECGIDS
             foreach (AnalyzedECGModel aECG in aECGList)
             {
@@ -388,6 +390,7 @@ namespace LogicTier
                     NextID = id;
                 }
             }
+            NextID++;
         }
 
     }

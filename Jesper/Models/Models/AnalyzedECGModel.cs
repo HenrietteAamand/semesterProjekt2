@@ -11,15 +11,15 @@ namespace Models.Models
         #endregion
 
         #region Properties
-        private int monitorId;
-        public int MonitorID
+        private string monitorId;
+        public string MonitorID
         {
             get { return monitorId; }
             private set { monitorId = value; }
         }
 
 
-        private int aECGID = 1;
+        private int aECGID;
 
         public int AECGID
         {
@@ -27,7 +27,6 @@ namespace Models.Models
             private set
             {
                 aECGID = value;
-                aECGID++;
             }
         }
 
@@ -105,7 +104,7 @@ namespace Models.Models
         #endregion
 
         #region Constructors
-        public AnalyzedECGModel(string cpr, int ecgID, int aECGID, DateTime date, int samplerate, List<double> values, int monitorID)
+        public AnalyzedECGModel(string cpr, int ecgID, int aECGID, DateTime date, double samplerate, List<double> values, string monitorID)
         {
             CPR = cpr;
             ECGID = ecgID;
@@ -116,6 +115,7 @@ namespace Models.Models
             MonitorID = monitorID;
             IsRead = false;
         }
+
 
         public AnalyzedECGModel() { }
 

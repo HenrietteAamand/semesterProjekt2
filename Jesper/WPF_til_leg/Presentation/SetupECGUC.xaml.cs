@@ -55,9 +55,9 @@ namespace WPF_til_leg.Presentation
         {
             string patientIDString = PatientIDCB.SelectedItem.ToString().Remove(0,9);
             
-            int ecgMonitorID = 0;
+            string ecgMonitorID = "0";
             string ecgMonitorString = EcgCB.SelectedItem.ToString();
-            ecgMonitorID = Convert.ToInt32(ecgMonitorString.Remove(0, 5));
+            ecgMonitorID = ecgMonitorString.Remove(0, 5);
 
             setupObj.LinkECGToPatient(patientIDString, ecgMonitorID);
 

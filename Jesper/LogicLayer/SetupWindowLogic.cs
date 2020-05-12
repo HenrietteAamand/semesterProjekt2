@@ -42,7 +42,7 @@ namespace LogicTier
             //Sker når der trykeks på "Opret patient"
         }
 
-        public void LinkECGToPatient(string cpr, int ecgMonitorID)
+        public void LinkECGToPatient(string cpr, string ecgMonitorID)
         {
             //Linker ECG-monitor til et patient objekt
             foreach (PatientModel patient in patientList.ToList())
@@ -71,9 +71,9 @@ namespace LogicTier
             //Fjerner ECG-monitoren fra patient objektet
             foreach (PatientModel patient in patientList.ToList())
             {
-                if (patient.ECGMonitorID == ecgID)
+                if (Convert.ToInt32(patient.ECGMonitorID) == ecgID)
                 {
-                    patient.ECGMonitorID = 0;
+                    patient.ECGMonitorID ="0";
                     DB.UpdatePatient(patient);
                     
 
@@ -83,7 +83,7 @@ namespace LogicTier
             //Sætter InUse på ECG-monitoren til false
             foreach (ECGMonitorModel monitor in ecgMonitorList.ToList())
             {
-                if (monitor.ID == ecgID)
+                if (Convert.ToInt32(monitor.ID) == ecgID)
                 {
                     monitor.InUse = false;
                     DB.UpdateECGMonitor(monitor);
@@ -121,7 +121,7 @@ namespace LogicTier
             foreach (ECGMonitorModel monitor in ecgMonitorList)
             {
 
-                if (monitor.ID == ecgMonitorID)
+                if (Convert.ToInt32(monitor.ID) == ecgMonitorID)
                 {
                     result = monitor.InUse;
                 }

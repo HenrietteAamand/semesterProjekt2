@@ -26,7 +26,8 @@ namespace DataTier.Databaser
 
         public void CreatePatient(PatientModel patient)
         {
-            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db +
+                ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
 
@@ -47,9 +48,10 @@ namespace DataTier.Databaser
 
         public IllnessModel getIllness(int id)
         {
-            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db +
+                ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
-            IllnessModel illness = new IllnessModel(0,"NN", " ", 0,0,false,false);
+            IllnessModel illness = new IllnessModel(0,"NN", " ", 0, 0, false, false);
 
             command = new SqlCommand("SELECT * FROM dbo.Illness WHERE ID = " + id, connection);
             connection.Open();
@@ -89,24 +91,43 @@ namespace DataTier.Databaser
                 double[] values = new double[800];
                 byte[] bytesArr1 = new byte[] { };
                 double[] STValues = new double[800];
+                List<double> valuesList = new List<double>();
+                List<double> STValuesList = new List<double>();
 
                 bytesArr = (byte[])reader["BLOBValues"];
 
                 for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
                 {
                     values[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
-                }
+                    valuesList.Add(BitConverter.ToDouble(bytesArr.ToArray(), i));
+                }             
 
-                bytesArr1 = (byte[])reader["BLOBstValues"];
-
-                for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
-                {
-                    STValues[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
-                }
+                
 
                 ameasurements.Add(new AnalyzedECGModel(Convert.ToString(reader["CPR"]), Convert.ToInt32(reader["ECGID"]), Convert.ToInt32(reader["AECGID"]),
-                    Convert.ToDateTime(reader["Date"]), Convert.ToDouble(reader["Samplerate"]), values.ToList<double>(), 
-                    Convert.ToString(reader["MonitorID"]), Convert.ToBoolean(reader["IsRead"]), getIllness(Convert.ToInt16(reader["Illness"])), STValues.ToList<double>(), true));
+                    Convert.ToDateTime(reader["Date"]), Convert.ToDouble(reader["Samplerate"]), valuesList,
+                    Convert.ToString(reader["MonitorID"])));
+             
+                foreach (AnalyzedECGModel aECG in ameasurements)
+                {
+                    if (aECG.IsAnalyzed)
+                    {
+                        bytesArr1 = (byte[])reader["BLOBstValues"];
+                        for (int i = 0, j = 0; i < bytesArr1.Length; i += 8, j++)
+                        {
+                            STValues[j] = BitConverter.ToDouble(bytesArr1.ToArray(), i);
+                            STValuesList.Add(BitConverter.ToDouble(bytesArr1.ToArray(), i));
+                        }
+
+                        aECG.STValues = STValuesList;
+                        aECG.STStartIndex = (int)reader["STStartIndex"];
+                        aECG.Baseline = (double)reader["Baseline"];
+                        aECG.IsRead = (bool)reader["IsRead"];
+                        aECG.Illnes.Id = (int)reader["Illness"];
+                        //aECG.STDepressed = (bool)reader["STDepressed"];
+                        //aECG.STElevated = (bool)reader["STElevated"];
+                    }
+                }
 
             }
             
@@ -116,7 +137,8 @@ namespace DataTier.Databaser
 
         public List<ECGMonitorModel> GetAllECGMonitors()
         {
-            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" +
+                db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             List<ECGMonitorModel> ecgMonitors = new List<ECGMonitorModel>();
 
@@ -156,16 +178,19 @@ namespace DataTier.Databaser
             {
                 byte[] bytesArr = new byte[] { };
                 double[] tal = new double[800];
+                List<double> talList = new List<double>();
 
                 bytesArr = (byte[])reader["BLOBValues"];
                 
                 for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
                 {
                     tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
+                    talList.Add(BitConverter.ToDouble(bytesArr.ToArray(), i));
                 }
 
                 measurements.Add(new ECGModel(Convert.ToString(reader["CPR"]),Convert.ToInt32(reader["ECGID"]),
-                    Convert.ToDateTime(reader["Date"]), Convert.ToDouble(reader["Samplerate"]), tal.ToList<double>(), Convert.ToString(reader["MonitorID"]), 
+                    Convert.ToDateTime(reader["Date"]), Convert.ToDouble(reader["Samplerate"]), talList,
+                    Convert.ToString(reader["MonitorID"]), 
                     Convert.ToBoolean(reader["IsAnalyzed"])));
 
             }
@@ -176,7 +201,8 @@ namespace DataTier.Databaser
 
         public List<IllnessModel> GetAllIllnesses()
         {
-            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + 
+                db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             List<IllnessModel> illness = new List<IllnessModel>();
 
@@ -203,7 +229,8 @@ namespace DataTier.Databaser
 
         public List<PatientModel> GetAllPatients()
         {
-            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db +
+                ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             List<PatientModel> patients = new List<PatientModel>();
 
@@ -266,7 +293,7 @@ namespace DataTier.Databaser
 
             connection.Open();
 
-            string insertStringParam = "UPDATE dbo.ECGMonitor SET inUse = " + Convert.ToByte(ecgMonitor.InUse)+ " WHERE ECGMonitorID = '" + ecgMonitor.ID + "'";
+            string insertStringParam = "UPDATE dbo.ECGMonitor SET inUse = " + Convert.ToByte(ecgMonitor.InUse)+ " WHERE ECGMonitorID = " + ecgMonitor.ID;
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.ExecuteNonQuery();
@@ -276,15 +303,23 @@ namespace DataTier.Databaser
 
         public void UpdateAnalyzedECG(AnalyzedECGModel analyzedEcg)
         {
-            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
+            double[] stvalues = (analyzedEcg.STValues).ToArray();
+            connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" +
+                db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
 
-            string insertStringParam = "UPDATE dbo.AnalyzedECG SET STStartIndex = " + analyzedEcg.STStartIndex + ", Baseline = " + analyzedEcg.Baseline + ", IsRead = " + Convert.ToByte(analyzedEcg.IsRead) + " WHERE AECGID = " + analyzedEcg.AECGID;
+            string insertStringParam = "UPDATE dbo.AnalyzedECG SET " +
+                "STStartIndex = " + analyzedEcg.STStartIndex + 
+                ", Baseline = " + analyzedEcg.Baseline + 
+                ", IsRead = " + Convert.ToByte(analyzedEcg.IsRead) + 
+                ", BLOBstValues =" + stvalues.SelectMany(value => BitConverter.GetBytes(value)).ToArray() + 
+                ", Illness = "+ analyzedEcg.Illnes.Id +
+                "WHERE AECGID = " + analyzedEcg.AECGID;
+
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.ExecuteNonQuery();
-                
             }
             connection.Close();
 
@@ -293,27 +328,26 @@ namespace DataTier.Databaser
         public void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg)
         {
             double[] values = (analyzedEcg.Values).ToArray();
-            double[] stvalues = (analyzedEcg.STValues).ToArray();
+            
             DateTime date = Convert.ToDateTime(analyzedEcg.Date);
 
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
 
-            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG (AECGID, ECGID, CPR, BLOBValues,Illness, Date, BLOBstValues, Samplerate, MonitorID, IsRead) VALUES (@AECGID, @ECGID, @CPR, @BLOBValues, @Illness, @Date, @BLOBstValues, @Samplerate, @MonitorID, @IsRead)";
+            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG (AECGID, ECGID, CPR, BLOBValues, Date, Samplerate, MonitorID, IsRead) VALUES (@AECGID, @ECGID, @CPR, @BLOBValues, @Date, @Samplerate, @MonitorID, @IsRead)";
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.CommandText = insertStringParam;
                 cmd.Parameters.AddWithValue("@AECGID", analyzedEcg.AECGID);
                 cmd.Parameters.AddWithValue("@ECGID", analyzedEcg.ECGID);            
                 cmd.Parameters.AddWithValue("@CPR", analyzedEcg.CPR);
-                cmd.Parameters.AddWithValue("@Illness", analyzedEcg.Illnes.Id);
                 cmd.Parameters.AddWithValue("@Date", date);
                 cmd.Parameters.AddWithValue("@Samplerate", analyzedEcg.SampleRate);
                 cmd.Parameters.AddWithValue("@IsRead", analyzedEcg.IsRead);
                 cmd.Parameters.AddWithValue("@MonitorID", analyzedEcg.MonitorID);
                 cmd.Parameters.AddWithValue("@BLOBValues", values.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
-                cmd.Parameters.AddWithValue("@BLOBstValues", stvalues.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
+                
 
                 
 
