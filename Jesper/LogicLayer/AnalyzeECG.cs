@@ -22,8 +22,8 @@ namespace LogicTier
 
         public TimeSpan IntervalIR { get; private set; }
         public double Baseline { get; private set; }
-        
 
+        private int aECGIDS = 1;
 
         private double rTakThreshold;
 
