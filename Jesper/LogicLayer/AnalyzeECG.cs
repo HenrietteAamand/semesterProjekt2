@@ -19,6 +19,7 @@ namespace LogicTier
         private const int intervalHistogram = 10;
 
         private ILocalDatabase lDBRef;
+        private MainWindowLogic mainLogic;
 
         public TimeSpan IntervalIR { get; private set; }
         public double Baseline { get; private set; }
@@ -53,6 +54,7 @@ namespace LogicTier
             
             patientRef = new PatientModel();
             lDBRef = new TestDB();
+            
             illnessList = lDBRef.GetAllIllnesses();
             ecgList = new List<ECGModel>();
             ecgList = lDBRef.GetAllECGs();

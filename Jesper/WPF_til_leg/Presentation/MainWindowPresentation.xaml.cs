@@ -17,6 +17,9 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using WPF_til_leg;
 using LogicTier;
+using Models.Models;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace WPF_til_leg.Presentation
 {
@@ -26,7 +29,10 @@ namespace WPF_til_leg.Presentation
     public partial class MainWindowPresentation : MetroWindow
     {
         private MainWindowLogic mainObj;
-        private ChartECG chartObj;
+        //private ChartECG chartObj;
+        private AnalyzeECG analyzeObj;
+        List<PatientModel> Patients;
+        List<AnalyzedECGModel> aECGS;
 
         public MainWindowPresentation()
         {
@@ -39,7 +45,16 @@ namespace WPF_til_leg.Presentation
             }
 
             mainObj = new MainWindowLogic();
-            chartObj = new ChartECG();
+            //chartObj = new ChartECG();
+            analyzeObj = new AnalyzeECG();
+
+            aECGS = new List<AnalyzedECGModel>();
+            Patients = new List<PatientModel>();
+            Patients = mainObj.getAllPatiens();
+
+            patientsLV.ItemsSource = Patients;
+
+            DataContext = this;
         }
 
         async Task ShowDialog()
@@ -48,7 +63,9 @@ namespace WPF_til_leg.Presentation
 
             if (result == MessageDialogResult.Affirmative)
             {
-                await this.ShowMessageAsync($" {0} EKG målinger er blevet opdateret","");
+                analyzeObj.CreateAnalyzedECGs();
+                
+                await this.ShowMessageAsync($" {analyzeObj.NewAECGModelsList.Count} EKG målinger er blevet opdateret","");
             }
 
         }
@@ -87,8 +104,9 @@ namespace WPF_til_leg.Presentation
         private void patientsLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            String cpr = patientsLV.SelectedItem.ToString();
-           
+            dynamic patient = patientsLV.SelectedItem;
+            string cpr = patient.CPR;
+
             CPRTB.Text = cpr;
             NavnTB.Text = mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
             AlderTB.Text = Convert.ToString(mainObj.GetAge(cpr));
@@ -99,8 +117,14 @@ namespace WPF_til_leg.Presentation
 
         private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //String ecg = ecgLV.SelectedItem.ToString();
-            //chartObj.MakeChart(mainObj.GetECGValues(Convert.ToInt32(ecg)));
+            dynamic aECG = ecgLV.SelectedItem;
+            //AnalyzedECGModel aECG = mainObj.aECGList[1];
+
+            chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex);
+
+            //chartUC.MakeECGChart(mainObj.GetECGValues(aECG.AECGID));
+            //chartUC.MakeST(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex);
+
         }
     }
 }

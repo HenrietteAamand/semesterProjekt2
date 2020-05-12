@@ -10,7 +10,7 @@ namespace DataTier.Databaser
 {
     public class TestDB : ILocalDatabase
     {
-        ECGModel ecg1 = new ECGModel("123456-7890", 1, (new DateTime(2011, 1, 1)), 50,
+        ECGModel ecg1 = new ECGModel("010156-7890", 1, (new DateTime(2011, 1, 1)), 50,
             (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1, false);
 
         //AnalyzedECGModel aECG = new AnalyzedECGModel("123456-7890", 1, 1, (new DateTime(2011, 1, 1)), 50,
@@ -18,7 +18,7 @@ namespace DataTier.Databaser
         //    (new IllnessModel(1, "st", "not good", 2, 4, false, false)),
         //    new List<double> { 4, 4, 4, 5, 4, 3.5, 4.5, 4, 4 });
         ECGMonitorModel monitor = new ECGMonitorModel(1, false);
-        PatientModel patient = new PatientModel("123456-7890", "Peter", "Petersen");
+        PatientModel patient = new PatientModel("010156-7890", "Peter", "Petersen");
         IllnessModel illness = new IllnessModel(1, "st", "not good", 2, 4, false, false);
         List<PatientModel> patientList = new List<PatientModel>();
 

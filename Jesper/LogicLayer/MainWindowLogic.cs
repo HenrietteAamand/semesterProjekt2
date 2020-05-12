@@ -13,20 +13,21 @@ namespace LogicTier
 		public AnalyzedECGModel aECGRef { get; private set; }
 		public List<AnalyzedECGModel> aECGList { get; private set; }
 		public List<PatientModel> patientList { get; private set; }
-		private ILocalDatabase DB;
+		public ILocalDatabase DB;
 		private IDOEDB DOEDB;
 
 		public MainWindowLogic()
 		{
+			DB = new TestDB();
 			analyzeECG = new AnalyzeECG();
 			patientList = new List<PatientModel>();
 			aECGList = new List<AnalyzedECGModel>();
-			DB = new TestDB();
+			
 			DOEDB = new DOEDB();
 			patientList = DB.GetAllPatients();
 			aECGList = DB.GetAllAnalyzedECGs();
-			GetAge("010156-7890");
-			IsAMan("123456-7890");
+			//GetAge("010156-7890");
+			//IsAMan("010156-7890");
 		}
 
 		public List<AnalyzedECGModel> GetAECGListForPatient(string cpr)
@@ -41,8 +42,33 @@ namespace LogicTier
 					analyzedECGList.Add(aECG);
 				}
 			}
-
 			//Sker når en patient vælges på listen
+				//TEST DATA
+					//AnalyzedECGModel aECG1 = new AnalyzedECGModel("010156-7890", 0, 0, (new DateTime(2011, 2, 1)), 50,
+					//	(new List<double> { 1, 1, 1, 2, 1, 2.5, 8, 0, 1, 3, 3, 3.5, 3, 3 }),1);
+					//AnalyzedECGModel aECG2 = new AnalyzedECGModel("010156-7890", 1, 1, (new DateTime(2011, 1, 1)), 50,
+					//	(new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1);
+					//aECG1.STValues = new List<double>{4,4.5,3,2 };
+					//aECG2.STValues = new List<double> { 3, 3.5, 2, 1 };
+					//aECG1.STStartIndex = 5;
+					//aECG2.STStartIndex = 7;
+					//aECG1.Baseline = 3;
+					//aECG1.Illnes = new IllnessModel(1, "st", "not good", 2, 4, false, false);
+					//aECG1.IsAnalyzed = true;
+					//aECG1.IsRead = true;
+					//aECG1.STElevated = true;
+					//aECG1.STDepressed = true;
+					//aECG1.Pulse = 50;
+					//aECG2.Baseline = 3;
+					//aECG2.Illnes = new IllnessModel(1, "st", "not good", 2, 4, false, false);
+					//aECG2.IsAnalyzed = true;
+					//aECG2.IsRead = true;
+					//aECG2.STElevated = true;
+					//aECG2.STDepressed = true;
+					//aECG2.Pulse = 50;
+					//analyzedECGList.Add(aECG1);
+					//analyzedECGList.Add(aECG2);
+					//aECGList = analyzedECGList;
 			return analyzedECGList;
 		}
 
@@ -114,13 +140,13 @@ namespace LogicTier
 			return result;
 		}
 
-		public List<double> GetECGValues(int ecgID)
+		public List<double> GetECGValues(int AECGID)
 		{
 			List<double> ecgValuesList = new List<double>();
 
 			foreach (AnalyzedECGModel aECG in aECGList)
 			{
-				if (aECG.ECGID == ecgID)
+				if (aECG.AECGID == AECGID)
 				{
 					ecgValuesList = aECG.Values;
 					aECG.IsRead = true;
@@ -208,6 +234,14 @@ namespace LogicTier
 				result = true;
 			}
 			return result;
+		}
+
+		public List<PatientModel> getAllPatiens()
+		{
+			//Henter alle Patient til liste
+			List<PatientModel> patientList = new List<PatientModel>();
+			patientList = DB.GetAllPatients();
+			return patientList;
 		}
 
 	}

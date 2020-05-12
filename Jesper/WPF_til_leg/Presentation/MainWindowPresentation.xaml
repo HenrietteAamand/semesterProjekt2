@@ -66,7 +66,7 @@
         </Controls:FlyoutsControl>
     </Controls:MetroWindow.Flyouts>
 
-    <Grid HorizontalAlignment="Center">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="auto" MaxWidth="420"/>
@@ -157,8 +157,8 @@
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="patientsLV_SelectionChanged">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding PatientCPR}" Header="CPR" />
-                            <GridViewColumn DisplayMemberBinding="{Binding Name}" Header="Navn"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding CPR}" Header="CPR" x:Name="cprColumn"/>
+                            <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Header="Navn"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -167,17 +167,14 @@
                     x:Name="ecgLV"
                     BorderThickness="0.5"
                     SelectedIndex="0"
+                    ItemsSource="{Binding ËCGs}"
                     Width="200"
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="ecgLV_SelectionChanged">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Målinger" />
+                            <GridViewColumn Header="Målinger" DisplayMemberBinding="{Binding Date}" />
                         </GridView>
                     </ListView.View>
-                    <ListViewItem>ECG 1</ListViewItem>
-                    <ListViewItem>ECG 2</ListViewItem>
-                    <ListViewItem>ECG 3</ListViewItem>
-                    <ListViewItem>ECG 4</ListViewItem>
                 </ListView>
             </StackPanel>
         </Border>
@@ -190,7 +187,7 @@
             Grid.RowSpan="3" 
             BorderThickness="1" 
             BorderBrush="Black">
-            <uc:ChartECG Margin="10" />
+            <uc:ChartECG x:Name="chartUC" Margin="10" />
         </Border>
 
         

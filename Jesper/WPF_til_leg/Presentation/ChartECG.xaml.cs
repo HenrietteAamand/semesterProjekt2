@@ -1,11 +1,10 @@
 ﻿using LogicTier;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 using LiveCharts;
-using LiveCharts.Wpf.Charts.Base;
 using LiveCharts.Wpf;
+
 
 namespace WPF_til_leg.Presentation
 {
@@ -17,38 +16,43 @@ namespace WPF_til_leg.Presentation
         AnalyzeECG analyzeLogic = new AnalyzeECG();
         MainWindowLogic mainLogic = new MainWindowLogic();
         public SeriesCollection series { get; set; }
-        //SeriesCollection series = new SeriesCollection();
-        LineSeries line = new LineSeries();
-        public SeriesCollection series2 { get; set; }
-        //SeriesCollection series = new SeriesCollection();
-        LineSeries line2 = new LineSeries();
-
-
+        
 
 
         public ChartECG()
         {
             InitializeComponent();
-            analyzeLogic.CreateAnalyzedECGs();
-
-            series = new SeriesCollection();
-
-            MakeChart2(analyzeLogic.NewAECGModelsList[0].Values);
-            MakeST(analyzeLogic.NewAECGModelsList[0].Values, analyzeLogic.NewAECGModelsList[0].STValues.Count, analyzeLogic.NewAECGModelsList[0].STStartIndex);
+            analyzeLogic.CreateAnalyzedECGs();         
 
 
+            //MakeChart2(ecg);
+            //MakeST(ecg, length, startIndex);
+            //MakeChart2(analyzeLogic.NewAECGModelsList[0].Values);
+            //MakeST(analyzeLogic.NewAECGModelsList[0].Values, analyzeLogic.NewAECGModelsList[0].STValues.Count, analyzeLogic.NewAECGModelsList[0].STStartIndex);
         }
 
-        public void MakeST(List<double> ecg, int length, int startIndex)
+        public void MakeCharts(List<double> ecg, int length, int startIndex)
         {
+            series = new SeriesCollection();
             ECGSeriesVisibility = true;
             BaseLineSeriesVisibility = true;
+            STSeriesVisibility = true;
+            MakeECGChart(ecg);
+            MakeST(ecg, length, startIndex);
+            OnPropertyChanged("series");
+        }
+
+
+        public void MakeST(List<double> ecg, int length, int startIndex)
+        {   ECGSeriesVisibility = true;
+            BaseLineSeriesVisibility = true;
             STSeriesVisibility = false;
+            LineSeries line = new LineSeries();
             List<double >ecg1 = new List<double>();
             ecg1 = ecg;
             for (int i = 0; i < ecg1.Count; i++)
             {
-                if (i<startIndex || i>startIndex+length)
+                if (i < startIndex || i > startIndex + length)
                 {
                     ecg1[i] = double.NaN;
                 }
@@ -61,20 +65,23 @@ namespace WPF_til_leg.Presentation
             series.Add(line);
             DataContext = this;
         }
-        public void MakeChart2(List<double> ecg)
+        public void MakeECGChart(List<double> ecg)
         {
-            ECGSeriesVisibility = true;
-            BaseLineSeriesVisibility = true;
-            STSeriesVisibility = false;
+            LineSeries line = new LineSeries();
             List<double> ecg2 = new List<double>();
             ecg2 = ecg;
-            line2.Values = new ChartValues<double>();
+            line.Values = new ChartValues<double>();
             for (int i = 0; i < ecg2.Count; i++)
             {
-                line2.Values.Add(ecg2[i]);
+                line.Values.Add(ecg2[i]);
             }
-            series.Add(line2);
+            series.Add(line);
             DataContext = this;
+        }
+        public void MakeBaseLineChart()
+        {
+            //Lave en streg fra første index af ecgValues til sidste index af ecgValues som har en værdi på baseline.
+
         }
 
         public bool ECGSeriesVisibility
