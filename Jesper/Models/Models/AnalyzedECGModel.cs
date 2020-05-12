@@ -11,14 +11,6 @@ namespace Models.Models
         #endregion
 
         #region Properties
-        private string monitorId;
-        public string MonitorID
-        {
-            get { return monitorId; }
-            private set { monitorId = value; }
-        }
-
-
         private int aECGID;
 
         public int AECGID

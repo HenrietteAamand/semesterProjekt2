@@ -89,7 +89,7 @@ namespace LogicTier
             foreach (ECGModel ecg in newECGList)
             {
                 FindNextID();
-                NewAECGModelsList.Add(new AnalyzedECGModel(ecg.CPR, ecg.ECGID, NextID, ecg.Date, ecg.SampleRate, ecg.Values, ecg.MonitorId));
+                NewAECGModelsList.Add(new AnalyzedECGModel(ecg.CPR, ecg.ECGID, NextID, ecg.Date, ecg.SampleRate, ecg.Values, ecg.MonitorID));
             }
         }
 
@@ -134,11 +134,11 @@ namespace LogicTier
             //Evt. kan laves histogram inde i intervallet
 
             //Laver histogram
-             foreach (ECGModel ecg in newECGList)
+             foreach (AnalyzedECGModel aECG in NewAECGModelsList)
             {
                 //Sætter max og min og laver et valuespan
-                double min = ecg.Values.Min();
-                double max = ecg.Values.Max();
+                double min = aECG.Values.Min();
+                double max = aECG.Values.Max();
 
 
                 double valueSpan = Math.Sqrt(Math.Pow(max, 2)) - min;
@@ -154,7 +154,7 @@ namespace LogicTier
 
                     listOfListOfIntervals.Add(new List<double>());
                     //Tage alle værdier fra newECGList som er mellem i*x og (((i+1)*(100/x%))/100) og putte ind den ny liste
-                    foreach (double value in ecg.Values)
+                    foreach (double value in aECG.Values)
                     {
                         if (value >= (min + (i * valueSpan /intervalHistogram)) && 
                             value < (min + (i * valueSpan / intervalHistogram)) + valueSpan/intervalHistogram)  
@@ -196,43 +196,43 @@ namespace LogicTier
 
         public void CalculateST()
         {
-            
+            int j = 0;
             //Måle R-tak
             //R-tak threshhold er sat til Baseline +1,5 mV
             //Den finder ud af, hvornår value bliver højere end threshold
             //Så tager den, den højeste værdi efter threshold og gemmer indexet for spidsen på r-takken
-            foreach (ECGModel ecg in newECGList)
+            foreach (AnalyzedECGModel aECG in NewAECGModelsList)
             {
-                int j = 0;
+                
                 int rSpidsIndex = 0;
                 STSegmentList = new List<double>();
                 STSegmentIndexList = new List<int>();
                 //Løber alle values igennem
-                for (int i = 0; i < ecg.Values.Count; i++)
+                for (int i = 0; i < aECG.Values.Count; i++)
                 {
                     //Hvis en value er større end threshold og større end den tidligere største værdi bliver rSpidsIndex = i
-                    if (ecg.Values[i] > RTakThreshhold && ecg.Values[i] > ecg.Values[rSpidsIndex])
+                    if (aECG.Values[i] > RTakThreshhold && aECG.Values[i] > aECG.Values[rSpidsIndex])
                     {
                         rSpidsIndex = i;
                     }
                 }
 
                 int sSpidsIndex = 0;
-                for (int i = 0; i < ecg.Values.Count; i++)
+                for (int i = 0; i < aECG.Values.Count; i++)
                 {
                     //Hvis en value er mindre end baseline og mindre end den tidligere mindste værdi og index er større end index for rSpidsIndex(dvs efter den)
                     //bliver sSpidsIndex = i
-                    if (ecg.Values[i] < NewAECGModelsList[j].Baseline && ecg.Values[i] < ecg.Values[sSpidsIndex] && i > rSpidsIndex)
+                    if (aECG.Values[i] < NewAECGModelsList[j].Baseline && aECG.Values[i] < aECG.Values[sSpidsIndex] && i > rSpidsIndex)
                     {
                         sSpidsIndex = i;
                     }
                 }
 
                 int tSpidsIndex = 0;
-                for (int i = 0; i < ecg.Values.Count; i++)
+                for (int i = 0; i < aECG.Values.Count; i++)
                 {
                     //Hvis en value er større end baseline og større end den tidligere største værdi og det ligger efter rSpidsIndex bliver tSpidsIndex = i
-                    if (ecg.Values[i] > NewAECGModelsList[j].Baseline && ecg.Values[i] > ecg.Values[tSpidsIndex] && i > sSpidsIndex)
+                    if (aECG.Values[i] > NewAECGModelsList[j].Baseline && aECG.Values[i] > aECG.Values[tSpidsIndex] && i > sSpidsIndex)
                     {
                         tSpidsIndex = i;
                     }
@@ -240,12 +240,12 @@ namespace LogicTier
 
 
                 //Alle values løbes igennem
-                for (int i = 0; i < ecg.Values.Count; i++)
+                for (int i = 0; i < aECG.Values.Count; i++)
                 {
                     //Hvis indexet for en value, ligger ml. sSpidsIndex og tSpidsIndex tilføjes de til stSegment
                     if (i >= sSpidsIndex && i <= tSpidsIndex)
                     {
-                        STSegmentList.Add(ecg.Values[i]);
+                        STSegmentList.Add(aECG.Values[i]);
                         STSegmentIndexList.Add(i);
                     }
                     
@@ -293,15 +293,15 @@ namespace LogicTier
             //Kaldes af CalculateST()
             foreach (AnalyzedECGModel aECG in NewAECGModelsList)
             {
-                if (STSegmentDepressed)
+                if (true)
                 {
                     aECG.Illnes = illnessList[0];
                 }
 
-                if (STSegmentElevated)
-                {
-                    //aECG.Illnes = illnessList[1];
-                }
+                //if (STSegmentElevated)
+                //{
+                //    //aECG.Illnes = illnessList[1];
+                //}
             }
         }
 
@@ -318,9 +318,10 @@ namespace LogicTier
         ////}
 
         public void UploadAnalyzedECG(AnalyzedECGModel aECG)
-            {
-                lDBRef.UploadAnalyzedECGs(aECG);
-            }
+        {
+            lDBRef.UploadAnalyzedECGs(aECG);
+            lDBRef.UpdateAnalyzedECG(aECG);
+        }
 
 
         //public void CalculatePuls()

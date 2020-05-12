@@ -8,6 +8,8 @@ using DataTier;
 using System.Data.SqlClient;
 using Models.Models;
 using System.ComponentModel;
+using System.Globalization;
+using System.Threading;
 
 namespace DataTier.Databaser
 {
@@ -18,9 +20,11 @@ namespace DataTier.Databaser
         private SqlCommand command;
         private const String db = "F20ST2ITS2201908197";
 
+
         public Database()
         {
-            
+            Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+
 
         }
 
@@ -303,19 +307,18 @@ namespace DataTier.Databaser
 
         public void UpdateAnalyzedECG(AnalyzedECGModel analyzedEcg)
         {
-            double[] stvalues = (analyzedEcg.STValues).ToArray();
+            
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" +
                 db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
-
+            
             string insertStringParam = "UPDATE dbo.AnalyzedECG SET " +
-                "STStartIndex = " + analyzedEcg.STStartIndex + 
-                ", Baseline = " + analyzedEcg.Baseline + 
-                ", IsRead = " + Convert.ToByte(analyzedEcg.IsRead) + 
-                ", BLOBstValues =" + stvalues.SelectMany(value => BitConverter.GetBytes(value)).ToArray() + 
-                ", Illness = "+ analyzedEcg.Illnes.Id +
-                "WHERE AECGID = " + analyzedEcg.AECGID;
+                "STStartIndex = " + Convert.ToInt32(analyzedEcg.STStartIndex) +
+            ", Baseline = " + Convert.ToDouble(analyzedEcg.Baseline) +
+            ", IsRead = " + Convert.ToByte(analyzedEcg.IsRead) +
+            ", Illness = " + Convert.ToInt32(analyzedEcg.Illnes.Id) +
+            " WHERE AECGID = " + Convert.ToInt32(analyzedEcg.AECGID);
 
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
@@ -328,14 +331,14 @@ namespace DataTier.Databaser
         public void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg)
         {
             double[] values = (analyzedEcg.Values).ToArray();
-            
+            double[] stvalues = (analyzedEcg.STValues).ToArray();
             DateTime date = Convert.ToDateTime(analyzedEcg.Date);
 
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db + ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
             connection.Open();
 
-            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG (AECGID, ECGID, CPR, BLOBValues, Date, Samplerate, MonitorID, IsRead) VALUES (@AECGID, @ECGID, @CPR, @BLOBValues, @Date, @Samplerate, @MonitorID, @IsRead)";
+            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG (AECGID, ECGID, CPR, BLOBValues, Date, Samplerate, MonitorID, IsRead, BLOBstValues) VALUES (@AECGID, @ECGID, @CPR, @BLOBValues, @Date, @Samplerate, @MonitorID, @IsRead, @BLOBstValues)";
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.CommandText = insertStringParam;
@@ -347,9 +350,10 @@ namespace DataTier.Databaser
                 cmd.Parameters.AddWithValue("@IsRead", analyzedEcg.IsRead);
                 cmd.Parameters.AddWithValue("@MonitorID", analyzedEcg.MonitorID);
                 cmd.Parameters.AddWithValue("@BLOBValues", values.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
-                
+                cmd.Parameters.AddWithValue("@BLOBstValues", stvalues.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
 
-                
+
+
 
                 cmd.ExecuteNonQuery(); 
                 

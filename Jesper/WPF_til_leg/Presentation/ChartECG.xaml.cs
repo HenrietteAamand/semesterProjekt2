@@ -22,7 +22,7 @@ namespace WPF_til_leg.Presentation
         public ChartECG()
         {
             InitializeComponent();
-            analyzeLogic.CreateAnalyzedECGs();         
+            //analyzeLogic.CreateAnalyzedECGs();         
 
 
             //MakeChart2(ecg);

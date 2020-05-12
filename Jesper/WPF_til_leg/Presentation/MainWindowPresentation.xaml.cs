@@ -7,7 +7,6 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using LogicTier;
 using Models.Models;
-using WPF_til_leg.Presentation;
 
 namespace WPF_til_leg.Presentation
 {
@@ -27,6 +26,7 @@ namespace WPF_til_leg.Presentation
             InitializeComponent();
             ShowDialog();
 
+            
             while (idT.Text == null)
             {
                 UploadB.IsEnabled = false;
@@ -39,7 +39,7 @@ namespace WPF_til_leg.Presentation
             aECGS = new List<AnalyzedECGModel>();
             Patients = new List<PatientModel>();
             Patients = mainObj.getAllPatiens();
-
+            analyzeObj.CreateAnalyzedECGs();
             patientsLV.ItemsSource = Patients;
 
             DataContext = this;
@@ -109,6 +109,7 @@ namespace WPF_til_leg.Presentation
             //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
             chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex);
+            //chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), a, 3);
 
             //chartUC.MakeECGChart(mainObj.GetECGValues(aECG.AECGID));
             //chartUC.MakeST(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex);

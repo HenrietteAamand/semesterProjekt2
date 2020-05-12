@@ -150,7 +150,7 @@ namespace LogicTier
 				{
 					ecgValuesList = aECG.Values;
 					aECG.IsRead = true;
-					//DB.UpdateIsRead(aECG.AECGID);
+					//DB.UpdateAnalyzedECG(aECG);
 				}
 			}
 

@@ -60,7 +60,7 @@ namespace Models.Models
 
         private string monitorId;
 
-        public string MonitorId
+        public string MonitorID
         {
             get { return monitorId; }
             set { monitorId = value; }
@@ -78,7 +78,7 @@ namespace Models.Models
             Date = date;
             SampleRate = sampleRate;
             Values = values;
-            MonitorId = monitorId;
+            MonitorID = monitorId;
             IsAnalyzed = isAnalyzed;
         }
 
