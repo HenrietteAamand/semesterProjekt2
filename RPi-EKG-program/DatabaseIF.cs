@@ -103,7 +103,7 @@ namespace RPi_EKG_program
 
                     Fornavn = (string)reader["ForNavn"];
 
-                    CPRNavn += Fornavn;
+                    CPRNavn =CPR+";"+ Fornavn;
                 }
             }
             catch (SqlException)

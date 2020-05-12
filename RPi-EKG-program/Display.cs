@@ -9,13 +9,15 @@ namespace RPi_EKG_program
 {
     class Display
     {
-        private string Linjeskift = "                   ";
+
         private static SerLCD displayController;
+        private bool ClearScreen;
+
         
 
-        public void updateMenuBar(bool connection,byte StorageStatus, byte batteryStatus)
+        public void updateInfoBar(bool connection,byte StorageStatus, byte batteryStatus)
         {
-            displayController.lcdGotoXY(0, 0);
+            
             string Connect = "";
             string Storage = "";
 
@@ -28,9 +30,9 @@ namespace RPi_EKG_program
 
             if (StorageStatus != 0)
             {
-                Storage = "Data: "+ StorageStatus;
+                Storage = "Data:"+ StorageStatus;
             }
-            else { Storage = "Data: 0"; }
+            else { Storage = "Data:0"; }
 
             string batteryniveau = "";
 
@@ -63,17 +65,14 @@ namespace RPi_EKG_program
                     break;
             }
             displayController.lcdDisplay();
-            displayController.lcdClear();
-            displayController.lcdHome();
-            displayController.lcdPrint("HEEEEEEEEEj");
-            displayController.lcdClear();
 
-            displayController.lcdHome();
-            displayController.lcdPrint(Convert.ToString(DateTime.Now.Hour)+":"+ Convert.ToString(DateTime.Now.Minute)+ "|" + Connect + "|" + Storage + "|" +batteryniveau);
-                
+            displayController.lcdGotoXY(0, 0);
+            //displayController.lcdHome();
+            displayController.lcdPrint(Convert.ToString(DateTime.Now.TimeOfDay));
+            displayController.lcdGotoXY(5, 0);
 
-
-
+            displayController.lcdPrint(" "+Connect + "  " + Storage + "  " + batteryniveau+"%");
+            
         }
 
 
@@ -82,10 +81,16 @@ namespace RPi_EKG_program
             displayController = new SerLCD();
             displayController.lcdDisplay();
             displayController.lcdSetBackLight(255,255,0);
+            ClearScreen = true;
+
+            
+
 
         }
-        public void ShowGreeting(string CPRNAVN)
+        public void ShowGreeting(string CPRNAVN, bool connection,byte storagestatus, byte batteryStatus)
         {
+
+           
 
             string CPR = "";
             string Navn = "";
@@ -102,75 +107,168 @@ namespace RPi_EKG_program
                 Navn += CPRNAVN[i];
             }
 
-            if (Navn.Length > 12)
-            {
-                string NyNavn = "";
-                for (int i = 0; i < 12; i++)
-                {
-                    NyNavn += Navn[i];
-                }
-                Navn = NyNavn;
-            }
-            while (Navn.Length < 11)
-            {
-                Navn += " ";
-            }
-            displayController.lcdPrint("     Velkommen      Du er logget ind som"/* + Navn + "  " + CPR*/);
+            
 
+            this.updateInfoBar(connection, storagestatus, batteryStatus);
 
+            
+            /* + Navn + "  " + CPR*/
+
+            displayController.lcdGotoXY(5, 1);
+            displayController.lcdPrint("Velkommen");
+            displayController.lcdGotoXY(0, 2);
+            displayController.lcdPrint("Du er logget ind som");
+            displayController.lcdGotoXY(0, 3);
+            displayController.lcdPrint(Navn);
+            displayController.lcdGotoXY(14, 3);
+            displayController.lcdPrint(CPR);
 
         }
 
-        public void StatusUpdateMeasurment()
+        public void StatusUpdateMeasurment(double time, bool connection, byte storagestatus, byte batteryStatus)
         {
+            
+            if(ClearScreen)
+            {
+                ClearScreen = false;
+                displayController.lcdClear();
 
-            // skal opdatere skærm 4. YEs
+                
+                this.updateInfoBar(connection, storagestatus, batteryStatus);
+              
+                displayController.lcdGotoXY(3, 1);
+
+                displayController.lcdPrint("Maaling i gang");
+
+                displayController.lcdGotoXY(2, 2);
+                displayController.lcdPrint("__________");
+
+                displayController.lcdGotoXY(2, 3);
+
+                displayController.lcdPrint("Forhold dig i ro");
+
+            }
+
+            //if (Convert.ToInt32(time) < 2 || Convert.ToInt32(time)==10|| Convert.ToInt32(time) ==20|| Convert.ToInt32(time) == 30|| Convert.ToInt32(time) == 39)
+            //{
+
+
+
+            //}
+
+            displayController.lcdGotoXY(2, 2);
+            displayController.lcdGotoXY(2, 2);
+            for (int i = 0; i < time/4; i++)
+            {
+                
+                displayController.lcdPrint("#");
+            }
+
+            double procent = (time / 40) * 100;
+            if (procent > 100)
+            {
+                procent = 100;
+            }
+            displayController.lcdGotoXY(15, 2);
+            displayController.lcdGotoXY(15, 2);
+            displayController.lcdPrint(Convert.ToString(Convert.ToInt32(procent)) + "%");
+
+
+       
         }
-        public void ScreenShow(short ScreenNb)
+        public void ScreenShow(short ScreenNb, bool connection,byte storagestatus,byte batteryStatus)
         {
 
             switch (ScreenNb)
             {
                 case 1:
-                    displayController.lcdDisplay();
-                    displayController.lcdClear();
-                    string Navn = "Lars"; //Navnet hentes fra lokalDB
-                    /*string CPR = "123456";*/ // CPR hentes også fra LokalDB - Måske kun de første 6
-
-                    if(Navn.Length>12)
                     {
-                        string NyNavn = "";
-                        for (int i = 0; i < 12; i++)
-                        {
-                            NyNavn += Navn[i];
-                        }
-                        Navn = NyNavn;
-                    }
-                    while(Navn.Length<11)
-                    {
-                        Navn += " ";
-                    }
+                        displayController.lcdClear();
+                        this.updateInfoBar(connection, storagestatus, batteryStatus);
 
+                        displayController.lcdGotoXY(3, 2);
+                        displayController.lcdPrint("Sender gamle");
+                        displayController.lcdGotoXY(4, 3);
+                        displayController.lcdPrint("maalinger");
 
-                    displayController.lcdPrint("     Velkommen      Du er logget ind som" /*+ Navn + "  " + CPR */);
-                    break;
+                    }
+                break;
+
                 case 2:
-                    displayController.lcdClear();
-                    displayController.lcdPrint(Linjeskift+ "  Forbind venligst  " + "     Elektroder     ");
+                    {
+                        displayController.lcdClear();
+                        this.updateInfoBar(connection, storagestatus, batteryStatus);
+
+                        displayController.lcdGotoXY(2, 2);
+                        displayController.lcdPrint("Forbind venligst");
+                        displayController.lcdGotoXY(5, 3);
+                        displayController.lcdPrint("Elektroder");
+                    }
+                    
 
                     break;
                 case 3:
-                    displayController.lcdClear();
-                    displayController.lcdPrint(Linjeskift + Linjeskift+"    Tryk på start   ");
+                    {
+                        displayController.lcdClear();
+                        this.updateInfoBar(connection, storagestatus, batteryStatus);
+
+                        displayController.lcdGotoXY(3, 2);
+
+                        displayController.lcdPrint("Tryk paa start");
+
+                        ClearScreen = true;
+                                               
+
+                    }
+                   
                     break;
-                case 4:
-                    displayController.lcdDisplay();
+                case 5:
                     displayController.lcdClear();
-                    displayController.lcdHome();
-                    
-                    displayController.lcdPrint("      ###_  "); //alt code 219
+                    this.updateInfoBar(connection, storagestatus, batteryStatus);
+
+                    displayController.lcdGotoXY(1, 2);
+
+                    displayController.lcdPrint("Maaling foretaget");
+                    displayController.lcdGotoXY(0, 3);
+
+                    displayController.lcdPrint("Ingen netforbindelse");
+
+
+
                     break;
+                case 6:
+                    displayController.lcdClear();
+                    this.updateInfoBar(connection, storagestatus, batteryStatus);
+
+                    displayController.lcdGotoXY(1, 2);
+
+                    displayController.lcdPrint("Maaling foretaget");
+                    displayController.lcdGotoXY(4, 3);
+
+                    displayController.lcdPrint("Maaling sendt");
+
+                    break;
+                case 7:
+                    displayController.lcdClear();
+                    this.updateInfoBar(connection, storagestatus, batteryStatus);
+
+                    displayController.lcdGotoXY(0, 2);
+
+                    displayController.lcdPrint("Ingen id tilknyttet");
                     
+                    break;
+                case 8:
+                    displayController.lcdClear();
+                    this.updateInfoBar(connection, storagestatus, batteryStatus);
+
+                    displayController.lcdGotoXY(1, 2);
+
+                    displayController.lcdPrint("Batteriniveau lavt");
+                    displayController.lcdGotoXY(2, 3);
+
+                    displayController.lcdPrint("Tilslut oplader");
+
+                    break;
             }
 
 
