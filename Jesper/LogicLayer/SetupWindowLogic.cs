@@ -23,7 +23,7 @@ namespace LogicTier
             ecgMonitorList = new List<ECGMonitorModel>();
             patientList = new List<PatientModel>();
             
-            DB = new TestDB();
+            DB = new Database();
             patientList = DB.GetAllPatients();
             ecgMonitorList = DB.GetAllECGMonitors();
             //newPatient("112233-4455", "Jens", "Jensen");

@@ -18,7 +18,7 @@ namespace LogicTier
 
 		public MainWindowLogic()
 		{
-			DB = new TestDB();
+			DB = new Database();
 			analyzeECG = new AnalyzeECG();
 			patientList = new List<PatientModel>();
 			aECGList = new List<AnalyzedECGModel>();

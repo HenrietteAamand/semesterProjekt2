@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataTier.Databaser
 {
-    public class TestDB : ILocalDatabase
+    public class Database : ILocalDatabase
     {
         ECGModel ecg1 = new ECGModel("010156-7890", 1, (new DateTime(2011, 1, 1)), 50,
             (new List<double> { 4, 4, 4, 5, 4, 3.5, 9, 1, 2, 4, 4, 4.5, 4, 4 }), 1, false);
@@ -26,7 +26,7 @@ namespace DataTier.Databaser
         List<ECGModel> ecgList = new List<ECGModel>();
         List<ECGMonitorModel> monitorList = new List<ECGMonitorModel>();
         List<IllnessModel> illnessList = new List<IllnessModel>();
-        public TestDB()
+        public Database()
         {
             //aECG.STStartIndex = 1;
             //aECGList.Add(aECG);

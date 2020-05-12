@@ -11,7 +11,7 @@ using System.ComponentModel;
 
 namespace DataTier.Databaser
 {
-    public class Database/* : ILocalDatabase*/
+    public class Database : ILocalDatabase
     {
         private SqlConnection connection;
         private SqlDataReader reader;

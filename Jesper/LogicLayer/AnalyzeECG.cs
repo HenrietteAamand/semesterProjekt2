@@ -24,7 +24,22 @@ namespace LogicTier
         public TimeSpan IntervalIR { get; private set; }
         public double Baseline { get; private set; }
 
-        private int aECGIDS = 1;
+        private List<int> aECGIDS;
+
+        public List<int> AECGIDS
+        {
+            get { return aECGIDS; }
+            set { aECGIDS = value; }
+        }
+
+        private int nextID = 0;
+
+        public int NextID
+        {
+            get { return nextID; }
+            set { nextID = value; }
+        }
+
 
         private double rTakThreshold;
 
@@ -41,7 +56,7 @@ namespace LogicTier
         public double STSegmentTreshhold { get; private set; }
         public bool STSegmentElevated { get; private set; }
         public bool STSegmentDepressed { get; private set; }
-        public List<double> AECGCollection { get; private set; }
+        public List<AnalyzedECGModel> aECGList { get; private set; }
 
 
 
@@ -53,11 +68,12 @@ namespace LogicTier
             illnessList = new List<IllnessModel>();
             
             patientRef = new PatientModel();
-            lDBRef = new TestDB();
+            lDBRef = new Database();
             
             illnessList = lDBRef.GetAllIllnesses();
             ecgList = new List<ECGModel>();
             ecgList = lDBRef.GetAllECGs();
+            aECGList = lDBRef.GetAllAnalyzedECGs();
             newECGList = new List<ECGModel>();
             foreach (ECGModel ecg in ecgList)
             {
@@ -67,10 +83,13 @@ namespace LogicTier
                 }
             }
 
+            FindNextID();
+
             //Der oprettes nye aECG for alle nye ECG'er
             foreach (ECGModel ecg in newECGList)
             {
-                NewAECGModelsList.Add(new AnalyzedECGModel(ecg.CPR, ecg.ECGID, aECGIDS, ecg.Date, ecg.SampleRate, ecg.Values, ecg.MonitorId));
+                NewAECGModelsList.Add(new AnalyzedECGModel(ecg.CPR, ecg.ECGID, NextID, ecg.Date, ecg.SampleRate, ecg.Values, ecg.MonitorId));
+                NextID++;
             }
         }
 
@@ -352,6 +371,24 @@ namespace LogicTier
 
         //    }
         //}
+
+        public void FindNextID()
+        {
+            //Putter alle ID's ind i aECGIDS
+            foreach (AnalyzedECGModel aECG in aECGList)
+            {
+                AECGIDS.Add(aECG.AECGID);
+            }
+
+            //LØber alle ID's igennem
+            foreach (int id in aECGIDS)
+            {
+                if (id > NextID)
+                {
+                    NextID = id;
+                }
+            }
+        }
 
     }
 }
