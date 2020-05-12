@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using RaspberryPiCore.ADC;
-
+using System.Threading;
 namespace RPi_EKG_program
 {
     class ADC
     {
         private static ADC1015 adConverter;
-        private Measurement measurement;
+        
 
         public ADC()
         {
@@ -18,7 +18,19 @@ namespace RPi_EKG_program
         
         public bool isCableConnected()
         {
-            if(adConverter.readADC_SingleEnded(0)==0)
+            ushort test = adConverter.readADC_SingleEnded(0);
+            Thread.Sleep(500);
+            ushort test1 = adConverter.readADC_SingleEnded(0);
+            Thread.Sleep(500);
+            ushort test2 = adConverter.readADC_SingleEnded(0);
+            Thread.Sleep(500);
+            short test4 = adConverter.readADC_Differential_0_1();
+            Thread.Sleep(500);
+            // Vi har målt 222 228 414 427
+            // 1079 x4 på alle når jack er i % klemmer
+            //
+
+            if (adConverter.readADC_SingleEnded(0)==0)
             { 
                 return false; 
             }

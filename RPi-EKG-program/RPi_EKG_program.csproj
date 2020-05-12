@@ -26,17 +26,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="PrivateDatabaseDataSet.Designer.cs">
+    <Compile Update="PrivateDataBase1vDataSet.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
-      <DependentUpon>PrivateDatabaseDataSet.xsd</DependentUpon>
+      <DependentUpon>PrivateDataBase1vDataSet.xsd</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="PrivateDatabaseDataSet.xsd">
+    <None Update="PrivateDataBase1vDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>PrivateDatabaseDataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>PrivateDataBase1vDataSet.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
 

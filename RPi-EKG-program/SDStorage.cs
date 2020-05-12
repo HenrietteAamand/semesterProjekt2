@@ -73,6 +73,7 @@ namespace RPi_EKG_program
                 inputFields = TextAlreadyInFile[i].Split(Convert.ToChar(";"));
                 if (!inputFields[1].Contains("1"))
                 {
+
                     TextAlreadyInFile[i] += 1;
 
 
