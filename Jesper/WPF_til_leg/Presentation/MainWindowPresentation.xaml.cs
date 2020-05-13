@@ -150,26 +150,56 @@ namespace WPF_til_leg.Presentation
             
         }
 
-        private void SoegTB_TextChanged(object sender, TextChangedEventArgs e)
+        public ICollectionView SourceCollection
         {
-            if (SoegTB.Text != "")
+            get
             {
-                foreach (ListViewItem item in patientsLV.Items)
-                {
-                    dynamic itemNew = item;
-                    if (!itemNew.CPR.Contains(SoegTB.Text))
-                    {
-                        item.Visibility = Visibility.Hidden;
-                    }
-                }
+                return this.usersCollection.View;
             }
-            //if (e.KeyChar == (char)13)
-            //{
-            //    DataView dv = dt.DefaultView;
-            //    dv.RowFilter = $"Column1 like '%{SoegTB.Text}%'";
-            //    dataGridView.DataSource = dv.ToTable();
-            //}
+        }
 
+        public string FilterText
+        {
+            get
+            {
+                return filterText;
+            }
+            set
+            {
+                filterText = value;
+                this.usersCollection.View.Refresh();
+                RaisePropertyChanged("FilterText");
+            }
+        }
+
+        void usersCollection_Filter(object sender, FilterEventArgs e)
+        {
+            if (string.IsNullOrEmpty(FilterText))
+            {
+                e.Accepted = true;
+                return;
+            }
+
+            PatientModel usr = e.Item as PatientModel;
+            if (usr.CPR.ToUpper().Contains(FilterText.ToUpper()))
+            {
+                e.Accepted = true;
+            }
+            else
+            {
+                e.Accepted = false;
+                patientsLV.SelectedItem = null;
+                ecgLV.ItemsSource = null;
+            }
+        }
+
+
+        public void RaisePropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
 
