@@ -167,7 +167,7 @@
                     x:Name="ecgLV"
                     BorderThickness="0.5"
                     SelectedIndex="0"
-                    ItemsSource="{Binding ECGs}"
+                    ItemsSource="{Binding ËCGs}"
                     Width="200"
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="ecgLV_SelectionChanged">
                     <ListView.View>
