@@ -19,6 +19,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
+        <UniformGrid Columns="2">
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
             <StackPanel.Resources>
                 <Style BasedOn="{StaticResource MahApps.Styles.CheckBox}" TargetType="{x:Type CheckBox}">
@@ -37,28 +38,26 @@
                 ST Segment
             </CheckBox>
         </StackPanel>
-        <lvc:CartesianChart Grid.Row="1" x:Name="chart" Hoverable="False" Series="{Binding series}" Visibility="{Binding ECGSeriesVisibility}">
-            <lvc:CartesianChart.AxisY>
-                <lvc:Axis>
-                    <lvc:Axis.Separator>
-                        <lvc:Separator Step="1"></lvc:Separator>
-                    </lvc:Axis.Separator>
-                </lvc:Axis>
-            </lvc:CartesianChart.AxisY>
-            <lvc:CartesianChart.AxisX>
-                <lvc:Axis>
-                    <lvc:Axis.Separator>
-                        <lvc:Separator Step="1"></lvc:Separator>
-                    </lvc:Axis.Separator>
-                </lvc:Axis>
-            </lvc:CartesianChart.AxisX>
-        </lvc:CartesianChart>
-        <!--<lvc:CartesianChart Grid.Row="1" Hoverable="False">
-            <lvc:CartesianChart.Series>
-                <lvc:LineSeries Title="EKG" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" PointGeometrySize="0"/>
-                --><!--<lvc:LineSeries Title="Base Line" Values="4,4,4,4,4,4,4,4,4,4,4,4,4,4" Visibility="{Binding BaseLineSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" Stroke="Black" PointGeometrySize="0"/>-->
-                <!--<lvc:LineSeries Title="ST Segment" Values="NaN,NaN,NaN,NaN,NaN,NaN,NaN,1,2,4,NaN" Visibility="{Binding STSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" Stroke="Red" PointGeometrySize="0"/>--><!--
-            </lvc:CartesianChart.Series>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <Controls:Badged Margin="10" >
+                    <Button x:Name="PrevB" Click="PrevOnClick">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="ArrowLeft" />
+                            <TextBlock Margin="5" Text="Prev"/>
+                        </StackPanel>
+                    </Button>
+                </Controls:Badged>
+                <Controls:Badged Margin="10" >
+                    <Button x:Name="NextB" Click="NextOnClick">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="ArrowRight" />
+                            <TextBlock Margin="5" Text="Prev"/>
+                        </StackPanel>
+                    </Button>
+                </Controls:Badged>
+            </StackPanel>
+        </UniformGrid>
+        <!--<lvc:CartesianChart Grid.Row="1" x:Name="chart" Hoverable="False" Series="{Binding series}" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}">
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis>
                     <lvc:Axis.Separator>
@@ -74,5 +73,21 @@
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>-->
+        
+        <lvc:CartesianChart Grid.Row="1" Hoverable="False">
+            <lvc:CartesianChart.Series>
+                <lvc:LineSeries Title="EKG" Values="{Binding ECGList}" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}" Fill="Transparent" PointGeometrySize="0"/>
+                <lvc:LineSeries Title="Base Line" Values="{Binding BaseList}" Visibility="{Binding BaseLineSeriesVisibility, Converter={StaticResource bvc}}" Fill="Transparent" Stroke="Black" PointGeometrySize="0"/>
+                <lvc:LineSeries Title="ST Segment" Values="{Binding STList}" Visibility="{Binding STSeriesVisibility, Converter={StaticResource bvc}}"  Fill="Transparent" Stroke="Red" PointGeometrySize="0"/>
+            </lvc:CartesianChart.Series>
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis MaxValue="10" MinValue="-10"/>
+            </lvc:CartesianChart.AxisY>
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis MinValue="{Binding From}" MaxValue="{Binding To}" 
+                          Separator="{x:Static lvc:DefaultAxes.CleanSeparator}">
+                </lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+        </lvc:CartesianChart>
     </Grid>
 </UserControl>
