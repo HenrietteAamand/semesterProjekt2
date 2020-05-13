@@ -37,7 +37,7 @@
                 ST Segment
             </CheckBox>
         </StackPanel>
-        <lvc:CartesianChart Grid.Row="1" x:Name="chart" Hoverable="False" Series="{Binding series}" Visibility="{Binding ECGSeriesVisibility}">
+        <lvc:CartesianChart Grid.Row="1" x:Name="chart" Hoverable="False" Series="{Binding series}" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}">
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis>
                     <lvc:Axis.Separator>

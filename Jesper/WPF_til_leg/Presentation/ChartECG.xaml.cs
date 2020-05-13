@@ -16,7 +16,10 @@ namespace WPF_til_leg.Presentation
         AnalyzeECG analyzeLogic = new AnalyzeECG();
         MainWindowLogic mainLogic = new MainWindowLogic();
         public SeriesCollection series { get; set; }
-        
+        LineSeries ecgLine = new LineSeries(VisibilityProperty);
+        LineSeries stLine = new LineSeries();
+        LineSeries baseLine = new LineSeries();
+
 
 
         public ChartECG()
@@ -31,23 +34,22 @@ namespace WPF_til_leg.Presentation
             //MakeST(analyzeLogic.NewAECGModelsList[0].Values, analyzeLogic.NewAECGModelsList[0].STValues.Count, analyzeLogic.NewAECGModelsList[0].STStartIndex);
         }
 
-        public void MakeCharts(List<double> ecg, int length, int startIndex)
+        public void MakeECGLine(List<double> ecg, int length, int startIndex, double baseline)
         {
             series = new SeriesCollection();
             ECGSeriesVisibility = true;
             BaseLineSeriesVisibility = true;
             STSeriesVisibility = true;
             MakeECGChart(ecg);
-            MakeST(ecg, length, startIndex);
+            MakeSTLine(ecg, length, startIndex);
             OnPropertyChanged("series");
         }
 
 
-        public void MakeST(List<double> ecg, int length, int startIndex)
+        public void MakeSTLine(List<double> ecg, int length, int startIndex)
         {   ECGSeriesVisibility = true;
             BaseLineSeriesVisibility = true;
             STSeriesVisibility = false;
-            LineSeries line = new LineSeries();
             List<double >ecg1 = new List<double>();
             ecg1 = ecg;
             for (int i = 0; i < ecg1.Count; i++)
@@ -57,30 +59,41 @@ namespace WPF_til_leg.Presentation
                     ecg1[i] = double.NaN;
                 }
             }
-            line.Values = new ChartValues<double>();
+            stLine.Values = new ChartValues<double>();
             for (int i = 0; i < ecg1.Count; i++)
             {
-                line.Values.Add(ecg1[i]);
+                stLine.Values.Add(ecg1[i]);
             }
-            series.Add(line);
+            series.Add(stLine);
             DataContext = this;
         }
         public void MakeECGChart(List<double> ecg)
         {
-            LineSeries line = new LineSeries();
             List<double> ecg2 = new List<double>();
             ecg2 = ecg;
-            line.Values = new ChartValues<double>();
+            ecgLine.Values = new ChartValues<double>();
             for (int i = 0; i < ecg2.Count; i++)
             {
-                line.Values.Add(ecg2[i]);
+                ecgLine.Values.Add(ecg2[i]);
             }
-            series.Add(line);
+            series.Add(ecgLine);
             DataContext = this;
         }
-        public void MakeBaseLineChart()
+        public void MakeBaseLineChart(List<double> ecg, double baseline)
         {
-            //Lave en streg fra første index af ecgValues til sidste index af ecgValues som har en værdi på baseline.
+            for (int i = 0; i < ecg.Count; i++)
+            {
+
+            }
+            List<double> ecg2 = new List<double>();
+            ecg2 = ecg;
+            ecgLine.Values = new ChartValues<double>();
+            for (int i = 0; i < ecg2.Count; i++)
+            {
+                ecgLine.Values.Add(baseline);
+            }
+            series.Add(baseLine);
+            DataContext = this;
 
         }
 

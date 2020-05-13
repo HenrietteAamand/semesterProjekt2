@@ -110,7 +110,7 @@ namespace WPF_til_leg.Presentation
                 dynamic aECG = ecgLV.SelectedItem;
                 //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
-                chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex);
+                chartUC.MakeECGLine(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex);
             }
             
             //chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), a, 3);
