@@ -207,14 +207,14 @@ namespace DataTier.Databaser
             while (reader.Read())
             {
                 byte[] bytesArr = new byte[] { };
-                double[] tal = new double[800];
+                double[] tal = new double[80000];
                 List<double> talList = new List<double>();
 
                 bytesArr = (byte[])reader["BLOBValues"];
                 
                 for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
                 {
-                    //tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
+                    tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
                     talList.Add(BitConverter.ToDouble(bytesArr.ToArray(), i));
                 }
 

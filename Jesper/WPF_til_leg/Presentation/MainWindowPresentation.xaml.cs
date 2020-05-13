@@ -130,6 +130,7 @@ namespace WPF_til_leg.Presentation
                 {
                     KonTB.Text = "KØN: Kvinde";
                 }
+
                 ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
             }
 
@@ -216,7 +217,6 @@ namespace WPF_til_leg.Presentation
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
 
     }
 }
