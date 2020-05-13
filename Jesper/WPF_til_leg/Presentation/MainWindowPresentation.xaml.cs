@@ -6,7 +6,7 @@ using System.Windows.Controls;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using LogicTier;
-using Models.Models;
+using DataTier.Models;
 
 namespace WPF_til_leg.Presentation
 {

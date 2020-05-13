@@ -236,10 +236,6 @@
       <Project>{eb37023b-dd9e-4c10-9727-396cef71745b}</Project>
       <Name>LogicTier</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Models\Models.csproj">
-      <Project>{47848402-88d7-4dab-83b9-222241e6fb6b}</Project>
-      <Name>Models</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.3.1.1-ci1320\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.3.1.1-ci1320\build\MaterialDesignThemes.targets')" />

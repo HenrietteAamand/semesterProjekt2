@@ -1,6 +1,6 @@
 ﻿using DataTier.Databaser;
 using DataTier.Interfaces;
-using Models.Models;
+using DataTier.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -5,7 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using LogicTier;
-using Models.Models;
+using DataTier.Models;
 
 
 //using System.Windows.Forms;

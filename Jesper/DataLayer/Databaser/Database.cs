@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DataTier.Interfaces;
 using DataTier;
 using System.Data.SqlClient;
-using Models.Models;
+using DataTier.Models;
 using System.ComponentModel;
 using System.Globalization;
 using System.Threading;
