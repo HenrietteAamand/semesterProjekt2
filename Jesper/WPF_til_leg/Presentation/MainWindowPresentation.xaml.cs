@@ -12,19 +12,25 @@ using System.Windows.Data;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using System.Linq;
 using System.Data;
+using System.ComponentModel;
 
 namespace WPF_til_leg.Presentation
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindowPresentation : MetroWindow
+    public partial class MainWindowPresentation : MetroWindow, INotifyPropertyChanged
     {
         private MainWindowLogic mainObj;
         //private ChartECG chartObj;
         private AnalyzeECG analyzeObj;
         List<PatientModel> Patients;
         List<AnalyzedECGModel> aECGS;
+
+        private string filterText;
+        private CollectionViewSource usersCollection;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindowPresentation()
         {
@@ -44,10 +50,15 @@ namespace WPF_til_leg.Presentation
             Patients = new List<PatientModel>();
             Patients = mainObj.getAllPatiens();
             analyzeObj.CreateAnalyzedECGs();
-            patientsLV.ItemsSource = Patients;
 
+            usersCollection = new CollectionViewSource();
+            usersCollection.Source = Patients;
+            usersCollection.Filter += usersCollection_Filter;
             DataContext = this;
         }
+
+        
+
 
         async Task ShowDialog()
         {
