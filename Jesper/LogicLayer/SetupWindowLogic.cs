@@ -73,7 +73,7 @@ namespace LogicTier
             {
                 if (patient.ECGMonitorID.Trim() == ecgID)
                 {
-                    patient.ECGMonitorID = "0";
+                    patient.ECGMonitorID = null;
                     DB.UpdatePatient(patient);
                     
 
