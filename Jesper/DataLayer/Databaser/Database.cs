@@ -310,7 +310,14 @@ namespace DataTier.Databaser
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.CommandText = insertStringParam;
-                cmd.Parameters.AddWithValue("@LinkedECG", patient.ECGMonitorID);
+                if (patient.ECGMonitorID == null)
+                {
+                    cmd.Parameters.AddWithValue("@LinkedECG", DBNull.Value);
+                }
+                else
+                {
+                    cmd.Parameters.AddWithValue("@LinkedECG", patient.ECGMonitorID);
+                }
 
                 cmd.ExecuteNonQuery();    
             }
