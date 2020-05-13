@@ -123,7 +123,7 @@
             Grid.Column="1"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Søg efter patient..." Grid.ColumnSpan="1" Margin="10,0,10,0">
+                             Controls:TextBoxHelper.Watermark="Søg efter patient..." Grid.ColumnSpan="1" Margin="10,0,10,0" TextChanged="SoegTB_TextChanged">
             <TextBox.Style>
                 <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Search}" TargetType="{x:Type TextBox}">
                     <Style.Triggers>
@@ -207,7 +207,7 @@
             x:Name="uploadOffDBB"
             Margin="10,0,10,0" >
             
-            <Button x:Name="UploadB" Click="UploadB_Click">
+            <Button x:Name="UploadB" Click="UploadB_Click" Visibility="Visible">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                     <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Upload" />
                     <TextBlock Margin="5" Text="Upload til Offentlig Database"/>
@@ -221,7 +221,7 @@
             Grid.Column="1"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Indtast personale ID..." Grid.ColumnSpan="1" Margin="10,0,10,0" VerticalAlignment="Center">
+                             Controls:TextBoxHelper.Watermark="Indtast personale ID..." Grid.ColumnSpan="1" Margin="10,0,10,0" VerticalAlignment="Center" TextChanged="idT_TextChanged">
                 <TextBox.Style>
                     <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
                         <Style.Triggers>
@@ -237,7 +237,7 @@
             <Controls:Badged 
             Margin="10,0,10,0" >
 
-                <Button x:Name="cancelB" Click="cancelB_Click">
+                <Button x:Name="cancelB" Click="cancelB_Click" Visibility="Visible">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Cancel" />
                         <TextBlock Margin="5" Text="Fortryd"/>
@@ -249,7 +249,7 @@
             Margin="10,0,10,0" 
                 Grid.Column="2">
 
-                <Button x:Name="okB" Click="okB_Click">
+                <Button x:Name="okB" Click="okB_Click" Visibility="Visible">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                         <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Check" />
                         <TextBlock Margin="5" Text="OK"/>

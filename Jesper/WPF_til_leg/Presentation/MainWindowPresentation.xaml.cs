@@ -7,6 +7,10 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using LogicTier;
 using DataTier.Models;
+using System.Windows.Forms;
+using System.Windows.Data;
+using ListViewItem = System.Windows.Controls.ListViewItem;
+using System.Linq;
 
 namespace WPF_til_leg.Presentation
 {
@@ -26,8 +30,7 @@ namespace WPF_til_leg.Presentation
             InitializeComponent();
             ShowDialog();
 
-            
-            while (idT.Text == null)
+            if (idT.Text == "")
             {
                 UploadB.IsEnabled = false;
             }
@@ -64,9 +67,14 @@ namespace WPF_til_leg.Presentation
 
         private void UploadB_Click(object sender, RoutedEventArgs e)
         {
-            uploadPressed.Visibility = Visibility.Hidden;
-            okB.Visibility = Visibility.Visible;
-            cancelB.Visibility = Visibility.Visible;
+            if (idT.Text != "")
+            {
+                //uploadPressed.Visibility = Visibility.Hidden;
+                UploadB.Visibility = Visibility.Hidden;
+                idT.Visibility = Visibility.Hidden;
+                okB.Visibility = Visibility.Visible;
+                cancelB.Visibility = Visibility.Visible;
+            }
         }
 
         private void cancelB_Click(object sender, RoutedEventArgs e)
@@ -95,10 +103,18 @@ namespace WPF_til_leg.Presentation
             dynamic patient = patientsLV.SelectedItem;
             string cpr = patient.CPR;
 
-            CPRTB.Text = cpr;
-            NavnTB.Text = mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
-            AlderTB.Text = Convert.ToString(mainObj.GetAge(cpr));
-            KonTB.Text = Convert.ToString(mainObj.IsAMan(cpr));
+            CPRTB.Text = "CPR-NUMMER: " + cpr;
+            NavnTB.Text = "NAVN: " + mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
+            AlderTB.Text = "ALDER: " + Convert.ToString(mainObj.GetAge(cpr)) + " år";
+            
+            if (mainObj.IsAMan(cpr) == true)
+            {
+                KonTB.Text = "KØN: Mand";
+            }
+            else
+            {
+                KonTB.Text = "KØN: Kvinde";
+            }
             ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
 
         }
@@ -119,5 +135,35 @@ namespace WPF_til_leg.Presentation
             //chartUC.MakeST(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex);
 
         }
+
+        private void idT_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(idT.Text != "")
+            {
+                UploadB.IsEnabled = true;
+            }
+            else
+            {
+                UploadB.IsEnabled = false;
+            }
+            
+        }
+
+        private void SoegTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            //    if (SoegTB.Text != "")
+            //    {
+            //        foreach (ListViewItem item in patientsLV.Items)
+            //        {
+            //            if(item.cpr != SoegTB.Text)
+            //            {
+
+            //            }
+            //        }
+            //    }
+
+        }
+
+
     }
 }

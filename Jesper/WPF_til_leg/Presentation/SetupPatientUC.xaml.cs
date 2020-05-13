@@ -33,32 +33,32 @@ namespace WPF_til_leg.Presentation
 
         private void OpretB_Click(object sender, RoutedEventArgs e)
         {
-            //TextRange CPRTR = new TextRange(CPRTB.Document.ContentStart,CPRTB.Document.ContentEnd);
-            //TextRange FnavnTR = new TextRange(FnavnTB.Document.ContentStart, FnavnTB.Document.ContentEnd);
-            //TextRange EnavnTR = new TextRange(EnavnTB.Document.ContentStart, EnavnTB.Document.ContentEnd);
-            
+            TextRange CPRTR = new TextRange(CPRTB.Document.ContentStart, CPRTB.Document.ContentEnd);
+            TextRange FnavnTR = new TextRange(FnavnTB.Document.ContentStart, FnavnTB.Document.ContentEnd);
+            TextRange EnavnTR = new TextRange(EnavnTB.Document.ContentStart, EnavnTB.Document.ContentEnd);
 
-            //if (CPRTR.Text != null && FnavnTR.Text != null && EnavnTR.Text != null)
-            //{
 
-            //    if (setupObj.IsPatientAlreadyCreated(CPRTR.Text) == false) 
-            //    {
-            //        setupObj.newPatient(CPRTR.Text, FnavnTR.Text, EnavnTR.Text);
-            //        PatientTB.Visibility = Visibility.Visible;
-            //        PatientTB.Text = "Patient oprettet.";
-            //    }
-            //    else 
-            //    {
-            //        PatientTB.Text = "Patient allerede oprettet";
-            //    }
-            //}
-            //else
-            //{
-            //    PatientTB.Visibility = Visibility.Visible;
-            //    PatientTB.Text = "En eller flere oplysninger er ikke udfyldt.";
-            //} 
+            if (CPRTR.Text != null && FnavnTR.Text != null && EnavnTR.Text != null)
+            {
 
-                
+                if (setupObj.IsPatientAlreadyCreated(CPRTR.Text) == false)
+                {
+                    setupObj.newPatient(CPRTR.Text, FnavnTR.Text, EnavnTR.Text);
+                    PatientTB.Visibility = Visibility.Visible;
+                    PatientTB.Text = "Patient oprettet.";
+                }
+                else
+                {
+                    PatientTB.Text = "Patient allerede oprettet";
+                }
+            }
+            else
+            {
+                PatientTB.Visibility = Visibility.Visible;
+                PatientTB.Text = "En eller flere oplysninger er ikke udfyldt.";
+            }
+
+
         }
     }
 }

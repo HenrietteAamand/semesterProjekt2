@@ -45,9 +45,9 @@ namespace DataTier.Databaser
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.CommandText = insertStringParam;
-                cmd.Parameters.AddWithValue("@CPR", patient.CPR);
-                cmd.Parameters.AddWithValue("@FirstName", patient.FirstName);
-                cmd.Parameters.AddWithValue("@LastName", patient.LastName);
+                cmd.Parameters.AddWithValue("@CPR", (patient.CPR).ToString());
+                cmd.Parameters.AddWithValue("@FirstName", (patient.FirstName).ToString());
+                cmd.Parameters.AddWithValue("@LastName", (patient.LastName).ToString());
 
                 cmd.ExecuteNonQuery();
                 
