@@ -214,7 +214,7 @@ namespace DataTier.Databaser
                 
                 for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
                 {
-                    tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
+                    //tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
                     talList.Add(BitConverter.ToDouble(bytesArr.ToArray(), i));
                 }
 

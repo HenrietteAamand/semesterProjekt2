@@ -120,7 +120,7 @@
 
         <TextBox x:Name="SoegTB"
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="1" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
                              Controls:TextBoxHelper.Watermark="Søg efter patient..." Grid.ColumnSpan="1" Margin="10,0,10,0">
@@ -152,9 +152,10 @@
                     x:Name="patientsLV"
                     Width="200"
                     BorderThickness="0.5"
-                    ItemsSource="{Binding Patients}"
+                    ItemsSource="{Binding SourceCollection}"
                     SelectedIndex="0"
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="patientsLV_SelectionChanged">
+
                     <ListView.View>
                         <GridView>
                             <GridViewColumn DisplayMemberBinding="{Binding CPR}" Header="CPR" x:Name="cprColumn"/>
