@@ -20,7 +20,7 @@ namespace DataTier.Interfaces
 
         List<IllnessModel> GetAllIllnesses();
 
-        IllnessModel getIllness(int id);
+        IllnessModel GetIllness(int id);
 
 
         //Gem

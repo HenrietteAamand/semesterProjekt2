@@ -89,6 +89,8 @@ namespace LogicTier
             foreach (ECGModel ecg in newECGList)
             {
                 FindNextID();
+                ecg.IsAnalyzed = true;
+                lDBRef.UpdateIsAnalyzed(ecg);
                 NewAECGModelsList.Add(new AnalyzedECGModel(ecg.CPR, ecg.ECGID, NextID, ecg.Date, ecg.SampleRate, ecg.Values, ecg.MonitorID));
             }
         }

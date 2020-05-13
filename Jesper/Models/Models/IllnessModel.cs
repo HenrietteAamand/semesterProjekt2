@@ -57,7 +57,10 @@ namespace Models.Models
 
         }
 
+        public IllnessModel()
+        {
 
+        }
 
         #endregion
 

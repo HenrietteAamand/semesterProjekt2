@@ -16,14 +16,20 @@ namespace DataTier.Databaser
     public class Database : ILocalDatabase
     {
         private SqlConnection connection;
+        private SqlConnection connection2;
         private SqlDataReader reader;
+        private SqlDataReader reader2;
         private SqlCommand command;
+        private SqlCommand command2;
         private const String db = "F20ST2ITS2201908197";
+        IllnessModel illness;
 
 
         public Database()
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
+            illness = new IllnessModel();
+            illness = GetIllness(1);
 
 
         }
@@ -50,26 +56,26 @@ namespace DataTier.Databaser
             connection.Close();
         } //virker /
 
-        public IllnessModel getIllness(int id)
+        public IllnessModel GetIllness(int id)
         {
             connection = new SqlConnection(@"Data Source=st-i4dab.uni.au.dk;Initial Catalog=" + db +
                 ";Integrated Security=False;User ID=" + db + ";Password=" + db + ";Connect Timeout=15;Encrypt=False;TrustServerCertificate=False");
 
-            IllnessModel illness = new IllnessModel(0,"NN", " ", 0, 0, false, false);
-
+            //IllnessModel illness = new IllnessModel(0,"NN", " ", 0, 0, false, false);
+            IllnessModel illness = null;
             command = new SqlCommand("SELECT * FROM dbo.Illness WHERE ID = " + id, connection);
             connection.Open();
 
-            reader = command.ExecuteReader();
+            reader2 = command.ExecuteReader();
 
 
-            if (reader.Read())
+            if (reader2.Read())
             {
 
-                illness = new IllnessModel(Convert.ToInt32(reader["ID"]), Convert.ToString(reader["Name"]),
-                    Convert.ToString(reader["About"]), Convert.ToDouble(reader["stMax"]), Convert.ToDouble(reader["srMax"]), 
-                    Convert.ToBoolean(reader["STSegmentElevated"]), Convert.ToBoolean(reader["STSegmentDepressed"]));
-
+                illness = new IllnessModel(Convert.ToInt32(reader2["ID"]), Convert.ToString(reader2["Name"]),
+                    Convert.ToString(reader2["About"]), Convert.ToDouble(reader2["stMax"]), Convert.ToDouble(reader2["srMax"]), 
+                    Convert.ToBoolean(reader2["STSegmentElevated"]), Convert.ToBoolean(reader2["STSegmentDepressed"]));
+                
             }
 
             connection.Close();
@@ -114,7 +120,7 @@ namespace DataTier.Databaser
              
                 foreach (AnalyzedECGModel aECG in ameasurements)
                 {
-                    if (aECG.IsAnalyzed)
+                    if (reader["BLOBstValues"] != null)
                     {
                         bytesArr1 = (byte[])reader["BLOBstValues"];
                         for (int i = 0, j = 0; i < bytesArr1.Length; i += 8, j++)
@@ -124,13 +130,33 @@ namespace DataTier.Databaser
                         }
 
                         aECG.STValues = STValuesList;
-                        aECG.STStartIndex = (int)reader["STStartIndex"];
+                    }
+
+                    if (reader["STStartIndex"].GetType() != typeof(DBNull))
+                    {
+                        aECG.STStartIndex = Convert.ToInt32(reader["STStartIndex"]);
+
+                    }
+                    
+                    if (reader["Baseline"].GetType() != typeof(DBNull))
+                    {
                         aECG.Baseline = (double)reader["Baseline"];
+                    }
+
+                    if (reader["IsRead"].GetType() != typeof(DBNull))
+                    {
                         aECG.IsRead = (bool)reader["IsRead"];
-                        aECG.Illnes.Id = (int)reader["Illness"];
+
+                    }
+                    if (reader["Illness"].GetType() != typeof(DBNull))
+                    {
+                        aECG.Illnes = illness;
+                    }
+  
+                        
                         //aECG.STDepressed = (bool)reader["STDepressed"];
                         //aECG.STElevated = (bool)reader["STElevated"];
-                    }
+                    
                 }
 
             }

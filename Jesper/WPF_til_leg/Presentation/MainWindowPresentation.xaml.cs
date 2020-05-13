@@ -105,10 +105,14 @@ namespace WPF_til_leg.Presentation
 
         private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            dynamic aECG = ecgLV.SelectedItem;
-            //AnalyzedECGModel aECG = mainObj.aECGList[1];
+            if (ecgLV.SelectedItem != null)
+            {
+                dynamic aECG = ecgLV.SelectedItem;
+                //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
-            chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex);
+                chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex);
+            }
+            
             //chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), a, 3);
 
             //chartUC.MakeECGChart(mainObj.GetECGValues(aECG.AECGID));
