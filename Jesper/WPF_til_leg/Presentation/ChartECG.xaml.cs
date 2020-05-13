@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Controls;
 using LiveCharts;
-using LiveCharts.Wpf;
-
+using System.Windows;
 
 namespace WPF_til_leg.Presentation
 {
@@ -16,11 +15,17 @@ namespace WPF_til_leg.Presentation
         AnalyzeECG analyzeLogic = new AnalyzeECG();
         MainWindowLogic mainLogic = new MainWindowLogic();
         public SeriesCollection series { get; set; }
-        
+        public ChartValues<double> STList { get; set; }
+        public ChartValues<double> ECGList { get; set; }
+        public ChartValues<double> BaseList { get; set; }
+
+        private double _to;
+        private double _from;
 
 
         public ChartECG()
         {
+            
             InitializeComponent();
             //analyzeLogic.CreateAnalyzedECGs();         
 
@@ -29,58 +34,111 @@ namespace WPF_til_leg.Presentation
             //MakeST(ecg, length, startIndex);
             //MakeChart2(analyzeLogic.NewAECGModelsList[0].Values);
             //MakeST(analyzeLogic.NewAECGModelsList[0].Values, analyzeLogic.NewAECGModelsList[0].STValues.Count, analyzeLogic.NewAECGModelsList[0].STStartIndex);
+            To = 25;
+            From = 0;
         }
 
-        public void MakeCharts(List<double> ecg, int length, int startIndex)
+        public void MakeCharts(List<double> ecg, int length, int startIndex, double baseline)
         {
-            series = new SeriesCollection();
+            
+            STList = new ChartValues<double>();
+            ECGList = new ChartValues<double>();
+            BaseList = new ChartValues<double>();
             ECGSeriesVisibility = true;
             BaseLineSeriesVisibility = true;
             STSeriesVisibility = true;
-            MakeECGChart(ecg);
-            MakeST(ecg, length, startIndex);
-            OnPropertyChanged("series");
+            MakeECGList(ecg);
+            //MakeECGLine(ecg);
+            MakeSTList(ecg, length, startIndex);
+            //MakeSTLine(ecg, length, startIndex);
+            MakeBaseList(ecg, baseline);
+            //MakeBaseLineChart(ecg, baseline);
+
+            OnPropertyChanged("ECGList");
+
+            OnPropertyChanged("BaseList");
+            DataContext = this;
         }
 
 
-        public void MakeST(List<double> ecg, int length, int startIndex)
-        {   ECGSeriesVisibility = true;
-            BaseLineSeriesVisibility = true;
-            STSeriesVisibility = false;
-            LineSeries line = new LineSeries();
-            List<double >ecg1 = new List<double>();
-            ecg1 = ecg;
-            for (int i = 0; i < ecg1.Count; i++)
+        //public void MakeSTLine(List<double> ecg, int length, int startIndex)
+        //{   
+        //    List<double >ecg1 = new List<double>();
+        //    ecg1 = ecg;
+        //    for (int i = 0; i < ecg1.Count; i++)
+        //    {
+        //        if (i < startIndex || i > startIndex + length)
+        //        {
+        //            ecg1[i] = double.NaN;
+        //        }
+        //    }
+        //    stLine.Values = new ChartValues<double>();
+        //    for (int i = 0; i < ecg1.Count; i++)
+        //    {
+        //        stLine.Values.Add(ecg1[i]);
+        //    }
+        //    series.Add(stLine);
+        //    DataContext = this;
+        //}
+        public void MakeSTList(List<double> ecg, int length, int startIndex)
+        {
+            List<double> ecg12 = new List<double>();
+            for (int i = 0; i < ecg.Count; i++)
             {
                 if (i < startIndex || i > startIndex + length)
                 {
-                    ecg1[i] = double.NaN;
+                    ecg12.Add(double.NaN);
                 }
+                else
+                    ecg12.Add(ecg[i]);
             }
-            line.Values = new ChartValues<double>();
-            for (int i = 0; i < ecg1.Count; i++)
+
+
+            ChartValues<double> stValues = new ChartValues<double>();
+            for (int i = 0; i < ecg12.Count; i++)
             {
-                line.Values.Add(ecg1[i]);
+                stValues.Add(ecg12[i]);
             }
-            series.Add(line);
+            STList = stValues;
             DataContext = this;
+            OnPropertyChanged("STList");
         }
-        public void MakeECGChart(List<double> ecg)
+        //public void MakeECGLine(List<double> ecg)
+        //{
+        //    List<double> ecg2 = new List<double>();
+        //    ecg2 = ecg;
+        //    ecgLine.Values = new ChartValues<double>();
+        //    for (int i = 0; i < ecg2.Count; i++)
+        //    {
+        //        ecgLine.Values.Add(ecg2[i]);
+        //    }
+        //    series.Add(ecgLine);
+        //    DataContext = this;
+        //}
+        public void MakeECGList(List<double> ecg)
         {
-            LineSeries line = new LineSeries();
             List<double> ecg2 = new List<double>();
             ecg2 = ecg;
-            line.Values = new ChartValues<double>();
+            ChartValues<double> ecgValues= new ChartValues<double>();
             for (int i = 0; i < ecg2.Count; i++)
             {
-                line.Values.Add(ecg2[i]);
+                ecgValues.Add(ecg2[i]);
             }
-            series.Add(line);
+
+            ECGList = ecgValues;
             DataContext = this;
         }
-        public void MakeBaseLineChart()
+        public void MakeBaseList(List<double> ecg, double baseline)
         {
-            //Lave en streg fra første index af ecgValues til sidste index af ecgValues som har en værdi på baseline.
+            List<double> ecg2 = new List<double>();
+            ecg2 = ecg;
+            ChartValues<double> baseValues = new ChartValues<double>();
+            for (int i = 0; i < ecg2.Count; i++)
+            {
+                baseValues.Add(baseline);
+            }
+            BaseList = baseValues;
+            DataContext = this;
 
         }
 
@@ -120,6 +178,37 @@ namespace WPF_til_leg.Presentation
         {
             if (PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        public double From
+        {
+            get { return _from; }
+            set
+            {
+                _from = value;
+                OnPropertyChanged("From");
+            }
+        }
+
+        public double To
+        {
+            get { return _to; }
+            set
+            {
+                _to = value;
+                OnPropertyChanged("To");
+            }
+        }
+
+        private void NextOnClick(object sender, RoutedEventArgs e)
+        {
+            From += 25;
+            To += 25;
+        }
+
+        private void PrevOnClick(object sender, RoutedEventArgs e)
+        {
+            From -= 25;
+            To -= 25;
         }
     }
 }
