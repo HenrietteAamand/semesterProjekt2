@@ -111,29 +111,33 @@ namespace WPF_til_leg.Presentation
 
         private void patientsLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            dynamic patient = patientsLV.SelectedItem;
-            string cpr = patient.CPR;
-
-            CPRTB.Text = "CPR-NUMMER: " + cpr;
-            NavnTB.Text = "NAVN: " + mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
-            AlderTB.Text = "ALDER: " + Convert.ToString(mainObj.GetAge(cpr)) + " år";
-            
-            if (mainObj.IsAMan(cpr) == true)
+            if (patientsLV.SelectedValue != null)
             {
-                KonTB.Text = "KØN: Mand";
+
+
+                dynamic patient = patientsLV.SelectedItem;
+                string cpr = patient.CPR;
+
+                CPRTB.Text = "CPR-NUMMER: " + cpr;
+                NavnTB.Text = "NAVN: " + mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
+                AlderTB.Text = "ALDER: " + Convert.ToString(mainObj.GetAge(cpr)) + " år";
+
+                if (mainObj.IsAMan(cpr) == true)
+                {
+                    KonTB.Text = "KØN: Mand";
+                }
+                else
+                {
+                    KonTB.Text = "KØN: Kvinde";
+                }
+                ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
             }
-            else
-            {
-                KonTB.Text = "KØN: Kvinde";
-            }
-            ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
 
         }
 
         private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ecgLV.SelectedItem != null)
+            if (ecgLV.SelectedItem != null && patientsLV.SelectedValue != null)
             {
                 dynamic aECG = ecgLV.SelectedItem;
                 //AnalyzedECGModel aECG = mainObj.aECGList[1];
