@@ -90,10 +90,7 @@
                             <MenuItem Header="ECG" />
                         </ContextMenu>
                     </ComboBox.ContextMenu>
-                    <ComboBoxItem Content="ECG 1" />
-                    <ComboBoxItem Content="ECG 2" />
-                    <ComboBoxItem Content="ECG 3" />
-                    <ComboBoxItem Content="ECG 4" />
+                    
                 </ComboBox>
 
                 <ComboBox x:Name="PatientIDCB"
@@ -111,10 +108,7 @@
                             <MenuItem Header="PatientID" />
                         </ContextMenu>
                     </ComboBox.ContextMenu>
-                    <ComboBoxItem Content="PatientID 1" />
-                    <ComboBoxItem Content="PatientID 1" />
-                    <ComboBoxItem Content="PatientID 1" />
-                    <ComboBoxItem Content="PatientID 1" />
+                    
                 </ComboBox>
 
                 <Controls:Badged 
@@ -144,7 +138,7 @@
                     </Button>
 
                 </Controls:Badged>
-                <TextBox x:Name="SetupTB" HorizontalAlignment="Center" MinHeight="30" Grid.Row="5" Background="Transparent" TextWrapping="Wrap" VerticalAlignment="Top" MinWidth="300" Grid.ColumnSpan="2"/>
+                <TextBox x:Name="SetupTB" HorizontalAlignment="Center" MinHeight="30" Grid.Row="5" Background="Transparent" BorderBrush="Transparent" TextWrapping="Wrap" VerticalAlignment="Top" MinWidth="300" Grid.ColumnSpan="2"/>
             </Grid>
 
         </GroupBox>

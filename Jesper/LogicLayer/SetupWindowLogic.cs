@@ -56,7 +56,7 @@ namespace LogicTier
 
             foreach (ECGMonitorModel monitor in ecgMonitorList.ToList())
             {
-                if (monitor.ID == ecgMonitorID)
+                if (monitor.ID.Trim() == ecgMonitorID)
                 {
                     monitor.InUse = true;
                     DB.UpdateECGMonitor(monitor);
@@ -65,15 +65,15 @@ namespace LogicTier
 
         }
 
-        public void ResetECGMonitor(int ecgID)
+        public void ResetECGMonitor(string ecgID)
         {
             //Finder patient med pågældende ECG-monitor tilknyttet
             //Fjerner ECG-monitoren fra patient objektet
             foreach (PatientModel patient in patientList.ToList())
             {
-                if (Convert.ToInt32(patient.ECGMonitorID) == ecgID)
+                if (patient.ECGMonitorID.Trim() == ecgID)
                 {
-                    patient.ECGMonitorID ="0";
+                    patient.ECGMonitorID = "0";
                     DB.UpdatePatient(patient);
                     
 
@@ -83,7 +83,7 @@ namespace LogicTier
             //Sætter InUse på ECG-monitoren til false
             foreach (ECGMonitorModel monitor in ecgMonitorList.ToList())
             {
-                if (Convert.ToInt32(monitor.ID) == ecgID)
+                if (monitor.ID.Trim() == ecgID)
                 {
                     monitor.InUse = false;
                     DB.UpdateECGMonitor(monitor);
@@ -115,13 +115,13 @@ namespace LogicTier
         }
 
 
-        public bool monitorInUse(int ecgMonitorID)
+        public bool monitorInUse(string ecgMonitorID)
         {
             bool result = false;
             foreach (ECGMonitorModel monitor in ecgMonitorList)
             {
 
-                if (Convert.ToInt32(monitor.ID) == ecgMonitorID)
+                if (monitor.ID.Trim() == ecgMonitorID)
                 {
                     result = monitor.InUse;
                 }

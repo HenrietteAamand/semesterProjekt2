@@ -29,26 +29,32 @@ namespace WPF_til_leg.Presentation
             InitializeComponent();
             setupObj = new SetupWindowLogic();
             PatientTB.Visibility = Visibility.Hidden;
+            PatientTB.IsEnabled = false;
         }
 
         private void OpretB_Click(object sender, RoutedEventArgs e)
         {
-            TextRange CPRTR = new TextRange(CPRTB.Document.ContentStart, CPRTB.Document.ContentEnd);
-            TextRange FnavnTR = new TextRange(FnavnTB.Document.ContentStart, FnavnTB.Document.ContentEnd);
-            TextRange EnavnTR = new TextRange(EnavnTB.Document.ContentStart, EnavnTB.Document.ContentEnd);
+            //TextRange CPRTR = new TextRange(CPRTB.Document.ContentStart, CPRTB.Document.ContentEnd);
+            //TextRange FnavnTR = new TextRange(FnavnTB.Document.ContentStart, FnavnTB.Document.ContentEnd);
+            //TextRange EnavnTR = new TextRange(EnavnTB.Document.ContentStart, EnavnTB.Document.ContentEnd);
 
+            //string CPRT = Convert.ToString(CPRTR).Trim();
+            //string FnavnT = Convert.ToString(FnavnTR).Trim();
+            //string EnavnT = Convert.ToString(EnavnTR).Trim();
 
-            if (CPRTR.Text != null && FnavnTR.Text != null && EnavnTR.Text != null)
+            if (CPRTB.Text != "" && FnavnTB.Text != "" && EnavnTB.Text != "")
             {
 
-                if (setupObj.IsPatientAlreadyCreated(CPRTR.Text) == false)
+                if (setupObj.IsPatientAlreadyCreated(CPRTB.Text) == false)
                 {
-                    setupObj.newPatient(CPRTR.Text, FnavnTR.Text, EnavnTR.Text);
+                    setupObj.newPatient(CPRTB.Text, FnavnTB.Text, EnavnTB.Text);
                     PatientTB.Visibility = Visibility.Visible;
                     PatientTB.Text = "Patient oprettet.";
+
                 }
                 else
                 {
+                    PatientTB.Visibility = Visibility.Visible;
                     PatientTB.Text = "Patient allerede oprettet";
                 }
             }

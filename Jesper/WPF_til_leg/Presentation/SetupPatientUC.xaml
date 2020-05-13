@@ -73,26 +73,27 @@
                     </Controls:MetroHeader.HeaderTemplate>
                 </Controls:MetroHeader>
 
-                <RichTextBox x:Name="CPRTB" Grid.Row="2" 
+                <TextBox x:Name="CPRTB" Grid.Row="2" 
                     Margin="10"
                     Controls:TextBoxHelper.ClearTextButton="True"
-                    Controls:TextBoxHelper.Watermark="Indtast CPR..."
-                    IsDocumentEnabled="True"
-                    SpellCheck.IsEnabled="True" />
+                    Controls:TextBoxHelper.Watermark="Indtast CPR..."/>
+                <!--IsDocumentEnabled="True"
+                    SpellCheck.IsEnabled="True" />-->
 
                 <UniformGrid Grid.Row="3" Columns="2">
-                    <RichTextBox x:Name="FnavnTB" 
+                    <TextBox x:Name="FnavnTB" 
                     Margin="10"
                     Controls:TextBoxHelper.ClearTextButton="True"
-                    Controls:TextBoxHelper.Watermark="Indtast Fornavn..."
-                    IsDocumentEnabled="True"
-                    SpellCheck.IsEnabled="True" />
-                    <RichTextBox x:Name="EnavnTB" 
+                    Controls:TextBoxHelper.Watermark="Indtast Fornavn..."/>
+                    <!--IsDocumentEnabled="True"-->
+                    <!--SpellCheck.IsEnabled="True" />-->
+
+                    <TextBox x:Name="EnavnTB" 
                     Margin="10"
                     Controls:TextBoxHelper.ClearTextButton="True"
-                    Controls:TextBoxHelper.Watermark="Indtast Efternavn..."
-                    IsDocumentEnabled="True"
-                    SpellCheck.IsEnabled="True" />
+                    Controls:TextBoxHelper.Watermark="Indtast Efternavn..."/>
+                    <!--IsDocumentEnabled="True"
+                    SpellCheck.IsEnabled="True"-->
 
                 </UniformGrid>
 
@@ -110,7 +111,7 @@
                     </Button>
 
                 </Controls:Badged>
-                <TextBox x:Name="PatientTB" HorizontalAlignment="Center" Background="Transparent" MinHeight="30" Margin="5" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" MinWidth="300"/>
+                <TextBox x:Name="PatientTB" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" MinHeight="30" Margin="5" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" MinWidth="300"/>
             </Grid>
 
         </GroupBox>
