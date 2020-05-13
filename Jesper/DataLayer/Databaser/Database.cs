@@ -108,8 +108,13 @@ namespace DataTier.Databaser
 
                 for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
                 {
-                    values[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
+                    
+                    //values[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
                     valuesList.Add(BitConverter.ToDouble(bytesArr.ToArray(), i));
+                    if (i > 4800)
+                    {
+                        i = bytesArr.Length;
+                    }
                 }             
 
                 
@@ -125,8 +130,13 @@ namespace DataTier.Databaser
                         bytesArr1 = (byte[])reader["BLOBstValues"];
                         for (int i = 0, j = 0; i < bytesArr1.Length; i += 8, j++)
                         {
+                            
                             STValues[j] = BitConverter.ToDouble(bytesArr1.ToArray(), i);
                             STValuesList.Add(BitConverter.ToDouble(bytesArr1.ToArray(), i));
+                            if (i > 4800)
+                            {
+                                i = bytesArr1.Length;
+                            }
                         }
 
                         aECG.STValues = STValuesList;
