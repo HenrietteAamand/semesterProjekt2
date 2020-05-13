@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Windows.Data;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using System.Linq;
+using System.Data;
 
 namespace WPF_til_leg.Presentation
 {
@@ -151,16 +152,23 @@ namespace WPF_til_leg.Presentation
 
         private void SoegTB_TextChanged(object sender, TextChangedEventArgs e)
         {
-            //    if (SoegTB.Text != "")
-            //    {
-            //        foreach (ListViewItem item in patientsLV.Items)
-            //        {
-            //            if(item.cpr != SoegTB.Text)
-            //            {
-
-            //            }
-            //        }
-            //    }
+            if (SoegTB.Text != "")
+            {
+                foreach (ListViewItem item in patientsLV.Items)
+                {
+                    dynamic itemNew = item;
+                    if (!itemNew.CPR.Contains(SoegTB.Text))
+                    {
+                        item.Visibility = Visibility.Hidden;
+                    }
+                }
+            }
+            //if (e.KeyChar == (char)13)
+            //{
+            //    DataView dv = dt.DefaultView;
+            //    dv.RowFilter = $"Column1 like '%{SoegTB.Text}%'";
+            //    dataGridView.DataSource = dv.ToTable();
+            //}
 
         }
 
