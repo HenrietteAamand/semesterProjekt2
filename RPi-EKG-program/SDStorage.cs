@@ -156,6 +156,7 @@ namespace RPi_EKG_program
 
             cpr = cprName.Split(Convert.ToChar(";"))[0];
             firstName = cprName.Split(Convert.ToChar(";"))[1];
+
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"EKGPersonID.txt"))
             {
                 file.WriteLine(cpr + ";" + firstName + ";" + DateTime.Now.ToString());

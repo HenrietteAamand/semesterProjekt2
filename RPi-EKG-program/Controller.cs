@@ -10,132 +10,128 @@ namespace RPi_EKG_program
     class Program
     {
            
-        private const string MonitorID = "Måler1";
+        private const string monitorID = "Måler1";
         private static int sampleRate = 10;
 
-        
         static void Main(string[] args)
         {
 
             Display displayController = new Display();
-            DatabaseIF LocalDB = new DatabaseIF();
-            SDStorage LocalStorage = new SDStorage();
-            ADC ADconverter = new ADC();
-            Start_Button StartB = new Start_Button();
+            DatabaseIF localDB = new DatabaseIF();
+            SDStorage localStorage = new SDStorage();
+            ADC adConverter = new ADC();
+            Start_Button startB = new Start_Button();
 
          
-            LocalDB.isConnected();
-
-            
-
-
-            while (LocalStorage.getCPRLocal() == null)
+            if(localDB.isConnected())
             {
-                displayController.screenShow(7, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                localStorage.storeInfoLocal(localDB.recieveData(monitorID));            
+            }
+
+
+            while (localStorage.getCPRLocal() == null)
+            {
+                displayController.screenShow(7, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
                 
-                if (LocalDB.isConnected())
+                if (localDB.isConnected())
                 {
-                    LocalStorage.storeInfoLocal(LocalDB.recieveData(MonitorID));
+                    localStorage.storeInfoLocal(localDB.recieveData(monitorID));
 
                 }
 
             }
 
-            displayController.showGreeting(LocalStorage.getInfoLocal(), LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            displayController.showGreeting(localStorage.getInfoLocal(), localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
 
             Thread.Sleep(5000);
 
 
             while (true)
             {
-                if (LocalDB.isConnected() && LocalStorage.checkUnSentData()!=0)
+                if (localDB.isConnected() && localStorage.checkUnSentData()!=0)
                 {
-                    displayController.screenShow(9, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                    displayController.screenShow(9, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
                     Thread.Sleep(1000);
 
-                    foreach (var item in LocalStorage.findUnSentData())
+                    foreach (var item in localStorage.findUnSentData())
                     {
-                        LocalDB.sendData(item);
+                        localDB.sendData(item);
                     }
                     Thread.Sleep(5000);
 
                 }
 
-                while (ADconverter.checkBattery() == 1)
+                while (adConverter.checkBattery() == 1)
                 {
-                    displayController.screenShow(8, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                    displayController.screenShow(8, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
                     Thread.Sleep(3000);
                 }
 
-                displayController.screenShow(3, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                displayController.screenShow(3, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
 
-                if (StartB.isPressed())
+                if (startB.isPressed())
                 {
-                    if (ADconverter.isCableConnected() == true)
+                    if (adConverter.isCableConnected() == true)
                     {
 
-                        bool connection = LocalDB.isConnected();
+                        bool connection = localDB.isConnected();
                        
-                        Byte lokalUnSent = LocalStorage.checkUnSentData();
-                        byte battery = ADconverter.checkBattery();
+                        Byte storageStatus = localStorage.checkUnSentData();
+                        byte batteryStatus = adConverter.checkBattery();
 
-                        DateTime StartTime = DateTime.Now;
-                        DateTime EndTime = DateTime.Now;
-                        TimeSpan MeasureTime = EndTime - StartTime;
+                        DateTime startTime = DateTime.Now;
+                        DateTime endTime = DateTime.Now;
+                        TimeSpan measureTime = endTime - startTime;
 
                         
 
-                        Measurement NewMeasurement = new Measurement(LocalStorage.getCPRLocal(), new List<double>(), DateTime.Now, (sampleRate/1000),MonitorID );
-                        displayController.statusUpdateMeasurment(MeasureTime.TotalSeconds, connection, lokalUnSent, battery);
+                        Measurement newMeasurement = new Measurement(localStorage.getCPRLocal(), new List<double>(), DateTime.Now, (sampleRate/1000),monitorID );
+                        displayController.statusUpdateMeasurment(measureTime.TotalSeconds, connection, storageStatus, batteryStatus);
 
-                        while (MeasureTime.TotalSeconds < 40)
+                        while (measureTime.TotalSeconds < 40)
                         {
-                            NewMeasurement.addToList(ADconverter.measureSignal());
+                            newMeasurement.addToList(adConverter.measureSignal());
 
 
-                            EndTime = DateTime.Now;
-                            MeasureTime = EndTime - StartTime;
+                            endTime = DateTime.Now;
+                            measureTime = endTime - startTime;
 
                             //Det var her vi skulle have startet en ny thread, og fordi vi ikke har lært trådprogrammering og fordi
                             //den ikke kan nå at følge med sampleRate, har vi valgt at fjerne den for denne omgang.
 
-                            //displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, connection, lokalUnSent, battery);
+                            //displayController.statusUpdateMeasurment(measureTime.TotalSeconds, connection, storageStatus, batteryStatus);
 
                             Thread.Sleep(sampleRate-4);
 
                         }
-                        NewMeasurement.SampleRate = (40 / NewMeasurement.Measurements.Count);
+                        newMeasurement.SampleRate = (40 / newMeasurement.Measurements.Count);
 
                         //Vi viser den nu før og efter en måling.
-                        displayController.statusUpdateMeasurment(MeasureTime.TotalSeconds, connection, lokalUnSent, battery);
+                        displayController.statusUpdateMeasurment(measureTime.TotalSeconds, connection, storageStatus, batteryStatus);
                         //Thread.Sleep(5000);
 
-                        LocalStorage.storeDataLocal(NewMeasurement);
+                        localStorage.storeDataLocal(newMeasurement);
 
-                        if (LocalDB.isConnected())
+                        if (localDB.isConnected())
                         {
-                            displayController.screenShow(6, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                            displayController.screenShow(6, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
 
-                            LocalDB.sendData(NewMeasurement);
+                            localDB.sendData(newMeasurement);
 
                         }
                         else
                         {
 
-                            displayController.screenShow(5, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                            displayController.screenShow(5, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
                             Thread.Sleep(10000);
 
                         }
-
-                        /*displayController.ScreenShow(3);*///Denne behøves ikke, da den alligevel breaker While og viser skærm 3.
-
-
-
+                                          
                     }
 
                     else
                     {
-                        displayController.screenShow(2, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                        displayController.screenShow(2, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
                         Thread.Sleep(5000);
                     }
 
