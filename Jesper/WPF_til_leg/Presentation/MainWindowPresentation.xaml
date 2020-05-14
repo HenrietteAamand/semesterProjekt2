@@ -230,7 +230,7 @@
             <Controls:Badged 
              
             x:Name="uploadOffDBB"
-            Margin="10,0,10,0" >
+            Margin="10,0,5,0" >
 
                 <Button x:Name="UploadB" Click="UploadB_Click" Visibility="Visible" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
@@ -246,7 +246,7 @@
                      Grid.Column="1"
                      Controls:TextBoxHelper.ClearTextButton="True"
                      Controls:TextBoxHelper.Watermark="Indtast personale ID..." 
-                     Grid.ColumnSpan="1" Margin="10,0,10,0" 
+                     Grid.ColumnSpan="1" Margin="5,0,10,0" 
                      HorizontalAlignment="Stretch" 
                      VerticalAlignment="Stretch" 
                      TextChanged="idT_TextChanged"
@@ -266,7 +266,7 @@
             </TextBox>
             <UniformGrid Columns="2" Grid.ColumnSpan="2" Name="uploadPressed" Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Controls:Badged 
-            Margin="10,0,10,0" >
+            Margin="10,0,5,0" >
 
                     <Button x:Name="cancelB" Click="cancelB_Click" Visibility="Visible">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
@@ -277,7 +277,7 @@
 
                 </Controls:Badged>
                 <Controls:Badged 
-            Margin="10,0,10,0" 
+            Margin="5,0,10,0" 
                 Grid.Column="2">
 
                     <Button x:Name="okB" Click="okB_Click" Visibility="Visible">

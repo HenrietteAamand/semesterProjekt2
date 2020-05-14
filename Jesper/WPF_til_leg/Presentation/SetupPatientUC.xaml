@@ -111,7 +111,7 @@
                     </Button>
 
                 </Controls:Badged>
-                <TextBox x:Name="PatientTB" HorizontalAlignment="Center" Background="Transparent" BorderBrush="Transparent" MinHeight="30" Margin="5" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" MinWidth="300" TextAlignment="Center"/>
+                <TextBox x:Name="PatientTB" HorizontalAlignment="Center" Background="Transparent" FontWeight="Black" Foreground="#FF086F9E" BorderBrush="Transparent" MinHeight="30" Margin="5" Grid.Row="5" TextWrapping="Wrap" VerticalAlignment="Top" MinWidth="300" TextAlignment="Center"/>
             </Grid>
 
         </GroupBox>
