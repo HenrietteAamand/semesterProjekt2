@@ -25,6 +25,7 @@ namespace WPF_til_leg.Presentation
         private AnalyzeECG analyzeObj;
         List<PatientModel> Patients;
         List<AnalyzedECGModel> aECGS;
+        private readonly CollectionViewSource viewSource = new CollectionViewSource();
 
         public MainWindowPresentation()
         {
