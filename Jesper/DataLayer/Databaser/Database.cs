@@ -16,11 +16,9 @@ namespace DataTier.Databaser
     public class Database : ILocalDatabase
     {
         private SqlConnection connection;
-        private SqlConnection connection2;
         private SqlDataReader reader;
         private SqlDataReader reader2;
         private SqlCommand command;
-        private SqlCommand command2;
         private const String db = "F20ST2ITS2201908197";
         IllnessModel illness;
 
