@@ -117,7 +117,6 @@ namespace LogicTier
             foreach (AnalyzedECGModel aECG in NewAECGModelsList)
             {
                 UploadAnalyzedECG(aECG);
-
             }
 
 

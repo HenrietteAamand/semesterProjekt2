@@ -26,6 +26,7 @@ namespace WPF_til_leg.Presentation
         private AnalyzeECG analyzeObj;
         List<PatientModel> Patients;
         List<AnalyzedECGModel> aECGS;
+        private readonly CollectionViewSource viewSource = new CollectionViewSource();
 
         private string filterText;
         private CollectionViewSource usersCollection;
@@ -84,25 +85,24 @@ namespace WPF_til_leg.Presentation
                 //uploadPressed.Visibility = Visibility.Hidden;
                 UploadB.Visibility = Visibility.Hidden;
                 idT.Visibility = Visibility.Hidden;
-                okB.Visibility = Visibility.Visible;
-                cancelB.Visibility = Visibility.Visible;
+                uploadPressed.Visibility = Visibility.Visible;
             }
         }
 
         private void cancelB_Click(object sender, RoutedEventArgs e)
         {
-            uploadPressed.Visibility = Visibility.Visible;
-            okB.Visibility = Visibility.Hidden;
-            cancelB.Visibility = Visibility.Hidden;
+            UploadB.Visibility = Visibility.Visible;
+            idT.Visibility = Visibility.Visible;
+            uploadPressed.Visibility = Visibility.Hidden;
             idT.Clear();
         }
 
         private void okB_Click(object sender, RoutedEventArgs e)
         {
-            uploadPressed.Visibility = Visibility.Visible;
-            okB.Visibility = Visibility.Hidden;
-            cancelB.Visibility = Visibility.Hidden;
-                        
+            UploadB.Visibility = Visibility.Visible;
+            idT.Visibility = Visibility.Visible;
+            uploadPressed.Visibility = Visibility.Hidden;
+
             mainObj.UploadData(idT.Text);
 
             idT.Text = "Måling uploaded.";
@@ -113,6 +113,8 @@ namespace WPF_til_leg.Presentation
         {
             if (patientsLV.SelectedValue != null)
             {
+
+
                 dynamic patient = patientsLV.SelectedItem;
                 string cpr = patient.CPR;
 
@@ -142,7 +144,9 @@ namespace WPF_til_leg.Presentation
                 //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
                 chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline);
-                RaisePropertyChanged("IsRead");
+                ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
+                chartUC.To = 250;
+                chartUC.From = 0;
             }
             
             //chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), a, 3);
