@@ -25,7 +25,6 @@ namespace WPF_til_leg.Presentation
         //private ChartECG chartObj;
         private AnalyzeECG analyzeObj;
         List<PatientModel> Patients;
-        List<AnalyzedECGModel> aECGS;
         private readonly CollectionViewSource viewSource = new CollectionViewSource();
 
         private string filterText;
@@ -43,14 +42,13 @@ namespace WPF_til_leg.Presentation
                 UploadB.IsEnabled = false;
             }
 
-            mainObj = new MainWindowLogic();
-            //chartObj = new ChartECG();
             analyzeObj = new AnalyzeECG();
-
-            aECGS = new List<AnalyzedECGModel>();
-            Patients = new List<PatientModel>();
-            Patients = mainObj.getAllPatiens();
             analyzeObj.CreateAnalyzedECGs();
+            
+            Patients = new List<PatientModel>();
+            mainObj = new MainWindowLogic();
+            Patients = mainObj.getAllPatiens();
+            
 
             usersCollection = new CollectionViewSource();
             usersCollection.Source = Patients;
@@ -145,7 +143,7 @@ namespace WPF_til_leg.Presentation
 
                 chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline);
                 ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
-                chartUC.To = 250;
+                chartUC.To = 500;
                 chartUC.From = 0;
             }
             

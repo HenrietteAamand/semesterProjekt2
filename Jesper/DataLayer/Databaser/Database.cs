@@ -97,6 +97,7 @@ namespace DataTier.Databaser
             
             while (reader.Read())
             {
+                int k = 0;
                 byte[] bytesArr = new byte[] { };
                 double[] values = new double[800];
                 byte[] bytesArr1 = new byte[] { };
@@ -123,8 +124,7 @@ namespace DataTier.Databaser
                     Convert.ToDateTime(reader["Date"]), Convert.ToDouble(reader["Samplerate"]), valuesList,
                     Convert.ToString(reader["MonitorID"])));
              
-                foreach (AnalyzedECGModel aECG in ameasurements)
-                {
+               
                     if (reader["BLOBstValues"] != null)
                     {
                         bytesArr1 = (byte[])reader["BLOBstValues"];
@@ -139,35 +139,35 @@ namespace DataTier.Databaser
                             }
                         }
 
-                        aECG.STValues = STValuesList;
+                        ameasurements[k].STValues = STValuesList;
                     }
 
                     if (reader["STStartIndex"].GetType() != typeof(DBNull))
                     {
-                        aECG.STStartIndex = Convert.ToInt32(reader["STStartIndex"]);
+                    ameasurements[k].STStartIndex = Convert.ToInt32(reader["STStartIndex"]);
 
                     }
                     
                     if (reader["Baseline"].GetType() != typeof(DBNull))
                     {
-                        aECG.Baseline = (double)reader["Baseline"];
+                    ameasurements[k].Baseline = (double)reader["Baseline"];
                     }
 
                     if (reader["IsRead"].GetType() != typeof(DBNull))
                     {
-                        aECG.IsRead = (bool)reader["IsRead"];
+                    ameasurements[k].IsRead = (bool)reader["IsRead"];
 
                     }
                     if (reader["Illness"].GetType() != typeof(DBNull))
                     {
-                        aECG.Illness = illness;
+                    ameasurements[k].Illness = illness;
                     }
-  
-                        
-                        //aECG.STDepressed = (bool)reader["STDepressed"];
-                        //aECG.STElevated = (bool)reader["STElevated"];
-                    
-                }
+
+
+                //ameasurements[k].STDepressed = (bool)reader["STDepressed"];
+                //ameasurements[k].STElevated = (bool)reader["STElevated"];
+                k++;
+
 
             }
             

@@ -223,7 +223,7 @@ namespace LogicTier
                 {
                     //Hvis en value er mindre end baseline og mindre end den tidligere mindste værdi og index er større end index for rSpidsIndex(dvs efter den)
                     //bliver sSpidsIndex = i
-                    if (aECG.Values[i] < NewAECGModelsList[j].Baseline && aECG.Values[i] < aECG.Values[sSpidsIndex] && i > rSpidsIndex)
+                    if (aECG.Values[i] < (NewAECGModelsList[j].Baseline-0.1) && aECG.Values[i] < aECG.Values[sSpidsIndex] && i > rSpidsIndex)
                     {
                         sSpidsIndex = i;
                     }
@@ -233,7 +233,7 @@ namespace LogicTier
                 for (int i = 0; i < aECG.Values.Count; i++)
                 {
                     //Hvis en value er større end baseline og større end den tidligere største værdi og det ligger efter rSpidsIndex bliver tSpidsIndex = i
-                    if (aECG.Values[i] > NewAECGModelsList[j].Baseline && aECG.Values[i] > aECG.Values[tSpidsIndex] && i > sSpidsIndex)
+                    if (aECG.Values[i] > (NewAECGModelsList[j].Baseline-0.1) && aECG.Values[i] > aECG.Values[tSpidsIndex] && i > sSpidsIndex)
                     {
                         tSpidsIndex = i;
                     }
@@ -259,14 +259,14 @@ namespace LogicTier
 
                 //STSegmentList's længde sammenlignes med Illnesses reference værdier
                 //Hvis STSegmentList er for lang, er ST - segmentet deprimeret
-                if (STSegmentList.Count > illnessList[0].STMax)
+                if (STSegmentList.Count*aECG.SampleRate > illnessList[2].STMax)
                     {
                         STSegmentDepressed = true;
                     }
 
                 //Hvis længden ml.sSpindsIndex og rSpindsIndex er for lang, we ST - segmentet eleveret
 
-                if ((sSpidsIndex - rSpidsIndex) > illnessList[0].SRMax)
+                if ((sSpidsIndex - rSpidsIndex) * aECG.SampleRate > illnessList[1].SRMax)
                     {
                         STSegmentElevated = true;
                     }
@@ -294,15 +294,17 @@ namespace LogicTier
             //Kaldes af CalculateST()
             foreach (AnalyzedECGModel aECG in NewAECGModelsList)
             {
-                if (true)
+                if (aECG.STDepressed)
                 {
-                    aECG.Illness = illnessList[0];
+                    aECG.Illness = illnessList[2];
                 }
 
-                //if (STSegmentElevated)
-                //{
-                //    //aECG.Illnes = illnessList[1];
-                //}
+                else if (aECG.STElevated)
+                {
+                    aECG.Illness = illnessList[3];
+                }
+                else
+                    aECG.Illness = illnessList[1];
             }
         }
 
@@ -321,7 +323,7 @@ namespace LogicTier
         public void UploadAnalyzedECG(AnalyzedECGModel aECG)
         {
             lDBRef.UploadAnalyzedECGs(aECG);
-            lDBRef.UpdateAnalyzedECG(aECG);
+            //lDBRef.UpdateAnalyzedECG(aECG);
             foreach (ECGModel ecg in newECGList)
             {
                 ecg.IsAnalyzed = true;

@@ -8,7 +8,6 @@ namespace LogicTier
 {
     public class MainWindowLogic
     {
-		private AnalyzeECG analyzeECG;
 		public PatientModel patientRef { get; private set; }
 		public AnalyzedECGModel aECGRef { get; private set; }
 		public List<AnalyzedECGModel> aECGList { get; private set; }
@@ -19,7 +18,6 @@ namespace LogicTier
 		public MainWindowLogic()
 		{
 			DB = new Database();
-			analyzeECG = new AnalyzeECG();
 			patientList = new List<PatientModel>();
 			aECGList = new List<AnalyzedECGModel>();
 			
