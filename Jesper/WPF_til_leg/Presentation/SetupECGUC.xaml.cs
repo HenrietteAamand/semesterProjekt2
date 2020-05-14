@@ -71,8 +71,9 @@ namespace WPF_til_leg.Presentation
                 SetupTB.Visibility = Visibility.Visible;
                 SetupTB.Text = "EKG-måler er ikke i brug.";
                 PatientIDCB.IsEnabled = true;
+                LinkECGB.IsEnabled = false;
+                ResetECGB.IsEnabled = false;
                 
-
             }
             else if (setupObj.monitorInUse(ecgMonitorID.ToString()) == true)
             {
