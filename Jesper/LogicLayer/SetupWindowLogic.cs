@@ -51,6 +51,8 @@ namespace LogicTier
                 {
                     patient.ECGMonitorID = ecgMonitorID;
                     DB.UpdatePatient(patient);
+                    patientList = DB.GetAllPatients();
+                    
                 }
             }
 
@@ -60,6 +62,7 @@ namespace LogicTier
                 {
                     monitor.InUse = true;
                     DB.UpdateECGMonitor(monitor);
+                    ecgMonitorList = DB.GetAllECGMonitors();
                 }
             }
 
@@ -75,7 +78,8 @@ namespace LogicTier
                 {
                     patient.ECGMonitorID = null;
                     DB.UpdatePatient(patient);
-                    
+                    patientList = DB.GetAllPatients();
+
 
                 }
                 
@@ -87,7 +91,8 @@ namespace LogicTier
                 {
                     monitor.InUse = false;
                     DB.UpdateECGMonitor(monitor);
-                   
+                    ecgMonitorList = DB.GetAllECGMonitors();
+
                 }
                 
             }

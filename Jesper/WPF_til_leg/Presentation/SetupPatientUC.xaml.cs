@@ -31,7 +31,7 @@ namespace WPF_til_leg.Presentation
             PatientTB.Visibility = Visibility.Hidden;
             PatientTB.IsEnabled = false;
             CPRTB.MaxLength = 11;
-           
+            
         }
 
         private void OpretB_Click(object sender, RoutedEventArgs e)
@@ -44,12 +44,12 @@ namespace WPF_til_leg.Presentation
             //string FnavnT = Convert.ToString(FnavnTR).Trim();
             //string EnavnT = Convert.ToString(EnavnTR).Trim();
 
+            
             string day = CPRTB.Text.Substring(0, 2);
-            string month = CPRTB.Text.Substring(2, 4);
-            string year = CPRTB.Text.Substring(4, 6);
+            string month = CPRTB.Text.Substring(2, 2);
+            
 
             if (CPRTB.Text != "" && FnavnTB.Text != "" && EnavnTB.Text != "")
-
             {
                 if(CPRTB.Text.Length == 11)
                 {
@@ -60,6 +60,7 @@ namespace WPF_til_leg.Presentation
                             setupObj.newPatient(CPRTB.Text, FnavnTB.Text, EnavnTB.Text);
                             PatientTB.Visibility = Visibility.Visible;
                             PatientTB.Text = "Patient oprettet.";
+
                         }
                         else
                         {
@@ -73,6 +74,7 @@ namespace WPF_til_leg.Presentation
                         PatientTB.Text = "Ugyldigt CPR";
                         CPRTB.Focus();
                     }
+                    
                 }
                 else
                 {
@@ -80,11 +82,13 @@ namespace WPF_til_leg.Presentation
                     PatientTB.Text = "Ugyldigt CPR";
                 }              
             }
-            else 
+            else
             {
                 PatientTB.Visibility = Visibility.Visible;
                 PatientTB.Text = "En eller flere oplysninger er ikke udfyldt.";
             }
+
+
         }
     }
 }

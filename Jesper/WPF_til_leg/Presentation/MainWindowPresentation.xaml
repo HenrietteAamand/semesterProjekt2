@@ -82,7 +82,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="584*"/>
+            <RowDefinition Height="37*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
@@ -96,7 +97,7 @@
             Grid.Column="2"
             Grid.ColumnSpan="7"
             HorizontalAlignment="Stretch"
-            Margin="10,0,10,0">
+            Margin="10,0,9.6,0">
             <TextBox x:Name="NavnTB"
                     Margin="0,0,5,0"
                     IsReadOnly="True"
@@ -141,9 +142,9 @@
             x:Name="listViewBorder"
             Grid.Row="2" 
             Grid.Column="1" 
-            Grid.RowSpan="1" 
+            Grid.RowSpan="2" 
             Width="400" 
-            Margin="10" 
+            Margin="10,10,10,9.8" 
             BorderThickness="0.5" 
             BorderBrush="Black">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
@@ -196,7 +197,7 @@
                     </ListView.Resources>
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Målinger" DisplayMemberBinding="{Binding Date, StringFormat='MM/dd/yy, hh:mm t'}" Width="200"/>
+                            <GridViewColumn Header="Målinger" DisplayMemberBinding="{Binding Date, StringFormat='MM/dd/yy, hh:mm'}" Width="200"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -204,83 +205,89 @@
         </Border>
         <Border
             x:Name="ecgBorder"
-            Margin="10,10,10,0" 
+            Margin="10,10,9.6,19.8" 
             Grid.Row="2" 
             Grid.Column="3" 
             Grid.ColumnSpan="6" 
-            Grid.RowSpan="3" 
+            Grid.RowSpan="5" 
             BorderThickness="1" 
             BorderBrush="Black">
             <uc:ChartECG x:Name="chartUC" Margin="10" />
         </Border>
 
-        
-        <Grid Grid.Row="3" Grid.Column="1" HorizontalAlignment="Center">
-        <!--ROW 3-->
+
+        <Grid Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0.2,0,19.8" Grid.RowSpan="3">
+            <!--ROW 3-->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
 
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <!--Visible when not pressed-->
             <Controls:Badged 
              
             x:Name="uploadOffDBB"
-            Margin="10,0,10,0" >
-            
-            <Button x:Name="UploadB" Click="UploadB_Click" Visibility="Visible">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                    <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Upload" />
-                    <TextBlock Margin="5" Text="Upload til Offentlig Database"/>
-                </StackPanel>
-            </Button>
+            Margin="10,0,5,0" >
 
-        </Controls:Badged>
+                <Button x:Name="UploadB" Click="UploadB_Click" Visibility="Visible" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                        <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Upload" />
+                        <TextBlock Margin="5" Text="Upload til Offentlig Database"/>
+                    </StackPanel>
+                </Button>
 
+            </Controls:Badged>
+        
             <TextBox x:Name="idT"
-            Grid.Row="0"
-            Grid.Column="1"
-                             Controls:TextBoxHelper.ClearTextButton="True"
-                             Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Indtast personale ID..." Grid.ColumnSpan="1" Margin="10,0,10,0" VerticalAlignment="Center" TextChanged="idT_TextChanged">
+                     Grid.Row="0"
+                     Grid.Column="1"
+                     Controls:TextBoxHelper.ClearTextButton="True"
+                     Controls:TextBoxHelper.Watermark="Indtast personale ID..." 
+                     Grid.ColumnSpan="1" Margin="5,0,10,0" 
+                     HorizontalAlignment="Stretch" 
+                     VerticalAlignment="Stretch" 
+                     TextChanged="idT_TextChanged"
+                     TextWrapping="Wrap"
+                     VerticalContentAlignment="Center"
+                     HorizontalContentAlignment="Stretch">
                 <TextBox.Style>
                     <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
                         <Style.Triggers>
                             <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
                                 <Setter Property="Controls:TextBoxHelper.ButtonContent" Value="r" />
-                                <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}" />
+                                <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}"/>
                             </Trigger>
                         </Style.Triggers>
                     </Style>
                 </TextBox.Style>
             </TextBox>
-            <UniformGrid Columns="2" Grid.ColumnSpan="2" Name="uploadPressed" Visibility="Hidden">
-            <Controls:Badged 
-            Margin="10,0,10,0" >
+            <UniformGrid Columns="2" Grid.ColumnSpan="2" Name="uploadPressed" Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <Controls:Badged 
+            Margin="10,0,5,0" >
 
-                <Button x:Name="cancelB" Click="cancelB_Click" Visibility="Visible">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                        <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Cancel" />
-                        <TextBlock Margin="5" Text="Fortryd"/>
-                    </StackPanel>
-                </Button>
+                    <Button x:Name="cancelB" Click="cancelB_Click" Visibility="Visible">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Cancel" />
+                            <TextBlock Margin="5" Text="Fortryd"/>
+                        </StackPanel>
+                    </Button>
 
-            </Controls:Badged>
-            <Controls:Badged 
-            Margin="10,0,10,0" 
+                </Controls:Badged>
+                <Controls:Badged 
+            Margin="5,0,10,0" 
                 Grid.Column="2">
 
-                <Button x:Name="okB" Click="okB_Click" Visibility="Visible">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                        <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Check" />
-                        <TextBlock Margin="5" Text="OK"/>
-                    </StackPanel>
-                </Button>
+                    <Button x:Name="okB" Click="okB_Click" Visibility="Visible">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Check" />
+                            <TextBlock Margin="5" Text="OK"/>
+                        </StackPanel>
+                    </Button>
 
-            </Controls:Badged>
+                </Controls:Badged>
             </UniformGrid>
         </Grid>
     </Grid>

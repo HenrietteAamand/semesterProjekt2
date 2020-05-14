@@ -138,7 +138,7 @@
                     </Button>
 
                 </Controls:Badged>
-                <TextBox x:Name="SetupTB" HorizontalAlignment="Center" MinHeight="30" Grid.Row="5" Background="Transparent" BorderBrush="Transparent" TextWrapping="Wrap" VerticalAlignment="Top" MinWidth="300" Grid.ColumnSpan="2" TextAlignment="Center"/>
+                <TextBox x:Name="SetupTB" HorizontalAlignment="Center" MinHeight="30" FontWeight="Black" Foreground="#FF086F9E" Grid.Row="5" Background="Transparent" BorderBrush="Transparent" TextWrapping="Wrap" VerticalAlignment="Top" MinWidth="300" Grid.ColumnSpan="2" TextAlignment="Center"/>
             </Grid>
 
         </GroupBox>
