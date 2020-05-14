@@ -82,7 +82,7 @@
                     Grid.ColumnSpan="2"
                     MinWidth="300"
                     Margin="10,0,10,10"
-                    Controls:TextBoxHelper.ClearTextButton="True"
+                    Controls:TextBoxHelper.ClearTextButton="False"
                     Controls:TextBoxHelper.Watermark="Vælg EKG måler..."
                     BorderThickness="4"  SelectionChanged="EcgCB_SelectionChanged">
                     <ComboBox.ContextMenu>
@@ -100,7 +100,7 @@
                     Grid.ColumnSpan="2"
                     MinWidth="300"
                     Margin="0,0,0,10"
-                    Controls:TextBoxHelper.ClearTextButton="True"
+                    Controls:TextBoxHelper.ClearTextButton="False"
                     Controls:TextBoxHelper.Watermark="Vælg et PatientID..."
                     BorderThickness="4">
                     <ComboBox.ContextMenu>

@@ -85,25 +85,24 @@ namespace WPF_til_leg.Presentation
                 //uploadPressed.Visibility = Visibility.Hidden;
                 UploadB.Visibility = Visibility.Hidden;
                 idT.Visibility = Visibility.Hidden;
-                okB.Visibility = Visibility.Visible;
-                cancelB.Visibility = Visibility.Visible;
+                uploadPressed.Visibility = Visibility.Visible;
             }
         }
 
         private void cancelB_Click(object sender, RoutedEventArgs e)
         {
-            uploadPressed.Visibility = Visibility.Visible;
-            okB.Visibility = Visibility.Hidden;
-            cancelB.Visibility = Visibility.Hidden;
+            UploadB.Visibility = Visibility.Visible;
+            idT.Visibility = Visibility.Visible;
+            uploadPressed.Visibility = Visibility.Hidden;
             idT.Clear();
         }
 
         private void okB_Click(object sender, RoutedEventArgs e)
         {
-            uploadPressed.Visibility = Visibility.Visible;
-            okB.Visibility = Visibility.Hidden;
-            cancelB.Visibility = Visibility.Hidden;
-                        
+            UploadB.Visibility = Visibility.Visible;
+            idT.Visibility = Visibility.Visible;
+            uploadPressed.Visibility = Visibility.Hidden;
+
             mainObj.UploadData(idT.Text);
 
             idT.Text = "Måling uploaded.";

@@ -30,6 +30,8 @@ namespace WPF_til_leg.Presentation
             setupObj = new SetupWindowLogic();
             PatientTB.Visibility = Visibility.Hidden;
             PatientTB.IsEnabled = false;
+            CPRTB.MaxLength = 11;
+            
         }
 
         private void OpretB_Click(object sender, RoutedEventArgs e)
@@ -41,22 +43,43 @@ namespace WPF_til_leg.Presentation
             //string CPRT = Convert.ToString(CPRTR).Trim();
             //string FnavnT = Convert.ToString(FnavnTR).Trim();
             //string EnavnT = Convert.ToString(EnavnTR).Trim();
+            string day = CPRTB.Text.Substring(0, 2);
+            string month = CPRTB.Text.Substring(2, 4);
+            string year = CPRTB.Text.Substring(4, 6);
+
 
             if (CPRTB.Text != "" && FnavnTB.Text != "" && EnavnTB.Text != "")
             {
-
-                if (setupObj.IsPatientAlreadyCreated(CPRTB.Text) == false)
+                if(CPRTB.Text.Length == 11)
                 {
-                    setupObj.newPatient(CPRTB.Text, FnavnTB.Text, EnavnTB.Text);
-                    PatientTB.Visibility = Visibility.Visible;
-                    PatientTB.Text = "Patient oprettet.";
+                    if(0 < Convert.ToInt32(day) && Convert.ToInt32(day) < 32 && 0 < Convert.ToInt32(month) && Convert.ToInt32(month) < 13)
+                    {
+                        if (setupObj.IsPatientAlreadyCreated(CPRTB.Text) == false)
+                        {
+                            setupObj.newPatient(CPRTB.Text, FnavnTB.Text, EnavnTB.Text);
+                            PatientTB.Visibility = Visibility.Visible;
+                            PatientTB.Text = "Patient oprettet.";
 
+                        }
+                        else
+                        {
+                            PatientTB.Visibility = Visibility.Visible;
+                            PatientTB.Text = "Patient allerede oprettet";
+                        }
+                    }
+                    else
+                    {
+                        PatientTB.Visibility = Visibility.Visible;
+                        PatientTB.Text = "Ugyldigt CPR";
+                        CPRTB.Focus();
+                    }
+                    
                 }
                 else
                 {
                     PatientTB.Visibility = Visibility.Visible;
-                    PatientTB.Text = "Patient allerede oprettet";
-                }
+                    PatientTB.Text = "Ugyldigt CPR";
+                }              
             }
             else
             {
