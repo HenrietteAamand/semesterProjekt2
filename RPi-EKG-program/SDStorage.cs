@@ -123,14 +123,22 @@ namespace RPi_EKG_program
         }
 
 
-        public void storeDataLocal(Measurement data)
+        public void storeDataLocal(Measurement data,bool connection)
         {
             int count = readCountMaster();
             try
             {
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"EKGMaster.txt", true))
                 {
-                    file.WriteLine("EKGdata" + count + ";0");
+                    if(connection)
+                    {
+                        file.WriteLine("EKGdata" + count + ";01");
+                    }
+                    else
+                    { 
+                        file.WriteLine("EKGdata" + count + ";0");
+                    }
+
                 }
             }
             catch (Exception)

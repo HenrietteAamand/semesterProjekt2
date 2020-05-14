@@ -25,7 +25,9 @@ namespace RPi_EKG_program
          
             if(localDB.isConnected())
             {
-                localStorage.storeInfoLocal(localDB.recieveData(monitorID));            
+                localStorage.storeInfoLocal(localDB.recieveData(monitorID));           
+                
+
             }
 
 
@@ -104,19 +106,20 @@ namespace RPi_EKG_program
                             Thread.Sleep(sampleRate-4);
 
                         }
-                        newMeasurement.SampleRate = (40 / newMeasurement.Measurements.Count);
+                        newMeasurement.SampleRate = (Convert.ToDouble(40 )/ Convert.ToDouble( newMeasurement.Measurements.Count));
 
                         //Vi viser den nu før og efter en måling.
                         displayController.statusUpdateMeasurment(measureTime.TotalSeconds, connection, storageStatus, batteryStatus);
                         //Thread.Sleep(5000);
 
-                        localStorage.storeDataLocal(newMeasurement);
+                        localStorage.storeDataLocal(newMeasurement, localDB.isConnected());
 
                         if (localDB.isConnected())
                         {
                             displayController.screenShow(6, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
 
                             localDB.sendData(newMeasurement);
+
 
                         }
                         else

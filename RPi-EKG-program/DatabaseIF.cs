@@ -32,34 +32,26 @@ namespace RPi_EKG_program
             }
             connection.Close();
 
-            //// SKAL VÆRE FALSE siden vi ikke har mulighed for at connecte til DB'en
             return true;
         }
 
-        public void sendData(Measurement Maalinger)
+        public void sendData(Measurement measurement)
         {
 
-            //double[] DatArray = new double[Maalinger.Measurements.Count];
-            //for (int i = 0; i < DatArray.Length; i++)
-            //{
-            //    DatArray[i] = Maalinger.Measurements[i];
-            //}
-            //writecmd.Parameters.AddWithValue("@Data", DatArray.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
-
+      
             try
             {
-                writecmd = new SqlCommand("INSERT INTO dbo.Measurement (ID,CPRID,BLOBmeasurement,Dato,Samplerate,MeasurerID) VALUES(@NytID,@CPR,@Data,@Dato,@SampleRate,@MeasurerID)", connection);
-                writecmd.Parameters.AddWithValue("@NytID", 3);
-                writecmd.Parameters.AddWithValue("@CPR", Maalinger.CPRNr);
-                writecmd.Parameters.AddWithValue("@Dato", Maalinger.Date);
-                writecmd.Parameters.AddWithValue("@Samplerate", Maalinger.SampleRate);
-                writecmd.Parameters.AddWithValue("@MeasurerID", Maalinger.MeasurerID);
+                writecmd = new SqlCommand("INSERT INTO ECG (CPR,BLOBValues,Date,Samplerate,MonitorID) VALUES(@CPR,@Data,@Date,@SampleRate,@MeasurerID)", connection);
+                writecmd.Parameters.AddWithValue("@CPR", measurement.CPRNr);
+                writecmd.Parameters.AddWithValue("@Date", measurement.Date);
+                writecmd.Parameters.AddWithValue("@Samplerate", measurement.SampleRate);
+                writecmd.Parameters.AddWithValue("@MeasurerID", measurement.MeasurerID);
 
-                double[] dataArray = new double[Maalinger.Measurements.Count];
+                double[] dataArray = new double[measurement.Measurements.Count];
 
                 for (int i = 0; i < dataArray.Length; i++)
                 {
-                    dataArray[i] = Maalinger.Measurements[i];
+                    dataArray[i] = measurement.Measurements[i];
                 }
 
                 writecmd.Parameters.AddWithValue("@Data", dataArray.SelectMany(value => BitConverter.GetBytes(value)).ToArray());
@@ -80,12 +72,12 @@ namespace RPi_EKG_program
 
         public string recieveData(string MeasurerID)
         {
-            readcmd = new SqlCommand("Select CPR,ForNavn from dbo.Patient WHERE tilknyttetEKG = @MeasurerID", connection);
+            readcmd = new SqlCommand("Select CPR,FirstName from Patient WHERE LinkedECG = @MeasurerID", connection);
             readcmd.Parameters.AddWithValue("@MeasurerID", MeasurerID);
 
-            string CPR;
-            string Fornavn;
-            string CPRNavn = "";
+            string cpr;
+            string firstName;
+            string cprName = "";
 
 
 
@@ -95,12 +87,12 @@ namespace RPi_EKG_program
                 reader = readcmd.ExecuteReader();
                 if (reader.Read())
                 {
-                    CPR = (string)reader["CPR"];
+                    cpr = (string)reader["CPR"];
 
 
-                    Fornavn = (string)reader["ForNavn"];
+                    firstName = (string)reader["FirstName"];
 
-                    CPRNavn =CPR+";"+ Fornavn;
+                    cprName =cpr+";"+ firstName;
                 }
             }
             catch (SqlException)
@@ -113,7 +105,7 @@ namespace RPi_EKG_program
                 connection.Close();
             }
 
-            return CPRNavn;
+            return cprName;
         }
 
 
