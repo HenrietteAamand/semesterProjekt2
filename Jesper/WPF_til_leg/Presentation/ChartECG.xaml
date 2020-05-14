@@ -43,7 +43,7 @@
                     <Button x:Name="PrevB" Click="PrevOnClick">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="ArrowLeft" />
-                            <TextBlock Margin="5" Text="Prev"/>
+                            <TextBlock Margin="5" Text="Venstre"/>
                         </StackPanel>
                     </Button>
                 </Controls:Badged>
@@ -51,7 +51,7 @@
                     <Button x:Name="NextB" Click="NextOnClick">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="ArrowRight" />
-                            <TextBlock Margin="5" Text="Prev"/>
+                            <TextBlock Margin="5" Text="Højre"/>
                         </StackPanel>
                     </Button>
                 </Controls:Badged>
@@ -74,7 +74,7 @@
             </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>-->
         
-        <lvc:CartesianChart Grid.Row="1" Hoverable="False">
+        <lvc:CartesianChart Grid.Row="1" Hoverable="False" DisableAnimations="True">
             <lvc:CartesianChart.Series>
                 <lvc:LineSeries Title="EKG" Values="{Binding ECGList}" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}" Fill="Transparent" PointGeometrySize="0"/>
                 <lvc:LineSeries Title="Base Line" Values="{Binding BaseList}" Visibility="{Binding BaseLineSeriesVisibility, Converter={StaticResource bvc}}" Fill="Transparent" Stroke="Black" PointGeometrySize="0"/>

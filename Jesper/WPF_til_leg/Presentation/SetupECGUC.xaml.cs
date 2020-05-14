@@ -43,35 +43,42 @@ namespace WPF_til_leg.Presentation
 
             foreach (PatientModel patient in patientList)
             {
-                string item = $"PatientID {patient.ID}";
+                string item = $"PatientCPR {patient.CPR}";
                 PatientIDCB.Items.Add(item);
             }
             PatientIDCB.IsEnabled = false;
+            SetupTB.IsEnabled = false;
 
         }
 
         //Trykker på Tilknyt knappen:
         private void LinkECGB_Click(object sender, RoutedEventArgs e)
         {
-            string patientIDString = PatientIDCB.SelectedItem.ToString().Remove(0,9);
-            
-            string ecgMonitorID = "0";
-            string ecgMonitorString = EcgCB.SelectedItem.ToString();
-            ecgMonitorID = ecgMonitorString.Remove(0, 5);
 
-            setupObj.LinkECGToPatient(patientIDString, ecgMonitorID);
+            string patientIDString = PatientIDCB.SelectedItem.ToString().Remove(0,11);
+            
+            int ecgMonitorID = 0;
+            string ecgMonitorString = EcgCB.SelectedItem.ToString().Remove(0, 6);
+            //ecgMonitorID = ecgMonitorString.Remove(0, 5).Remove(6);
+            ecgMonitorID = Convert.ToInt32(ecgMonitorString);
+
+            if (EcgCB.SelectedItem != null)
+            {
+                setupObj.LinkECGToPatient(patientIDString, ecgMonitorID.ToString());
+            }           
 
             SetupTB.Visibility = Visibility.Visible;
             SetupTB.Text = "Tilknytning gennemført.";
+
         }
 
         private void ResetECGB_Click(object sender, RoutedEventArgs e)
         {
-            int ecgMonitorID = 0;
-            string ecgMonitorString = EcgCB.SelectedItem.ToString();
-            ecgMonitorID = Convert.ToInt32(ecgMonitorString.Remove(0, 5));
+            //strin ecgMonitorID = 0;
+            string ecgMonitorString = EcgCB.SelectedItem.ToString().Remove(0, 6).Trim();
+            //ecgMonitorID = Convert.ToInt32(ecgMonitorString.Remove(0, 5));
 
-            setupObj.ResetECGMonitor(ecgMonitorID);
+            setupObj.ResetECGMonitor(ecgMonitorString);
             SetupTB.Visibility = Visibility.Visible;
             SetupTB.Text = "Nulstilling gennemført.";
         }
@@ -79,12 +86,13 @@ namespace WPF_til_leg.Presentation
         // Tilknyt patient eller nulstil EKG-måler:
         private void EcgCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
-            int ecgMonitorID = 0;
-            string ecgMonitorString = EcgCB.SelectedItem.ToString();
-            ecgMonitorID = Convert.ToInt32(ecgMonitorString.Remove(0, 5));
 
-            if (setupObj.monitorInUse(ecgMonitorID) == false)
+            int ecgMonitorID = 0;
+            string ecgMonitorString = EcgCB.SelectedItem.ToString().Remove(0, 6);
+            //ecgMonitorID = ecgMonitorString.Remove(0, 5).Remove(6);
+            ecgMonitorID = Convert.ToInt32(ecgMonitorString);
+
+            if (setupObj.monitorInUse(ecgMonitorID.ToString()) == false)
             {
                 ResetECGB.IsEnabled = false;
                 
@@ -94,7 +102,9 @@ namespace WPF_til_leg.Presentation
             }
             else
             {
-                LinkECGB.IsEnabled = true;
+                LinkECGB.IsEnabled = false;
+                ResetECGB.IsEnabled = true;
+                PatientIDCB.IsEnabled = false;
                 SetupTB.Visibility = Visibility.Visible;
                 SetupTB.Text = "EKG-måler er i brug.";
             }

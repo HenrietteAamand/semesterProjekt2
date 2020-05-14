@@ -34,7 +34,7 @@ namespace WPF_til_leg.Presentation
             //MakeST(ecg, length, startIndex);
             //MakeChart2(analyzeLogic.NewAECGModelsList[0].Values);
             //MakeST(analyzeLogic.NewAECGModelsList[0].Values, analyzeLogic.NewAECGModelsList[0].STValues.Count, analyzeLogic.NewAECGModelsList[0].STStartIndex);
-            To = 25;
+            To = 500;
             From = 0;
         }
 
@@ -201,14 +201,14 @@ namespace WPF_til_leg.Presentation
 
         private void NextOnClick(object sender, RoutedEventArgs e)
         {
-            From += 25;
-            To += 25;
+            From += 250;
+            To += 250;
         }
 
         private void PrevOnClick(object sender, RoutedEventArgs e)
         {
-            From -= 25;
-            To -= 25;
+            From -= 250;
+            To -= 250;
         }
     }
 }

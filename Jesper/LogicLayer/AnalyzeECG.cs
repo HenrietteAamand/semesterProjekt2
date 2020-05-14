@@ -89,8 +89,6 @@ namespace LogicTier
             foreach (ECGModel ecg in newECGList)
             {
                 FindNextID();
-                ecg.IsAnalyzed = true;
-                lDBRef.UpdateIsAnalyzed(ecg);
                 NewAECGModelsList.Add(new AnalyzedECGModel(ecg.CPR, ecg.ECGID, NextID, ecg.Date, ecg.SampleRate, ecg.Values, ecg.MonitorID));
             }
         }
@@ -136,7 +134,7 @@ namespace LogicTier
             //Evt. kan laves histogram inde i intervallet
 
             //Laver histogram
-             foreach (AnalyzedECGModel aECG in NewAECGModelsList)
+            foreach (AnalyzedECGModel aECG in NewAECGModelsList)
             {
                 //Sætter max og min og laver et valuespan
                 double min = aECG.Values.Min();
@@ -158,12 +156,12 @@ namespace LogicTier
                     //Tage alle værdier fra newECGList som er mellem i*x og (((i+1)*(100/x%))/100) og putte ind den ny liste
                     foreach (double value in aECG.Values)
                     {
-                        if (value >= (min + (i * valueSpan /intervalHistogram)) && 
-                            value < (min + (i * valueSpan / intervalHistogram)) + valueSpan/intervalHistogram)  
+                        if (value >= (min + (i * valueSpan / intervalHistogram)) &&
+                            value < (min + (i * valueSpan / intervalHistogram)) + valueSpan / intervalHistogram)
                         {
                             listOfListOfIntervals[i].Add(value);
                         }
-                        else if(i == 9 && value > max - valueSpan/intervalHistogram)
+                        else if (i == 9 && value > max - valueSpan / intervalHistogram)
                         {
                             listOfListOfIntervals[9].Add(value);
                         }
@@ -175,6 +173,8 @@ namespace LogicTier
                 //Laver baseline
                 List<double> intervalList = new List<double>();
                 int intervalListCount = listOfListOfIntervals[0].Count;
+                intervalList = listOfListOfIntervals[0];
+
                 for (int i = 0; i < listOfListOfIntervals.Count; i++)
                 {
                     if (listOfListOfIntervals[i].Count > intervalListCount)
@@ -323,6 +323,11 @@ namespace LogicTier
         {
             lDBRef.UploadAnalyzedECGs(aECG);
             lDBRef.UpdateAnalyzedECG(aECG);
+            foreach (ECGModel ecg in newECGList)
+            {
+                ecg.IsAnalyzed = true;
+                lDBRef.UpdateIsAnalyzed(ecg);
+            }
         }
 
 
