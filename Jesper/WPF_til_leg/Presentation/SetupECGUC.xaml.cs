@@ -68,11 +68,10 @@ namespace WPF_til_leg.Presentation
 
             if (setupObj.monitorInUse(ecgMonitorID.ToString()) == false)
             {
-                ResetECGB.IsEnabled = false;
-                LinkECGB.IsEnabled = true;
                 SetupTB.Visibility = Visibility.Visible;
                 SetupTB.Text = "EKG-måler er ikke i brug.";
                 PatientIDCB.IsEnabled = true;
+                
 
             }
             else if (setupObj.monitorInUse(ecgMonitorID.ToString()) == true)
@@ -126,6 +125,12 @@ namespace WPF_til_leg.Presentation
             UpdateCB();
            
 
+        }
+
+        private void PatientIDCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ResetECGB.IsEnabled = false;
+            LinkECGB.IsEnabled = true;
         }
     }
 }

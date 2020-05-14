@@ -44,10 +44,6 @@ namespace WPF_til_leg.Presentation
             //string FnavnT = Convert.ToString(FnavnTR).Trim();
             //string EnavnT = Convert.ToString(EnavnTR).Trim();
 
-            
-           
-            
-
             if (CPRTB.Text != "" && FnavnTB.Text != "" && EnavnTB.Text != "")
             {
                 string day = CPRTB.Text.Substring(0, 2);
