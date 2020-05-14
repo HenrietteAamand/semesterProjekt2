@@ -160,7 +160,7 @@ namespace DataTier.Databaser
                     }
                     if (reader["Illness"].GetType() != typeof(DBNull))
                     {
-                        aECG.Illnes = illness;
+                        aECG.Illness = illness;
                     }
   
                         
@@ -360,7 +360,7 @@ namespace DataTier.Databaser
                 "STStartIndex = " + Convert.ToInt32(analyzedEcg.STStartIndex) +
             ", Baseline = " + Convert.ToDouble(analyzedEcg.Baseline) +
             ", IsRead = " + Convert.ToByte(analyzedEcg.IsRead) +
-            ", Illness = " + Convert.ToInt32(analyzedEcg.Illnes.Id) +
+            ", Illness = " + Convert.ToInt32(analyzedEcg.Illness.Id) +
             " WHERE AECGID = " + Convert.ToInt32(analyzedEcg.AECGID);
 
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))

@@ -113,8 +113,6 @@ namespace WPF_til_leg.Presentation
         {
             if (patientsLV.SelectedValue != null)
             {
-
-
                 dynamic patient = patientsLV.SelectedItem;
                 string cpr = patient.CPR;
 
@@ -144,6 +142,7 @@ namespace WPF_til_leg.Presentation
                 //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
                 chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline);
+                RaisePropertyChanged("IsRead");
             }
             
             //chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), a, 3);

@@ -171,6 +171,30 @@
                     ItemsSource="{Binding ËCGs}"
                     Width="200"
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="ecgLV_SelectionChanged">
+                    <ListView.Resources>
+                        <Style BasedOn="{StaticResource MahApps.Styles.ListViewItem}" TargetType="{x:Type ListViewItem}">
+                            <Style.Triggers>
+                                <DataTrigger 
+                                    Binding="{Binding IsRead}"
+                                    Value="False">
+                                    <Setter Property="Background"
+                                            Value="#FFC9EBFA" />
+                                    <Setter Property="FontWeight"
+                                            Value="UltraBold" />
+                                    <Setter Property="FontStyle"
+                                            Value="Italic" />
+                                </DataTrigger>
+                                <DataTrigger 
+                                    Binding="{Binding Illness.Id}"
+                                    Value="1">
+                                    <Setter Property="Foreground"
+                                            Value="Tomato" />
+                                    <Setter Property="FontWeight"
+                                            Value="Bold" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.Resources>
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Målinger" DisplayMemberBinding="{Binding Date}" />
