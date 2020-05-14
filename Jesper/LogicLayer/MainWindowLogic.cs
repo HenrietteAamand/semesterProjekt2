@@ -110,12 +110,12 @@ namespace LogicTier
 		//	//Sker når der opdateres
 		//}
 
-		public void UploadData(AnalyzedECGModel analyzedEcg)
+		public void UploadData(string id)
 		{
 			//Hvis der er indtastet id uploader den
-			if (analyzedEcg.AECGID.ToString() != null)
+			if (id != null)
 			{
-				DOEDB.UploadData(analyzedEcg);
+				DOEDB.UploadData();
 			}
 
 			//Uploader data til DOEDB
