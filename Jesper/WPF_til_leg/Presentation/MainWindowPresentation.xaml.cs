@@ -12,13 +12,14 @@ using System.Windows.Data;
 using ListViewItem = System.Windows.Controls.ListViewItem;
 using System.Linq;
 using System.Data;
+using System.ComponentModel;
 
 namespace WPF_til_leg.Presentation
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindowPresentation : MetroWindow
+    public partial class MainWindowPresentation : MetroWindow, INotifyPropertyChanged
     {
         private MainWindowLogic mainObj;
         //private ChartECG chartObj;
@@ -26,6 +27,11 @@ namespace WPF_til_leg.Presentation
         List<PatientModel> Patients;
         List<AnalyzedECGModel> aECGS;
         private readonly CollectionViewSource viewSource = new CollectionViewSource();
+
+        private string filterText;
+        private CollectionViewSource usersCollection;
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public MainWindowPresentation()
         {
@@ -45,10 +51,15 @@ namespace WPF_til_leg.Presentation
             Patients = new List<PatientModel>();
             Patients = mainObj.getAllPatiens();
             analyzeObj.CreateAnalyzedECGs();
-            patientsLV.ItemsSource = Patients;
 
+            usersCollection = new CollectionViewSource();
+            usersCollection.Source = Patients;
+            usersCollection.Filter += usersCollection_Filter;
             DataContext = this;
         }
+
+        
+
 
         async Task ShowDialog()
         {
@@ -101,29 +112,34 @@ namespace WPF_til_leg.Presentation
 
         private void patientsLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
-            dynamic patient = patientsLV.SelectedItem;
-            string cpr = patient.CPR;
-
-            CPRTB.Text = "CPR-NUMMER: " + cpr;
-            NavnTB.Text = "NAVN: " + mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
-            AlderTB.Text = "ALDER: " + Convert.ToString(mainObj.GetAge(cpr)) + " år";
-            
-            if (mainObj.IsAMan(cpr) == true)
+            if (patientsLV.SelectedValue != null)
             {
-                KonTB.Text = "KØN: Mand";
+
+
+                dynamic patient = patientsLV.SelectedItem;
+                string cpr = patient.CPR;
+
+                CPRTB.Text = "CPR-NUMMER: " + cpr;
+                NavnTB.Text = "NAVN: " + mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
+                AlderTB.Text = "ALDER: " + Convert.ToString(mainObj.GetAge(cpr)) + " år";
+
+                if (mainObj.IsAMan(cpr) == true)
+                {
+                    KonTB.Text = "KØN: Mand";
+                }
+                else
+                {
+                    KonTB.Text = "KØN: Kvinde";
+                }
+
+                ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
             }
-            else
-            {
-                KonTB.Text = "KØN: Kvinde";
-            }
-            ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
 
         }
 
         private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ecgLV.SelectedItem != null)
+            if (ecgLV.SelectedItem != null && patientsLV.SelectedValue != null)
             {
                 dynamic aECG = ecgLV.SelectedItem;
                 //AnalyzedECGModel aECG = mainObj.aECGList[1];
@@ -151,28 +167,57 @@ namespace WPF_til_leg.Presentation
             
         }
 
-        private void SoegTB_TextChanged(object sender, TextChangedEventArgs e)
+        public ICollectionView SourceCollection
         {
-            if (SoegTB.Text != "")
+            get
             {
-                foreach (ListViewItem item in patientsLV.Items)
-                {
-                    dynamic itemNew = item;
-                    if (!itemNew.CPR.Contains(SoegTB.Text))
-                    {
-                        item.Visibility = Visibility.Hidden;
-                    }
-                }
+                return this.usersCollection.View;
             }
-            //if (e.KeyChar == (char)13)
-            //{
-            //    DataView dv = dt.DefaultView;
-            //    dv.RowFilter = $"Column1 like '%{SoegTB.Text}%'";
-            //    dataGridView.DataSource = dv.ToTable();
-            //}
-
         }
 
+        public string FilterText
+        {
+            get
+            {
+                return filterText;
+            }
+            set
+            {
+                filterText = value;
+                this.usersCollection.View.Refresh();
+                RaisePropertyChanged("FilterText");
+            }
+        }
+
+        void usersCollection_Filter(object sender, FilterEventArgs e)
+        {
+            if (string.IsNullOrEmpty(FilterText))
+            {
+                e.Accepted = true;
+                return;
+            }
+
+            PatientModel usr = e.Item as PatientModel;
+            if (usr.CPR.ToUpper().Contains(FilterText.ToUpper()))
+            {
+                e.Accepted = true;
+            }
+            else
+            {
+                e.Accepted = false;
+                patientsLV.SelectedItem = null;
+                ecgLV.ItemsSource = null;
+            }
+        }
+
+
+        public void RaisePropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
 
     }
 }

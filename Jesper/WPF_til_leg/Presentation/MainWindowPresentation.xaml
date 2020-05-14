@@ -120,10 +120,10 @@
 
         <TextBox x:Name="SoegTB"
             Grid.Row="1"
-            Grid.Column="1"
+            Grid.Column="1" Text="{Binding FilterText, UpdateSourceTrigger=PropertyChanged}"
                              Controls:TextBoxHelper.ClearTextButton="True"
                              Controls:TextBoxHelper.UseFloatingWatermark="True"
-                             Controls:TextBoxHelper.Watermark="Søg efter patient..." Grid.ColumnSpan="1" Margin="10,0,10,0" TextChanged="SoegTB_TextChanged">
+                             Controls:TextBoxHelper.Watermark="Søg efter patient..." Grid.ColumnSpan="1" Margin="10,0,10,0">
             <TextBox.Style>
                 <Style BasedOn="{StaticResource MahApps.Styles.TextBox.Search}" TargetType="{x:Type TextBox}">
                     <Style.Triggers>
@@ -152,7 +152,7 @@
                     x:Name="patientsLV"
                     Width="200"
                     BorderThickness="0.5"
-                    ItemsSource="{Binding Patients}"
+                    ItemsSource="{Binding SourceCollection}"
                     SelectedIndex="0"
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="patientsLV_SelectionChanged">
                     <ListView.View>

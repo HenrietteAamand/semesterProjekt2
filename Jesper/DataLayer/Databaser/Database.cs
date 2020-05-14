@@ -108,8 +108,13 @@ namespace DataTier.Databaser
 
                 for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
                 {
+                    
                     //values[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
                     valuesList.Add(BitConverter.ToDouble(bytesArr.ToArray(), i));
+                    if (i > 4800)
+                    {
+                        i = bytesArr.Length;
+                    }
                 }             
 
                 
@@ -125,8 +130,13 @@ namespace DataTier.Databaser
                         bytesArr1 = (byte[])reader["BLOBstValues"];
                         for (int i = 0, j = 0; i < bytesArr1.Length; i += 8, j++)
                         {
-                            //STValues[j] = BitConverter.ToDouble(bytesArr1.ToArray(), i);
+                            
+                            STValues[j] = BitConverter.ToDouble(bytesArr1.ToArray(), i);
                             STValuesList.Add(BitConverter.ToDouble(bytesArr1.ToArray(), i));
+                            if (i > 4800)
+                            {
+                                i = bytesArr1.Length;
+                            }
                         }
 
                         aECG.STValues = STValuesList;
@@ -207,14 +217,14 @@ namespace DataTier.Databaser
             while (reader.Read())
             {
                 byte[] bytesArr = new byte[] { };
-                double[] tal = new double[800];
+                double[] tal = new double[80000];
                 List<double> talList = new List<double>();
 
                 bytesArr = (byte[])reader["BLOBValues"];
                 
                 for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
                 {
-                    //tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
+                    tal[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
                     talList.Add(BitConverter.ToDouble(bytesArr.ToArray(), i));
                 }
 
