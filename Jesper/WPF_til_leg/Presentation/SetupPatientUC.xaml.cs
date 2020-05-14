@@ -43,10 +43,11 @@ namespace WPF_til_leg.Presentation
             //string CPRT = Convert.ToString(CPRTR).Trim();
             //string FnavnT = Convert.ToString(FnavnTR).Trim();
             //string EnavnT = Convert.ToString(EnavnTR).Trim();
-            string day = CPRTB.Text.Substring(0, 2);
-            string month = CPRTB.Text.Substring(2, 4);
-            string year = CPRTB.Text.Substring(4, 6);
 
+            
+            string day = CPRTB.Text.Substring(0, 2);
+            string month = CPRTB.Text.Substring(2, 2);
+            
 
             if (CPRTB.Text != "" && FnavnTB.Text != "" && EnavnTB.Text != "")
             {
