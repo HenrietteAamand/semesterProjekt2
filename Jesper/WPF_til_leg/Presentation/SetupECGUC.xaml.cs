@@ -102,8 +102,9 @@ namespace WPF_til_leg.Presentation
             }           
 
             SetupTB.Visibility = Visibility.Visible;
-            SetupTB.Text = "Tilknytning gennemført.";
             UpdateCB();
+            SetupTB.Text = "Tilknytning gennemført.";
+            
 
         }
 
@@ -115,8 +116,9 @@ namespace WPF_til_leg.Presentation
 
             setupObj.ResetECGMonitor(ecgMonitorString);
             SetupTB.Visibility = Visibility.Visible;
-            SetupTB.Text = "Nulstilling gennemført.";
             UpdateCB();
+            SetupTB.Text = "Nulstilling gennemført.";
+            
         }
 
         // Tilknyt patient eller nulstil EKG-måler:
