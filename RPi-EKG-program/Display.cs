@@ -11,30 +11,30 @@ namespace RPi_EKG_program
     {
 
         private static SerLCD displayController;
-        private bool ClearScreen;
+        private bool clearScreen;
 
         
 
-        public void updateInfoBar(bool connection,byte StorageStatus, byte batteryStatus)
+        public void updateInfoBar(bool connection,byte storageStatus, byte batteryStatus)
         {
             
-            string Connect = "";
-            string Storage = "";
+            string connectionIcon = "";
+            string storageStatusIcon = "";
 
             if (connection == true)
             {
-                Connect = "O";
+                connectionIcon = "O";
 
             }
-            else { Connect = "X"; }
+            else { connectionIcon = "X"; }
 
-            if (StorageStatus != 0)
+            if (storageStatus != 0)
             {
-                Storage = "Data:"+ StorageStatus;
+                storageStatusIcon = "Data:"+ storageStatus;
             }
-            else { Storage = "Data:0"; }
+            else { storageStatusIcon = "Data:0"; }
 
-            string batteryniveau = "";
+            string batteryStatusIcon = "";
 
             switch (batteryStatus)
             {
@@ -42,36 +42,33 @@ namespace RPi_EKG_program
                     {
                         // Her ville der være en "custom" karatker for at vise batteristatus
                         //Da vi ikke kan lave specielle custom karakter, bruger vi et system med procent 0- 100.
-                        batteryniveau = "25";
+                        batteryStatusIcon = "25";
                         //SKAL vise screen 8
 
 
                     }
                     break;
                 case 2:
-                    batteryniveau = "50";
+                    batteryStatusIcon = "50";
 
                     break;
                 case 3:
                     {
 
-                        batteryniveau = "75";
+                        batteryStatusIcon = "75";
 
                     }
                     break;
                 case 4:
-                    batteryniveau = "99";
+                    batteryStatusIcon = "99";
 
                     break;
             }
             displayController.lcdDisplay();
-
             displayController.lcdGotoXY(0, 0);
-            //displayController.lcdHome();
             displayController.lcdPrint(Convert.ToString(DateTime.Now.TimeOfDay));
             displayController.lcdGotoXY(5, 0);
-
-            displayController.lcdPrint(" "+Connect + "  " + Storage + "  " + batteryniveau+"%");
+            displayController.lcdPrint(" "+connectionIcon + "  " + storageStatusIcon + "  " + batteryStatusIcon+"%");
             
         }
 
@@ -81,60 +78,55 @@ namespace RPi_EKG_program
             displayController = new SerLCD();
             displayController.lcdDisplay();
             displayController.lcdSetBackLight(255,255,0);
-            ClearScreen = true;
+            clearScreen = true;
 
             
 
 
         }
-        public void ShowGreeting(string CPRNAVN, bool connection,byte storagestatus, byte batteryStatus)
+        public void showGreeting(string cprNavn, bool connection,byte storageStatus, byte batteryStatus)
         {
 
            
 
-            string CPR = "";
-            string Navn = "";
+            string cprIcon = "";
+            string navnIcon = "";
             displayController.lcdDisplay();
             displayController.lcdClear();
             displayController.lcdHome();
 
             for (int i = 0; i < 6; i++)
             {
-                CPR += CPRNAVN[i];
+                cprIcon += cprNavn[i];
             }
-            for (int i = 6; i < CPRNAVN.Length; i++)
+            for (int i = 6; i < cprNavn.Length; i++)
             {
-                Navn += CPRNAVN[i];
+                navnIcon += cprNavn[i];
             }
 
-            
-
-            this.updateInfoBar(connection, storagestatus, batteryStatus);
-
-            
-            /* + Navn + "  " + CPR*/
+            this.updateInfoBar(connection, storageStatus, batteryStatus);
 
             displayController.lcdGotoXY(5, 1);
             displayController.lcdPrint("Velkommen");
             displayController.lcdGotoXY(0, 2);
             displayController.lcdPrint("Du er logget ind som");
             displayController.lcdGotoXY(0, 3);
-            displayController.lcdPrint(Navn);
+            displayController.lcdPrint(navnIcon);
             displayController.lcdGotoXY(14, 3);
-            displayController.lcdPrint(CPR);
+            displayController.lcdPrint(cprIcon);
 
         }
 
-        public void StatusUpdateMeasurment(double time, bool connection, byte storagestatus, byte batteryStatus)
+        public void statusUpdateMeasurment(double time, bool connection, byte storageStatus, byte batteryStatus)
         {
             
-            if(ClearScreen)
+            if(clearScreen)
             {
-                ClearScreen = false;
+                clearScreen = false;
                 displayController.lcdClear();
 
                 
-                this.updateInfoBar(connection, storagestatus, batteryStatus);
+                this.updateInfoBar(connection, storageStatus, batteryStatus);
               
                 displayController.lcdGotoXY(3, 1);
 
@@ -148,13 +140,6 @@ namespace RPi_EKG_program
                 displayController.lcdPrint("Forhold dig i ro");
 
             }
-
-            //if (Convert.ToInt32(time) < 2 || Convert.ToInt32(time)==10|| Convert.ToInt32(time) ==20|| Convert.ToInt32(time) == 30|| Convert.ToInt32(time) == 39)
-            //{
-
-
-
-            //}
 
             displayController.lcdGotoXY(2, 2);
             displayController.lcdGotoXY(2, 2);
@@ -171,22 +156,23 @@ namespace RPi_EKG_program
             }
             displayController.lcdGotoXY(15, 2);
             displayController.lcdGotoXY(15, 2);
+
             displayController.lcdPrint(Convert.ToString(Convert.ToInt32(procent)) + "%");
 
 
        
         }
-        public void ScreenShow(short ScreenNb, bool connection,byte storagestatus,byte batteryStatus)
+        public void screenShow(short screenNb, bool connection,byte storageStatus,byte batteryStatus)
         {
 
-            switch (ScreenNb)
+            switch (screenNb)
             {
                 
 
                 case 2:
                     {
                         displayController.lcdClear();
-                        this.updateInfoBar(connection, storagestatus, batteryStatus);
+                        this.updateInfoBar(connection, storageStatus, batteryStatus);
 
                         displayController.lcdGotoXY(2, 2);
                         displayController.lcdPrint("Forbind venligst");
@@ -199,13 +185,13 @@ namespace RPi_EKG_program
                 case 3:
                     {
                         displayController.lcdClear();
-                        this.updateInfoBar(connection, storagestatus, batteryStatus);
+                        this.updateInfoBar(connection, storageStatus, batteryStatus);
 
                         displayController.lcdGotoXY(3, 2);
 
                         displayController.lcdPrint("Tryk paa start");
 
-                        ClearScreen = true;
+                        clearScreen = true;
                                                
 
                     }
@@ -213,7 +199,7 @@ namespace RPi_EKG_program
                     break;
                 case 5:
                     displayController.lcdClear();
-                    this.updateInfoBar(connection, storagestatus, batteryStatus);
+                    this.updateInfoBar(connection, storageStatus, batteryStatus);
 
                     displayController.lcdGotoXY(1, 2);
 
@@ -227,7 +213,7 @@ namespace RPi_EKG_program
                     break;
                 case 6:
                     displayController.lcdClear();
-                    this.updateInfoBar(connection, storagestatus, batteryStatus);
+                    this.updateInfoBar(connection, storageStatus, batteryStatus);
 
                     displayController.lcdGotoXY(1, 2);
 
@@ -239,7 +225,7 @@ namespace RPi_EKG_program
                     break;
                 case 7:
                     displayController.lcdClear();
-                    this.updateInfoBar(connection, storagestatus, batteryStatus);
+                    this.updateInfoBar(connection, storageStatus, batteryStatus);
 
                     displayController.lcdGotoXY(0, 2);
 
@@ -248,7 +234,7 @@ namespace RPi_EKG_program
                     break;
                 case 8:
                     displayController.lcdClear();
-                    this.updateInfoBar(connection, storagestatus, batteryStatus);
+                    this.updateInfoBar(connection, storageStatus, batteryStatus);
 
                     displayController.lcdGotoXY(1, 2);
 
@@ -261,7 +247,7 @@ namespace RPi_EKG_program
                 case 1:
                     {
                         displayController.lcdClear();
-                        this.updateInfoBar(connection, storagestatus, batteryStatus);
+                        this.updateInfoBar(connection, storageStatus, batteryStatus);
 
                         displayController.lcdGotoXY(3, 2);
                         displayController.lcdPrint("Sender gamle");

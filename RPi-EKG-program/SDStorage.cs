@@ -13,7 +13,7 @@ namespace RPi_EKG_program
         private FileStream input;
         private StreamReader reader;
         private StreamWriter writer;
-        private BinaryFormatter Formatter;
+        private BinaryFormatter formatter;
         public int Count { get; private set; }
 
         public SDStorage()
@@ -28,63 +28,63 @@ namespace RPi_EKG_program
             string inputRecord;
             string[] inputFields = new string[2];
             inputRecord = reader.ReadLine();
-            byte Counter = 0;
-            while (inputRecord != null)
+            byte counter = 0;
+            while (inputRecord != null && inputRecord !="")
             {
 
                 inputFields = inputRecord.Split(Convert.ToChar(";"));
 
                 if (!inputFields[1].Contains("1"))
                 {
-                    Counter++;
+                    counter++;
 
                 }
                 inputRecord = reader.ReadLine();
             }
             input.Close();
 
-            return Counter;
+            return counter;
 
         }
 
-        public List<Measurement> FindUnSentData()
+        public List<Measurement> findUnSentData()
         {
             input = new FileStream(@"EKGMaster.txt", FileMode.Open, FileAccess.Read);
             reader = new StreamReader(input);
 
-            List<Measurement> MeasurementList = new List<Measurement>();
-            Measurement NewMeasurement = new Measurement();
+            List<Measurement> measurementList = new List<Measurement>();
+            Measurement newMeasurement = new Measurement();
             string inputRecord;
             string[] inputFields = new string[3];
-            List<string> TextAlreadyInFile = new List<string>();
+            List<string> textAlreadyInFile = new List<string>();
 
             inputRecord = reader.ReadLine();
 
             while (inputRecord != null)
             {
-                TextAlreadyInFile.Add(inputRecord);
+                textAlreadyInFile.Add(inputRecord);
                 inputRecord = reader.ReadLine();
             }
 
             input.Close();
 
-            for (int i = 0; i < TextAlreadyInFile.Count; i++)
+            for (int i = 0; i < textAlreadyInFile.Count; i++)
             {
-                inputFields = TextAlreadyInFile[i].Split(Convert.ToChar(";"));
+                inputFields = textAlreadyInFile[i].Split(Convert.ToChar(";"));
                 if (!inputFields[1].Contains("1"))
                 {
 
-                    TextAlreadyInFile[i] += 1;
+                    textAlreadyInFile[i] += 1;
 
 
                     input = new FileStream(@"" + inputFields[0] + ".txt", FileMode.Open, FileAccess.Read);
                     reader = new StreamReader(input);
-                    Formatter = new BinaryFormatter();
+                    formatter = new BinaryFormatter();
 
                     try
                     {
-                        NewMeasurement = (Measurement)Formatter.Deserialize(input);
-                        MeasurementList.Add(NewMeasurement);
+                        newMeasurement = (Measurement)formatter.Deserialize(input);
+                        measurementList.Add(newMeasurement);
                     }
                     catch (Exception)
                     {
@@ -97,17 +97,17 @@ namespace RPi_EKG_program
             try
             {
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"EKGMaster.txt"))
-                    foreach (string line in TextAlreadyInFile)
+                    foreach (string line in textAlreadyInFile)
                     {
                         file.WriteLine(line);
                     }
             }
             catch (Exception)
             { throw; }
-            return MeasurementList;
+            return measurementList;
         }
 
-        public int ReadCountMaster()
+        public int readCountMaster()
         {
             Count = 1;
 
@@ -123,9 +123,9 @@ namespace RPi_EKG_program
         }
 
 
-        public void StoreDataLocal(Measurement Data)
+        public void storeDataLocal(Measurement data)
         {
-            int count = ReadCountMaster();
+            int count = readCountMaster();
             try
             {
                 using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"EKGMaster.txt", true))
@@ -137,28 +137,28 @@ namespace RPi_EKG_program
             { throw; }
 
             input = new FileStream(@"EKGdata" + count + ".txt", FileMode.OpenOrCreate, FileAccess.Write);
-            Formatter = new BinaryFormatter();
+            formatter = new BinaryFormatter();
             writer = new StreamWriter(input);
 
             try
             {
-                Formatter.Serialize(input, Data);
+                formatter.Serialize(input, data);
             }
             catch (Exception)
             { throw; }
             input.Close();
         }
 
-        public void StoreInfoLocal(string CPRNavn)
+        public void storeInfoLocal(string cprName)
         {
-            string CPR;
-            string FirstName;
+            string cpr;
+            string firstName;
 
-            CPR = CPRNavn.Split(Convert.ToChar(";"))[0];
-            FirstName = CPRNavn.Split(Convert.ToChar(";"))[1];
+            cpr = cprName.Split(Convert.ToChar(";"))[0];
+            firstName = cprName.Split(Convert.ToChar(";"))[1];
             using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"EKGPersonID.txt"))
             {
-                file.WriteLine(CPR + ";" + FirstName + ";" + DateTime.Now.ToString());
+                file.WriteLine(cpr + ";" + firstName + ";" + DateTime.Now.ToString());
             }
 
         }
@@ -169,13 +169,13 @@ namespace RPi_EKG_program
             input = new FileStream(@"EKGPersonID.txt", FileMode.Open, FileAccess.Read);
             reader = new StreamReader(input);
 
-            string CPRNavn;
+            string cprName;
             string inputRecord = reader.ReadLine();
             string[] inputFields = new string[3];
             inputFields = inputRecord.Split(Convert.ToChar(";"));
-            CPRNavn = inputFields[0].Split(Convert.ToChar("-"))[0] + inputFields[1];
+            cprName = inputFields[0].Split(Convert.ToChar("-"))[0] + inputFields[1];
 
-            return CPRNavn;
+            return cprName;
         }
 
         public string getCPRLocal()
@@ -183,13 +183,13 @@ namespace RPi_EKG_program
             input = new FileStream(@"EKGPersonID.txt", FileMode.Open, FileAccess.Read);
             reader = new StreamReader(input);
 
-            string CPR = "";
+            string cpr = "";
             string inputRecord = reader.ReadLine();
             string[] inputFields = new string[3];
             inputFields = inputRecord.Split(Convert.ToChar(";"));
 
-            CPR = inputFields[0];
-            return CPR;
+            cpr = inputFields[0];
+            return cpr;
         }
 
 

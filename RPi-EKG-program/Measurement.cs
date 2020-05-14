@@ -10,18 +10,18 @@ namespace RPi_EKG_program
        
         public string CPRNr { get; private set; }
         public List<double> Measurements { get; private set; }
-        public DateTime Dato { get; private set; }
-        public double samplerate { get; private set; }
+        public DateTime Date { get; private set; }
+        public double SampleRate { get; private set; }
         public string MeasurerID { get; private set; }
 
 
-        public Measurement(string CPR, List<double> Measurements, DateTime Dato, double Samplerate, string MeasurerID)
+        public Measurement(string cpr, List<double> measurements, DateTime date, double sampleRate, string measurerID)
         {
-            CPRNr = CPR;
-            this.Measurements = Measurements;
-            this.Dato = Dato;
-            samplerate = Samplerate;
-            this.MeasurerID = MeasurerID;
+            CPRNr = cpr;
+            Measurements = measurements;
+            Date = date;
+            SampleRate = sampleRate;
+            MeasurerID = measurerID;
 
         }
 

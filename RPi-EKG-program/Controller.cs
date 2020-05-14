@@ -26,22 +26,22 @@ namespace RPi_EKG_program
          
             LocalDB.isConnected();
 
-
+            
 
 
             while (LocalStorage.getCPRLocal() == null)
             {
-                displayController.ScreenShow(7, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                displayController.screenShow(7, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
                 
                 if (LocalDB.isConnected())
                 {
-                    LocalStorage.StoreInfoLocal(LocalDB.RecieveData(MonitorID));
+                    LocalStorage.storeInfoLocal(LocalDB.recieveData(MonitorID));
 
                 }
 
             }
 
-            displayController.ShowGreeting(LocalStorage.getInfoLocal(), LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+            displayController.showGreeting(LocalStorage.getInfoLocal(), LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
 
             Thread.Sleep(5000);
 
@@ -50,10 +50,10 @@ namespace RPi_EKG_program
             {
                 if (LocalDB.isConnected() && LocalStorage.checkUnSentData()!=0)
                 {
-                    displayController.ScreenShow(9, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                    displayController.screenShow(9, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
                     Thread.Sleep(1000);
 
-                    foreach (var item in LocalStorage.FindUnSentData())
+                    foreach (var item in LocalStorage.findUnSentData())
                     {
                         LocalDB.sendData(item);
                     }
@@ -63,11 +63,11 @@ namespace RPi_EKG_program
 
                 while (ADconverter.checkBattery() == 1)
                 {
-                    displayController.ScreenShow(8, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                    displayController.screenShow(8, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
                     Thread.Sleep(3000);
                 }
 
-                displayController.ScreenShow(3, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                displayController.screenShow(3, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
 
                 if (StartB.isPressed())
                 {
@@ -86,24 +86,31 @@ namespace RPi_EKG_program
                         
 
                         Measurement NewMeasurement = new Measurement(LocalStorage.getCPRLocal(), new List<double>(), DateTime.Now, (sampleRate/1000),MonitorID );
+                        displayController.statusUpdateMeasurment(MeasureTime.TotalSeconds, connection, lokalUnSent, battery);
 
                         while (MeasureTime.TotalSeconds < 40)
                         {
                             NewMeasurement.addToList(ADconverter.measureSignal());
                             EndTime = DateTime.Now;
                             MeasureTime = EndTime - StartTime;
-                            displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, connection, lokalUnSent, battery);
-                          
-                     
-                            Thread.Sleep(sampleRate);
+
+                            //Det var her vi skulle have startet en ny thread, og fordi vi ikke har lært trådprogrammering og fordi
+                            //den ikke kan nå at følge med sampleRate, har vi valgt at fjerne den for denne omgang.
+
+                            //displayController.StatusUpdateMeasurment(MeasureTime.TotalSeconds, connection, lokalUnSent, battery);
+
+                            Thread.Sleep(sampleRate-4);
 
                         }
+                        //Vi viser den nu før og efter en måling.
+                        displayController.statusUpdateMeasurment(MeasureTime.TotalSeconds, connection, lokalUnSent, battery);
+                        //Thread.Sleep(5000);
 
-                        LocalStorage.StoreDataLocal(NewMeasurement);
+                        LocalStorage.storeDataLocal(NewMeasurement);
 
                         if (LocalDB.isConnected())
                         {
-                            displayController.ScreenShow(6, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                            displayController.screenShow(6, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
 
                             LocalDB.sendData(NewMeasurement);
 
@@ -111,7 +118,7 @@ namespace RPi_EKG_program
                         else
                         {
 
-                            displayController.ScreenShow(5, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                            displayController.screenShow(5, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
                             Thread.Sleep(10000);
 
                         }
@@ -124,7 +131,7 @@ namespace RPi_EKG_program
 
                     else
                     {
-                        displayController.ScreenShow(2, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
+                        displayController.screenShow(2, LocalDB.isConnected(), LocalStorage.checkUnSentData(), ADconverter.checkBattery());
                         Thread.Sleep(5000);
                     }
 
