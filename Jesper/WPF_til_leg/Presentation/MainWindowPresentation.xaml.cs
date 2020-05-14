@@ -144,6 +144,7 @@ namespace WPF_til_leg.Presentation
                 //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
                 chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline);
+                ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
             }
             
             //chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), a, 3);

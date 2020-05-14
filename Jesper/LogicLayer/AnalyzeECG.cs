@@ -297,7 +297,7 @@ namespace LogicTier
             {
                 if (true)
                 {
-                    aECG.Illnes = illnessList[0];
+                    aECG.Illness = illnessList[0];
                 }
 
                 //if (STSegmentElevated)

@@ -26,7 +26,7 @@ namespace DataTier.Models
 
         private IllnessModel illness;
 
-        public IllnessModel Illnes
+        public IllnessModel Illness
         {
             get { return illness; }
             set { illness = value; }

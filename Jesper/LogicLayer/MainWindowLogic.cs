@@ -83,7 +83,7 @@ namespace LogicTier
 					{
 						if (!aECG.IsRead)
 						{
-							if (aECG.Illnes != null)
+							if (aECG.Illness != null)
 							{
 								//Sæt skriftfarven til rød
 
@@ -92,7 +92,7 @@ namespace LogicTier
 
 						}
 
-						if (aECG.Illnes != null)
+						if (aECG.Illness != null)
 						{
 							//Sæt skriftfarven til rød
 						}
