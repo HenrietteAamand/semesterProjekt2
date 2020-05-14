@@ -45,13 +45,14 @@ namespace WPF_til_leg.Presentation
             //string EnavnT = Convert.ToString(EnavnTR).Trim();
 
             
-            string day = CPRTB.Text.Substring(0, 2);
-            string month = CPRTB.Text.Substring(2, 2);
+           
             
 
             if (CPRTB.Text != "" && FnavnTB.Text != "" && EnavnTB.Text != "")
             {
-                if(CPRTB.Text.Length == 11)
+                string day = CPRTB.Text.Substring(0, 2);
+                string month = CPRTB.Text.Substring(2, 2);
+                if (CPRTB.Text.Length == 11)
                 {
                     if(0 < Convert.ToInt32(day) && Convert.ToInt32(day) < 32 && 0 < Convert.ToInt32(month) && Convert.ToInt32(month) < 13)
                     {

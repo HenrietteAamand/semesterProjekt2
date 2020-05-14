@@ -31,6 +31,9 @@ namespace WPF_til_leg.Presentation
             setupObj = new SetupWindowLogic();
 
             LoadCB();
+
+            ResetECGB.IsEnabled = false;
+            LinkECGB.IsEnabled = false;
         }
 
         public void LoadCB()
