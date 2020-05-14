@@ -91,6 +91,8 @@ namespace RPi_EKG_program
                         while (MeasureTime.TotalSeconds < 40)
                         {
                             NewMeasurement.addToList(ADconverter.measureSignal());
+
+
                             EndTime = DateTime.Now;
                             MeasureTime = EndTime - StartTime;
 
@@ -102,6 +104,8 @@ namespace RPi_EKG_program
                             Thread.Sleep(sampleRate-4);
 
                         }
+                        NewMeasurement.SampleRate = (40 / NewMeasurement.Measurements.Count);
+
                         //Vi viser den nu før og efter en måling.
                         displayController.statusUpdateMeasurment(MeasureTime.TotalSeconds, connection, lokalUnSent, battery);
                         //Thread.Sleep(5000);

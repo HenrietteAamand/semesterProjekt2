@@ -11,7 +11,7 @@ namespace RPi_EKG_program
         public string CPRNr { get; private set; }
         public List<double> Measurements { get; private set; }
         public DateTime Date { get; private set; }
-        public double SampleRate { get; private set; }
+        public double SampleRate { get; set; }
         public string MeasurerID { get; private set; }
 
 
