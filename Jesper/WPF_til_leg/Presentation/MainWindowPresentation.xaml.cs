@@ -148,9 +148,9 @@ namespace WPF_til_leg.Presentation
                 dynamic aECG = ecgLV.SelectedItem;
                 //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
-                chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline);
+                chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
                 ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
-                chartUC.To = aECG.Values.Count;
+                chartUC.To = 20000*aECG.SampleRate;
                 chartUC.From = 0;
 
             }

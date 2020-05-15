@@ -19,7 +19,7 @@ namespace LogicTier
         private const int intervalHistogram = 100;
 
         private ILocalDatabase lDBRef;
-        private MainWindowLogic mainLogic;
+
 
         public TimeSpan IntervalIR { get; private set; }
         public double Baseline { get; private set; }

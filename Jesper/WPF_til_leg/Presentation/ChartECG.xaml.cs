@@ -16,6 +16,7 @@ namespace WPF_til_leg.Presentation
         public ChartValues<double> STList { get; set; }
         public ChartValues<double> ECGList { get; set; }
         public ChartValues<double> BaseList { get; set; }
+        public double ECGSampleRate { get; set; }
 
         private double _to;
         private double _from;
@@ -24,18 +25,17 @@ namespace WPF_til_leg.Presentation
         public ChartECG()
         {
             
-            InitializeComponent();     
+            InitializeComponent();
 
 
             //MakeChart2(ecg);
             //MakeST(ecg, length, startIndex);
             //MakeChart2(analyzeLogic.NewAECGModelsList[0].Values);
             //MakeST(analyzeLogic.NewAECGModelsList[0].Values, analyzeLogic.NewAECGModelsList[0].STValues.Count, analyzeLogic.NewAECGModelsList[0].STStartIndex);
-            To = 500;
-            From = 0;
+            PrevB.IsEnabled = false;
         }
 
-        public void MakeCharts(List<double> ecg, int length, int startIndex, double baseline)
+        public void MakeCharts(List<double> ecg, int length, int startIndex, double baseline, double sampleRate)
         {
             
             STList = new ChartValues<double>();
@@ -44,6 +44,7 @@ namespace WPF_til_leg.Presentation
             ECGSeriesVisibility = true;
             BaseLineSeriesVisibility = true;
             STSeriesVisibility = true;
+            ECGSampleRate = sampleRate;
             MakeECGList(ecg);
             //MakeECGLine(ecg);
             MakeSTList(ecg, length, startIndex);
@@ -198,14 +199,23 @@ namespace WPF_til_leg.Presentation
 
         private void NextOnClick(object sender, RoutedEventArgs e)
         {
-            From += 250;
-            To += 250;
+            if (From - 20000 * ECGSampleRate >= 0)
+            {
+                PrevB.IsEnabled = true;
+            }
+            From += 20000 * ECGSampleRate;
+            To += 20000 * ECGSampleRate;
         }
 
         private void PrevOnClick(object sender, RoutedEventArgs e)
         {
-            From -= 250;
-            To -= 250;
+            if (From - (20000 * ECGSampleRate) <= 0)
+            {
+                PrevB.IsEnabled = false;
+            }
+            From -= 20000 * ECGSampleRate;
+            To -= 20000 * ECGSampleRate;
+            
         }
     }
 }
