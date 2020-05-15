@@ -16,7 +16,7 @@ namespace LogicTier
         List<List<double>> listOfListOfIntervals;
         public List<AnalyzedECGModel> NewAECGModelsList = new List<AnalyzedECGModel>();
         List<ECGModel> newECGList;
-        private const int intervalHistogram = 10;
+        private const int intervalHistogram = 100;
 
         private ILocalDatabase lDBRef;
         private MainWindowLogic mainLogic;
@@ -57,6 +57,15 @@ namespace LogicTier
         public bool STSegmentElevated { get; private set; }
         public bool STSegmentDepressed { get; private set; }
         public List<AnalyzedECGModel> aECGList { get; private set; }
+
+        private string fullName;
+
+        public string FullName
+        {
+            get { return fullName; }
+            set { fullName = value; }
+        }
+
 
 
 
