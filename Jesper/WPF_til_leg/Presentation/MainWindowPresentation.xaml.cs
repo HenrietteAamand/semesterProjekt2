@@ -118,6 +118,7 @@ namespace WPF_til_leg.Presentation
             {
 
 
+
                 dynamic patient = patientsLV.SelectedItem;
                 string cpr = patient.CPR;
                 ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
