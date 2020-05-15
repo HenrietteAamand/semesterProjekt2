@@ -82,8 +82,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="584*"/>
-            <RowDefinition Height="37*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="20"/>
@@ -138,74 +138,185 @@
         </TextBox>
 
         <!--ROW 2-->
-        <Border
-            x:Name="listViewBorder"
+        <Grid 
             Grid.Row="2" 
             Grid.Column="1" 
             Grid.RowSpan="2" 
             Width="400" 
-            Margin="10,10,10,9.8" 
+            Margin="10,10,10,10" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+            </Grid.RowDefinitions>
+            <Border
+            x:Name="listViewBorder"
+            Grid.Row="0" 
             BorderThickness="0.5" 
             BorderBrush="Black">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" >
 
-                <ListView 
+
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Grid.Row="0">
+
+                    <ListView 
                     x:Name="patientsLV"
                     Width="200"
                     BorderThickness="0.5"
                     ItemsSource="{Binding SourceCollection}"
                     SelectedIndex="0"
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="patientsLV_SelectionChanged">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn DisplayMemberBinding="{Binding CPR}" Header="CPR" x:Name="cprColumn"/>
-                            <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Header="Navn"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn DisplayMemberBinding="{Binding CPR}" Header="CPR" x:Name="cprColumn"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Header="Navn"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
 
-                <ListView
+                    <ListView
                     x:Name="ecgLV"
                     BorderThickness="0.5"
                     SelectedIndex="0"
                     ItemsSource="{Binding ËCGs}"
-                    Width="200"
+                    Width="199"
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="ecgLV_SelectionChanged">
-                    <ListView.Resources>
-                        <Style BasedOn="{StaticResource MahApps.Styles.ListViewItem}" TargetType="{x:Type ListViewItem}">
-                            <Style.Triggers>
-                                <DataTrigger 
+                        <ListView.Resources>
+                            <Style BasedOn="{StaticResource MahApps.Styles.ListViewItem}" TargetType="{x:Type ListViewItem}">
+                                <Style.Triggers>
+                                    <DataTrigger 
                                     Binding="{Binding IsRead}"
                                     Value="False">
-                                    <Setter Property="Background"
+                                        <Setter Property="Background"
                                             Value="#FFC9EBFA" />
-                                    <Setter Property="FontWeight"
+                                        <Setter Property="FontWeight"
                                             Value="UltraBold" />
-                                    <Setter Property="FontStyle"
+                                        <Setter Property="FontStyle"
                                             Value="Italic" />
-                                </DataTrigger>
-                                <DataTrigger 
+                                    </DataTrigger>
+                                    <DataTrigger 
                                     Binding="{Binding Illness.Id}"
                                     Value="1">
-                                    <Setter Property="Foreground"
+                                        <Setter Property="Foreground"
                                             Value="Tomato" />
-                                    <Setter Property="FontWeight"
+                                        <Setter Property="FontWeight"
                                             Value="Bold" />
-                                </DataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListView.Resources>
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="Målinger" DisplayMemberBinding="{Binding Date, StringFormat='MM/dd/yy, hh:mm'}" Width="200"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </StackPanel>
-        </Border>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Målinger" DisplayMemberBinding="{Binding Date, StringFormat='MM/dd/yy, hh:mm'}" Width="200"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </Border>
+
+            <Border Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,10,0,0" >
+                <StackPanel>
+                    <TextBox
+                Margin="0,0,0,5"
+                x:Name="commentT" 
+                MinHeight="50" 
+                Grid.Row="1" 
+                VerticalScrollBarVisibility="Auto"
+                TextWrapping="Wrap"
+                Controls:TextBoxHelper.ClearTextButton="True"
+                Controls:TextBoxHelper.Watermark="Skriv kommentar til Den Offentlige Database (valgfrit)..." >
+                        <TextBox.Style>
+                            <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
+                                <Style.Triggers>
+                                    <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
+                                        <Setter Property="Controls:TextBoxHelper.ButtonContent" Value="r" />
+                                        <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBox.Style>
+                    </TextBox>
+
+                    <Grid Margin="0,0,0,0"  >
+                        <!--ROW 3-->
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <!--Visible when not pressed-->
+                        <Controls:Badged 
+             
+            x:Name="uploadOffDBB"
+            Margin="0,0,5,0" >
+
+                            <Button x:Name="UploadB" Click="UploadB_Click" Visibility="Visible" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                    <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Upload" />
+                                    <TextBlock Margin="5" Text="Upload til Offentlig Database"/>
+                                </StackPanel>
+                            </Button>
+
+                        </Controls:Badged>
+
+                        <TextBox x:Name="idT"
+                     Grid.Row="0"
+                     Grid.Column="1"
+                     Controls:TextBoxHelper.ClearTextButton="True"
+                     Controls:TextBoxHelper.Watermark="Indtast personale ID..." 
+                     Grid.ColumnSpan="1" Margin="5,0,0,0" 
+                     HorizontalAlignment="Stretch" 
+                     VerticalAlignment="Stretch" 
+                     TextChanged="idT_TextChanged"
+                     TextWrapping="Wrap"
+                     VerticalContentAlignment="Center"
+                     HorizontalContentAlignment="Stretch">
+                            <TextBox.Style>
+                                <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
+                                    <Style.Triggers>
+                                        <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
+                                            <Setter Property="Controls:TextBoxHelper.ButtonContent" Value="r" />
+                                            <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBox.Style>
+                        </TextBox>
+                        <UniformGrid Columns="2" Grid.ColumnSpan="2" Name="uploadPressed" Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <Controls:Badged>
+
+                                <Button x:Name="cancelB" Click="cancelB_Click" Visibility="Visible">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Cancel" />
+                                        <TextBlock Margin="5" Text="Fortryd"/>
+                                    </StackPanel>
+                                </Button>
+
+                            </Controls:Badged>
+                            <Controls:Badged  
+                Grid.Column="2">
+
+                                <Button x:Name="okB" Click="okB_Click" Visibility="Visible">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Check" />
+                                        <TextBlock Margin="5" Text="OK"/>
+                                    </StackPanel>
+                                </Button>
+
+                            </Controls:Badged>
+                        </UniformGrid>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+
+        </Grid>
         <Border
             x:Name="ecgBorder"
-            Margin="10,10,9.6,19.8" 
+            Margin="10,10,10,20" 
             Grid.Row="2" 
             Grid.Column="3" 
             Grid.ColumnSpan="6" 
@@ -216,80 +327,7 @@
         </Border>
 
 
-        <Grid Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0.2,0,19.8" Grid.RowSpan="3">
-            <!--ROW 3-->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <!--Visible when not pressed-->
-            <Controls:Badged 
-             
-            x:Name="uploadOffDBB"
-            Margin="10,0,5,0" >
-
-                <Button x:Name="UploadB" Click="UploadB_Click" Visibility="Visible" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                        <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Upload" />
-                        <TextBlock Margin="5" Text="Upload til Offentlig Database"/>
-                    </StackPanel>
-                </Button>
-
-            </Controls:Badged>
         
-            <TextBox x:Name="idT"
-                     Grid.Row="0"
-                     Grid.Column="1"
-                     Controls:TextBoxHelper.ClearTextButton="True"
-                     Controls:TextBoxHelper.Watermark="Indtast personale ID..." 
-                     Grid.ColumnSpan="1" Margin="5,0,10,0" 
-                     HorizontalAlignment="Stretch" 
-                     VerticalAlignment="Stretch" 
-                     TextChanged="idT_TextChanged"
-                     TextWrapping="Wrap"
-                     VerticalContentAlignment="Center"
-                     HorizontalContentAlignment="Stretch">
-                <TextBox.Style>
-                    <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
-                        <Style.Triggers>
-                            <Trigger Property="Controls:TextBoxHelper.HasText" Value="True">
-                                <Setter Property="Controls:TextBoxHelper.ButtonContent" Value="r" />
-                                <Setter Property="Controls:TextBoxHelper.ButtonContentTemplate" Value="{x:Null}"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBox.Style>
-            </TextBox>
-            <UniformGrid Columns="2" Grid.ColumnSpan="2" Name="uploadPressed" Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <Controls:Badged 
-            Margin="10,0,5,0" >
-
-                    <Button x:Name="cancelB" Click="cancelB_Click" Visibility="Visible">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                            <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Cancel" />
-                            <TextBlock Margin="5" Text="Fortryd"/>
-                        </StackPanel>
-                    </Button>
-
-                </Controls:Badged>
-                <Controls:Badged 
-            Margin="5,0,10,0" 
-                Grid.Column="2">
-
-                    <Button x:Name="okB" Click="okB_Click" Visibility="Visible">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
-                            <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Check" />
-                            <TextBlock Margin="5" Text="OK"/>
-                        </StackPanel>
-                    </Button>
-
-                </Controls:Badged>
-            </UniformGrid>
-        </Grid>
     </Grid>
 
 </Controls:MetroWindow>
