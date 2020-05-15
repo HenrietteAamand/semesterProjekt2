@@ -113,7 +113,7 @@ namespace LogicTier
 			if (id != null && note != null)
 			{
 				DOEDB.UploadData(aECG);
-				DOEDB.UploadMaeling(patient, id, note);
+				DOEDB.UploadMaeling(patient, id, note, aECG.Date);
 			}
 
 			//Uploader data til DOEDB

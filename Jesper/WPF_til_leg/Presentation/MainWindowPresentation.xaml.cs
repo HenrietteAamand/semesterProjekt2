@@ -100,6 +100,7 @@ namespace WPF_til_leg.Presentation
 
         private void okB_Click(object sender, RoutedEventArgs e)
         {
+
             UploadB.Visibility = Visibility.Visible;
             idT.Visibility = Visibility.Visible;
             uploadPressed.Visibility = Visibility.Hidden;
@@ -107,8 +108,8 @@ namespace WPF_til_leg.Presentation
             dynamic aECG = ecgLV.SelectedItem;
             dynamic patient = patientsLV.SelectedItem;
             mainObj.UploadData(idT.Text, commentT.Text, aECG, patient);
-
             idT.Text = "Måling uploaded.";
+
 
         }
 
