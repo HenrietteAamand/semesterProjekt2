@@ -52,6 +52,7 @@ namespace WPF_til_leg.Presentation
             Patients = mainObj.getAllPatiens();
             analyzeObj.CreateAnalyzedECGs();
 
+
             usersCollection = new CollectionViewSource();
             usersCollection.Source = Patients;
             usersCollection.Filter += usersCollection_Filter;
@@ -111,12 +112,14 @@ namespace WPF_til_leg.Presentation
 
         private void patientsLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             if (patientsLV.SelectedValue != null)
             {
 
 
                 dynamic patient = patientsLV.SelectedItem;
                 string cpr = patient.CPR;
+                ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
 
                 CPRTB.Text = "CPR-NUMMER: " + cpr;
                 NavnTB.Text = "NAVN: " + mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
@@ -130,8 +133,8 @@ namespace WPF_til_leg.Presentation
                 {
                     KonTB.Text = "KØN: Kvinde";
                 }
-
                 ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
+
             }
 
         }
@@ -145,7 +148,7 @@ namespace WPF_til_leg.Presentation
 
                 chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline);
                 ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
-                chartUC.To = 250;
+                chartUC.To = 500;
                 chartUC.From = 0;
             }
             

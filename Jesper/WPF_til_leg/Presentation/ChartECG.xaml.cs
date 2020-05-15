@@ -12,8 +12,6 @@ namespace WPF_til_leg.Presentation
         private bool _ECGSeriesVisibility;
         private bool _baseLineSeriesVisibility;
         private bool _stSeriesVisibility;
-        AnalyzeECG analyzeLogic = new AnalyzeECG();
-        MainWindowLogic mainLogic = new MainWindowLogic();
         public SeriesCollection series { get; set; }
         public ChartValues<double> STList { get; set; }
         public ChartValues<double> ECGList { get; set; }
@@ -26,8 +24,7 @@ namespace WPF_til_leg.Presentation
         public ChartECG()
         {
             
-            InitializeComponent();
-            //analyzeLogic.CreateAnalyzedECGs();         
+            InitializeComponent();     
 
 
             //MakeChart2(ecg);

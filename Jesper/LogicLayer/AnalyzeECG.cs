@@ -13,7 +13,7 @@ namespace LogicTier
         private List<IllnessModel> illnessList;
         private PatientModel patientRef;
         private List<ECGModel> ecgList;
-        List<List<double>> listOfListOfIntervals = new List<List<double>>();
+        List<List<double>> listOfListOfIntervals;
         public List<AnalyzedECGModel> NewAECGModelsList = new List<AnalyzedECGModel>();
         List<ECGModel> newECGList;
         private const int intervalHistogram = 10;
@@ -138,7 +138,12 @@ namespace LogicTier
                 //Sætter max og min og laver et valuespan
                 double min = aECG.Values.Min();
                 double max = aECG.Values.Max();
-
+                listOfListOfIntervals = new List<List<double>>();
+                //if (listOfListOfIntervals.Count != 0)
+                //{
+                //    listOfListOfIntervals.Clear();
+                //}
+                
 
                 double valueSpan = Math.Sqrt(Math.Pow(max, 2)) - min;
 
@@ -185,10 +190,13 @@ namespace LogicTier
                 }
 
                 //Sætter Baseline for aECG
-                int j = 0;
-                NewAECGModelsList[j].Baseline = intervalList.Average();
-                RTakThreshhold = NewAECGModelsList[j].Baseline+1.5;
-                j++;
+                //int j = 0;
+                double avr = intervalList.Average();
+                aECG.Baseline = avr;
+                //NewAECGModelsList[j].Baseline = avr;
+
+                RTakThreshhold = aECG.Baseline+1.5;
+                //j++;
 
             }
 
@@ -324,8 +332,8 @@ namespace LogicTier
             lDBRef.UpdateAnalyzedECG(aECG);
             foreach (ECGModel ecg in newECGList)
             {
-                ecg.IsAnalyzed = true;
                 lDBRef.UpdateIsAnalyzed(ecg);
+                ecg.IsAnalyzed = true;
             }
         }
 
