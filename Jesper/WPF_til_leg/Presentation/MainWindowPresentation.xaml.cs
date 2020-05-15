@@ -36,7 +36,7 @@ namespace WPF_til_leg.Presentation
         public MainWindowPresentation()
         {
             InitializeComponent();
-            ShowDialog();
+            
 
             if (idT.Text == "")
             {
@@ -46,6 +46,7 @@ namespace WPF_til_leg.Presentation
             mainObj = new MainWindowLogic();
             //chartObj = new ChartECG();
             analyzeObj = new AnalyzeECG();
+            ShowDialog();
 
             aECGS = new List<AnalyzedECGModel>();
             Patients = new List<PatientModel>();
@@ -64,14 +65,15 @@ namespace WPF_til_leg.Presentation
 
         async Task ShowDialog()
         {
-            var result = await this.ShowMessageAsync("Velkommen", $"Der er {0} nye EKG målinger. Vil du opdatere?", MessageDialogStyle.AffirmativeAndNegative);
 
-            if (result == MessageDialogResult.Affirmative)
-            {
-                analyzeObj.CreateAnalyzedECGs();
+            await this.ShowMessageAsync("Velkommen", $"Der er {analyzeObj.NewAECGModelsList.Count} nye EKG målinger.", MessageDialogStyle.Affirmative);
+
+            //if (result == MessageDialogResult.Affirmative)
+            //{
+            //    analyzeObj.CreateAnalyzedECGs();
                 
-                await this.ShowMessageAsync($" {analyzeObj.NewAECGModelsList.Count} EKG målinger er blevet opdateret","");
-            }
+            //    await this.ShowMessageAsync($"  EKG målinger er blevet opdateret","");
+            //}
 
         }
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -150,7 +152,7 @@ namespace WPF_til_leg.Presentation
 
                 chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
                 ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
-                chartUC.To = 20000*aECG.SampleRate;
+                chartUC.To = 2/aECG.SampleRate;
                 chartUC.From = 0;
 
             }
@@ -222,5 +224,23 @@ namespace WPF_til_leg.Presentation
             }
         }
 
+
+        private void updateB_Click(object sender, RoutedEventArgs e)
+        {
+            UpdateView();
+
+        }
+
+        public void UpdateView()
+        {
+            Patients = mainObj.getAllPatiens();
+            analyzeObj.CreateAnalyzedECGs();
+
+            usersCollection.Source = Patients;
+            usersCollection.Filter += usersCollection_Filter;
+
+            RaisePropertyChanged("SourceCollection");
+            DataContext = this;
+        }
     }
 }

@@ -199,22 +199,23 @@ namespace WPF_til_leg.Presentation
 
         private void NextOnClick(object sender, RoutedEventArgs e)
         {
-            if (From - 20000 * ECGSampleRate >= 0)
+            if (From - (1 / ECGSampleRate) >= 0)
             {
                 PrevB.IsEnabled = true;
+                OnPropertyChanged("NextB");
             }
-            From += 20000 * ECGSampleRate;
-            To += 20000 * ECGSampleRate;
+            From += 1 / ECGSampleRate;
+            To += 1 / ECGSampleRate;
         }
 
         private void PrevOnClick(object sender, RoutedEventArgs e)
         {
-            if (From - (20000 * ECGSampleRate) <= 0)
+            if (From - (1 / ECGSampleRate) <= 0)
             {
                 PrevB.IsEnabled = false;
             }
-            From -= 20000 * ECGSampleRate;
-            To -= 20000 * ECGSampleRate;
+            From -= 1 / ECGSampleRate;
+            To -= 1 /ECGSampleRate;
             
         }
     }
