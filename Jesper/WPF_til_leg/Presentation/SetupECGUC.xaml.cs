@@ -31,6 +31,9 @@ namespace WPF_til_leg.Presentation
             setupObj = new SetupWindowLogic();
 
             LoadCB();
+
+            ResetECGB.IsEnabled = false;
+            LinkECGB.IsEnabled = false;
         }
 
         public void LoadCB()
@@ -65,12 +68,12 @@ namespace WPF_til_leg.Presentation
 
             if (setupObj.monitorInUse(ecgMonitorID.ToString()) == false)
             {
-                ResetECGB.IsEnabled = false;
-                LinkECGB.IsEnabled = true;
                 SetupTB.Visibility = Visibility.Visible;
                 SetupTB.Text = "EKG-måler er ikke i brug.";
                 PatientIDCB.IsEnabled = true;
-
+                LinkECGB.IsEnabled = false;
+                ResetECGB.IsEnabled = false;
+                
             }
             else if (setupObj.monitorInUse(ecgMonitorID.ToString()) == true)
             {
@@ -99,8 +102,9 @@ namespace WPF_til_leg.Presentation
             }           
 
             SetupTB.Visibility = Visibility.Visible;
-            SetupTB.Text = "Tilknytning gennemført.";
             UpdateCB();
+            SetupTB.Text = "Tilknytning gennemført.";
+            
 
         }
 
@@ -112,8 +116,9 @@ namespace WPF_til_leg.Presentation
 
             setupObj.ResetECGMonitor(ecgMonitorString);
             SetupTB.Visibility = Visibility.Visible;
-            SetupTB.Text = "Nulstilling gennemført.";
             UpdateCB();
+            SetupTB.Text = "Nulstilling gennemført.";
+            
         }
 
         // Tilknyt patient eller nulstil EKG-måler:
@@ -123,6 +128,12 @@ namespace WPF_til_leg.Presentation
             UpdateCB();
            
 
+        }
+
+        private void PatientIDCB_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ResetECGB.IsEnabled = false;
+            LinkECGB.IsEnabled = true;
         }
     }
 }

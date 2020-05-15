@@ -11,8 +11,6 @@ namespace LogicTier
     public class SetupWindowLogic
     {
 
-
-
         private ILocalDatabase DB;
 
         private List<ECGMonitorModel> ecgMonitorList;
