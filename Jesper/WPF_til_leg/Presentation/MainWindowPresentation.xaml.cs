@@ -133,7 +133,6 @@ namespace WPF_til_leg.Presentation
                 {
                     KonTB.Text = "KØN: Kvinde";
                 }
-                ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
 
             }
 
@@ -148,15 +147,11 @@ namespace WPF_til_leg.Presentation
 
                 chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline);
                 ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
-                chartUC.To = 500;
+                chartUC.To = aECG.Values.Count;
                 chartUC.From = 0;
+
             }
             
-            //chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), a, 3);
-
-            //chartUC.MakeECGChart(mainObj.GetECGValues(aECG.AECGID));
-            //chartUC.MakeST(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex);
-
         }
 
         private void idT_TextChanged(object sender, TextChangedEventArgs e)

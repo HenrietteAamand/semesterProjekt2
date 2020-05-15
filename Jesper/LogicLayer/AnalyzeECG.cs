@@ -205,7 +205,6 @@ namespace LogicTier
 
         public void CalculateST()
         {
-            int j = 0;
             //Måle R-tak
             //R-tak threshhold er sat til Baseline +1,5 mV
             //Den finder ud af, hvornår value bliver højere end threshold
@@ -231,7 +230,7 @@ namespace LogicTier
                 {
                     //Hvis en value er mindre end baseline og mindre end den tidligere mindste værdi og index er større end index for rSpidsIndex(dvs efter den)
                     //bliver sSpidsIndex = i
-                    if (aECG.Values[i] < NewAECGModelsList[j].Baseline && aECG.Values[i] < aECG.Values[sSpidsIndex] && i > rSpidsIndex)
+                    if (aECG.Values[i] < aECG.Baseline && aECG.Values[i] < aECG.Values[sSpidsIndex] && i > rSpidsIndex)
                     {
                         sSpidsIndex = i;
                     }
@@ -241,7 +240,7 @@ namespace LogicTier
                 for (int i = 0; i < aECG.Values.Count; i++)
                 {
                     //Hvis en value er større end baseline og større end den tidligere største værdi og det ligger efter rSpidsIndex bliver tSpidsIndex = i
-                    if (aECG.Values[i] > NewAECGModelsList[j].Baseline && aECG.Values[i] > aECG.Values[tSpidsIndex] && i > sSpidsIndex)
+                    if (aECG.Values[i] > aECG.Baseline && aECG.Values[i] > aECG.Values[tSpidsIndex] && i > sSpidsIndex)
                     {
                         tSpidsIndex = i;
                     }
@@ -260,9 +259,19 @@ namespace LogicTier
                     
                 }
                 //Startindexet gemmes i alle aECG's så man ved hvor grafen skal starte for ST-segmentet
-                //NewAECGModelsList[j].STStartIndex = STSegmentIndexList[0];
+                if (STSegmentIndexList.Count != 0)
+                {
+                    aECG.STStartIndex = STSegmentIndexList[0];
 
-                NewAECGModelsList[j].STValues = STSegmentList;
+                    aECG.STValues = STSegmentList;
+                }
+                else
+                {
+                    aECG.STStartIndex = 0;
+
+                    aECG.STValues = new List<double> {0, 0};
+                }
+                    
 
 
                 //STSegmentList's længde sammenlignes med Illnesses reference værdier
@@ -278,7 +287,6 @@ namespace LogicTier
                     {
                         STSegmentElevated = true;
                     }
-                j++;
             }
 
 
