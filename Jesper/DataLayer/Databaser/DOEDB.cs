@@ -42,7 +42,7 @@ namespace DataTier.Databaser
                 cmd.Parameters.AddWithValue("@antalmaalinger", 1);
                 cmd.Parameters.AddWithValue("@sfp_ansvrmedarbjnr", workerID);
                 cmd.Parameters.AddWithValue("@dato", date);
-                cmd.Parameters.AddWithValue("@sfp_ans_org", "Sygehuse");
+                cmd.Parameters.AddWithValue("@sfp_ans_org", "Gruppe 5");
                 cmd.Parameters.AddWithValue("@borger_fornavn", patient.FirstName);
                 cmd.Parameters.AddWithValue("@borger_efternavn", patient.LastName);
                 cmd.Parameters.AddWithValue("@borger_cprnr", patient.CPR);
