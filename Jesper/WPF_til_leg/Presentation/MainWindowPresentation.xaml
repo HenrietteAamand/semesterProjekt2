@@ -169,7 +169,7 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn DisplayMemberBinding="{Binding CPR}" Header="CPR" x:Name="cprColumn"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding FirstName}" Header="Navn"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding FullName}" Header="Navn"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
@@ -224,7 +224,7 @@
                 VerticalScrollBarVisibility="Auto"
                 TextWrapping="Wrap"
                 Controls:TextBoxHelper.ClearTextButton="True"
-                Controls:TextBoxHelper.Watermark="Skriv kommentar til Den Offentlige Database (valgfrit)..." >
+                Controls:TextBoxHelper.Watermark="Skriv kommentar til Den Offentlige Database..." TextChanged="commentT_TextChanged" >
                         <TextBox.Style>
                             <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
                                 <Style.Triggers>
@@ -269,11 +269,10 @@
                      Controls:TextBoxHelper.Watermark="Indtast personale ID..." 
                      Grid.ColumnSpan="1" Margin="5,0,0,0" 
                      HorizontalAlignment="Stretch" 
-                     VerticalAlignment="Stretch" 
-                     TextChanged="idT_TextChanged"
+                     VerticalAlignment="Stretch"
                      TextWrapping="Wrap"
                      VerticalContentAlignment="Center"
-                     HorizontalContentAlignment="Stretch">
+                     HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.501,0.5" TextChanged="idT_TextChanged">
                             <TextBox.Style>
                                 <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
                                     <Style.Triggers>

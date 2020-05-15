@@ -52,6 +52,14 @@ namespace DataTier.Models
             set { lastName = value; }
         }
 
+        private String fullName;
+
+        public String FullName
+        {
+            get { return firstName + " " + lastName; }
+            set { FullName = value; }
+        }
+
         //private List<ECGModel> ecgList;
 
         //public List<ECGModel> ECGList
@@ -74,7 +82,7 @@ namespace DataTier.Models
         #region Constructor
         public PatientModel()
         {
-
+            
         }
 
         public PatientModel(string ecgMonitorID, string cpr, string firstName, string lastName)
@@ -84,8 +92,10 @@ namespace DataTier.Models
             CPR = cpr;
             FirstName = firstName;
             LastName = lastName;
+            
             //ECGList = ecgList;
             //AECGList = aECGList;
+           
         }
 
         public PatientModel(string cpr, string firstName, string lastName)
@@ -93,6 +103,7 @@ namespace DataTier.Models
             CPR = cpr;
             FirstName = firstName;
             LastName = lastName;
+          
         }
         #endregion
 
