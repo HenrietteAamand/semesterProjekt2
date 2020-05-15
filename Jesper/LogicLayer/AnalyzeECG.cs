@@ -260,7 +260,7 @@ namespace LogicTier
                     
                 }
                 //Startindexet gemmes i alle aECG's så man ved hvor grafen skal starte for ST-segmentet
-                NewAECGModelsList[j].STStartIndex = STSegmentIndexList[0];
+                //NewAECGModelsList[j].STStartIndex = STSegmentIndexList[0];
 
                 NewAECGModelsList[j].STValues = STSegmentList;
 
