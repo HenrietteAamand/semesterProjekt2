@@ -94,10 +94,11 @@ namespace DataTier.Databaser
 
             reader = command.ExecuteReader();
 
-            
+            int k = 0;
+
             while (reader.Read())
             {
-                int k = 0;
+                
                 byte[] bytesArr = new byte[] { };
                 double[] values = new double[800];
                 byte[] bytesArr1 = new byte[] { };
@@ -133,35 +134,45 @@ namespace DataTier.Databaser
                             
                             STValues[j] = BitConverter.ToDouble(bytesArr1.ToArray(), i);
                             STValuesList.Add(BitConverter.ToDouble(bytesArr1.ToArray(), i));
-                            if (i > 4800)
-                            {
-                                i = bytesArr1.Length;
-                            }
+                            //if (i > 4800)
+                            //{
+                            //    i = bytesArr1.Length;
+                            //}
                         }
 
                         ameasurements[k].STValues = STValuesList;
                     }
+                    else 
+                        ameasurements[k].STValues = new List<double> {0};
 
                     if (reader["STStartIndex"].GetType() != typeof(DBNull))
                     {
                     ameasurements[k].STStartIndex = Convert.ToInt32(reader["STStartIndex"]);
 
                     }
+                    else 
+                        ameasurements[k].STStartIndex=0;
                     
                     if (reader["Baseline"].GetType() != typeof(DBNull))
                     {
                     ameasurements[k].Baseline = (double)reader["Baseline"];
                     }
+                    else 
+                        ameasurements[k].Baseline = 0;
 
                     if (reader["IsRead"].GetType() != typeof(DBNull))
                     {
                     ameasurements[k].IsRead = (bool)reader["IsRead"];
 
                     }
+                    else 
+                        ameasurements[k].IsRead = false;
                     if (reader["Illness"].GetType() != typeof(DBNull))
                     {
                     ameasurements[k].Illness = illness;
                     }
+                    else 
+                        ameasurements[k].Illness = new IllnessModel();
 
 
                 //aECG.STDepressed = (bool)reader["STDepressed"];

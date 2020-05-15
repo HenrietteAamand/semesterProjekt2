@@ -147,7 +147,7 @@ namespace LogicTier
 				{
 					ecgValuesList = aECG.Values;
 					aECG.IsRead = true;
-					//DB.UpdateAnalyzedECG(aECG);
+					DB.UpdateAnalyzedECG(aECG);
 				}
 			}
 
