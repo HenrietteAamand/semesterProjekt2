@@ -85,6 +85,14 @@ namespace LogicTier
             ecgList = lDBRef.GetAllECGs();
             aECGList = lDBRef.GetAllAnalyzedECGs();
             newECGList = new List<ECGModel>();
+            
+        }
+
+        //public List<ECGModel> LoadNewECGs(PatientModel patient) { throw new NotImplementedException(); }
+
+        public void CreateAnalyzedECGs()
+        {
+            ecgList = lDBRef.GetAllECGs();
             foreach (ECGModel ecg in ecgList)
             {
                 if (!ecg.IsAnalyzed)
@@ -93,41 +101,40 @@ namespace LogicTier
                 }
             }
 
-     
+            //Næste ID findes
+            FindNextID();
             //Der oprettes nye aECG for alle nye ECG'er
             foreach (ECGModel ecg in newECGList)
             {
-                FindNextID();
+                
                 NewAECGModelsList.Add(new AnalyzedECGModel(ecg.CPR, ecg.ECGID, NextID, ecg.Date, ecg.SampleRate, ecg.Values, ecg.MonitorID));
+                NextID++;
             }
-        }
-
-        //public List<ECGModel> LoadNewECGs(PatientModel patient) { throw new NotImplementedException(); }
-
-        public void CreateAnalyzedECGs()
-        {
 
             //Der kommer en liste med alle ECG'er
             //Der laves en liste med ECG'er som er nye.
 
-
-            //Beregner og sætter baseline for alle nyoprettede aECG'er
-            CalculateBaseline();
-
-            ////Beregner og sætter ST for alle nye målinger. Laver også lister for ST index og values, til at lave graf
-            CalculateST();
-
-            ////Beregner og sætter puls for alle nye målinger
-            //CalculatePuls();
-
-            ////Tilføjer illnesses til alle nye målinger
-            AddIllnes();
-
-            foreach (AnalyzedECGModel aECG in NewAECGModelsList)
+            if (NewAECGModelsList.Count != 0)
             {
-                UploadAnalyzedECG(aECG);
-            }
 
+
+                //Beregner og sætter baseline for alle nyoprettede aECG'er
+                CalculateBaseline();
+
+                ////Beregner og sætter ST for alle nye målinger. Laver også lister for ST index og values, til at lave graf
+                CalculateST();
+
+                ////Beregner og sætter puls for alle nye målinger
+                //CalculatePuls();
+
+                ////Tilføjer illnesses til alle nye målinger
+                AddIllnes();
+
+                foreach (AnalyzedECGModel aECG in NewAECGModelsList)
+                {
+                    UploadAnalyzedECG(aECG);
+                }
+            }
 
         }
 
@@ -408,6 +415,7 @@ namespace LogicTier
         public void FindNextID()
         {
             AECGIDS = new List<int>();
+            aECGList = lDBRef.GetAllAnalyzedECGs();
             //Putter alle ID's ind i aECGIDS
             foreach (AnalyzedECGModel aECG in aECGList)
             {

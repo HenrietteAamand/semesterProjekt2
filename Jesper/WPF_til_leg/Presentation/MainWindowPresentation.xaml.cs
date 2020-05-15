@@ -46,12 +46,13 @@ namespace WPF_til_leg.Presentation
             mainObj = new MainWindowLogic();
             //chartObj = new ChartECG();
             analyzeObj = new AnalyzeECG();
+            analyzeObj.CreateAnalyzedECGs();
             ShowDialog();
 
             aECGS = new List<AnalyzedECGModel>();
             Patients = new List<PatientModel>();
             Patients = mainObj.getAllPatiens();
-            analyzeObj.CreateAnalyzedECGs();
+            
 
 
             usersCollection = new CollectionViewSource();
