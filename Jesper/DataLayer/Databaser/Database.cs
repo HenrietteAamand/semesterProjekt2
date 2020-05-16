@@ -132,7 +132,7 @@ namespace DataTier.Databaser
                         for (int i = 0, j = 0; i < bytesArr1.Length; i += 8, j++)
                         {
                             
-                            STValues[j] = BitConverter.ToDouble(bytesArr1.ToArray(), i);
+                            //STValues[j] = BitConverter.ToDouble(bytesArr1.ToArray(), i);
                             STValuesList.Add(BitConverter.ToDouble(bytesArr1.ToArray(), i));
                             //if (i > 4800)
                             //{
