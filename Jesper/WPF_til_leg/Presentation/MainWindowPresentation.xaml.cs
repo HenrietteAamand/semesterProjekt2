@@ -69,7 +69,7 @@ namespace WPF_til_leg.Presentation
         async Task ShowDialog()
         {
 
-            await this.ShowMessageAsync("Velkommen", $"Der er {analyzeObj.NewAECGModelsList.Count} nye EKG målinger.", MessageDialogStyle.Affirmative);
+            await this.ShowMessageAsync("Velkommen", $"Der er {/*analyzeObj.NewAECGModelsList.Count*/0} nye EKG målinger.", MessageDialogStyle.Affirmative);
 
             //if (result == MessageDialogResult.Affirmative)
             //{
@@ -158,7 +158,7 @@ namespace WPF_til_leg.Presentation
 
                     chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
                     ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
-                    chartUC.To = 2 / aECG.SampleRate;
+                    chartUC.To = 1 / aECG.SampleRate;
                     chartUC.From = 0;
                 }
               
