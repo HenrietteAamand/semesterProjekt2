@@ -202,7 +202,6 @@ namespace WPF_til_leg.Presentation
             if (From - (1 / ECGSampleRate) >= 0)
             {
                 PrevB.IsEnabled = true;
-                OnPropertyChanged("NextB");
             }
             From += 1 / ECGSampleRate;
             To += 1 / ECGSampleRate;
