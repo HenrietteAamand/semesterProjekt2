@@ -36,7 +36,7 @@ namespace WPF_til_leg.Presentation
         public MainWindowPresentation()
         {
             InitializeComponent();
-            ShowDialog();
+            
 
             //if (idT.Text == "")
             //{
@@ -47,7 +47,7 @@ namespace WPF_til_leg.Presentation
             //chartObj = new ChartECG();
             analyzeObj = new AnalyzeECG();
             analyzeObj.CreateAnalyzedECGs();
-            
+            ShowDialog();
 
             aECGS = new List<AnalyzedECGModel>();
             Patients = new List<PatientModel>();
@@ -158,6 +158,8 @@ namespace WPF_til_leg.Presentation
 
                     chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
                     ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
+                    //SÆt tekstboks.text = "Den er deprimeret" hvis aECG.IsDepressed == True
+                    //SÆt tekstboks.text = "Den er eleveret" hvis aECG.STElevated == true;
                     chartUC.To = 2 / aECG.SampleRate;
                     chartUC.From = 0;
                 }
