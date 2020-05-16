@@ -36,18 +36,18 @@ namespace WPF_til_leg.Presentation
         public MainWindowPresentation()
         {
             InitializeComponent();
-            
+            ShowDialog();
 
-            if (idT.Text == "")
-            {
-                UploadB.IsEnabled = false;
-            }
+            //if (idT.Text == "")
+            //{
+            //    UploadB.IsEnabled = false;
+            //}
 
             mainObj = new MainWindowLogic();
             //chartObj = new ChartECG();
             analyzeObj = new AnalyzeECG();
             analyzeObj.CreateAnalyzedECGs();
-            ShowDialog();
+            
 
             aECGS = new List<AnalyzedECGModel>();
             Patients = new List<PatientModel>();
@@ -59,6 +59,8 @@ namespace WPF_til_leg.Presentation
             usersCollection.Source = Patients;
             usersCollection.Filter += usersCollection_Filter;
             DataContext = this;
+
+            UploadB.IsEnabled = false;
         }
 
         
@@ -84,7 +86,7 @@ namespace WPF_til_leg.Presentation
 
         private void UploadB_Click(object sender, RoutedEventArgs e)
         {
-            if (idT.Text != "")
+            if (idT.Text != "" && commentT.Text != "")
             {
                 //uploadPressed.Visibility = Visibility.Hidden;
                 UploadB.Visibility = Visibility.Hidden;
@@ -99,6 +101,7 @@ namespace WPF_til_leg.Presentation
             idT.Visibility = Visibility.Visible;
             uploadPressed.Visibility = Visibility.Hidden;
             idT.Clear();
+            commentT.Clear();
         }
 
         private void okB_Click(object sender, RoutedEventArgs e)
@@ -146,16 +149,19 @@ namespace WPF_til_leg.Presentation
 
         private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ecgLV.SelectedItem != null && patientsLV.SelectedValue != null)
+            if (ecgLV.SelectedItem != null)
             {
-                dynamic aECG = ecgLV.SelectedItem;
-                //AnalyzedECGModel aECG = mainObj.aECGList[1];
+                if (patientsLV.SelectedItem != null)
+                {
+                    dynamic aECG = ecgLV.SelectedItem;
+                    //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
-                chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
-                ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
-                chartUC.To = 1/aECG.SampleRate;
-                chartUC.From = 0;
-
+                    chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
+                    ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
+                    chartUC.To = 2 / aECG.SampleRate;
+                    chartUC.From = 0;
+                }
+              
             }
             if (commentT.Text != "" && idT.Text != "")
             {
@@ -169,18 +175,7 @@ namespace WPF_til_leg.Presentation
 
         }
 
-        private void idT_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if(idT.Text != "")
-            {
-                UploadB.IsEnabled = true;
-            }
-            else
-            {
-                UploadB.IsEnabled = false;
-            }
-            
-        }
+        
 
         public ICollectionView SourceCollection
         {
@@ -251,6 +246,30 @@ namespace WPF_til_leg.Presentation
 
             RaisePropertyChanged("SourceCollection");
             DataContext = this;
+        }
+        private void idT_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (commentT.Text == "" && idT.Text == "")
+            {
+                UploadB.IsEnabled = false;
+            }
+            else
+            {
+                UploadB.IsEnabled = false;
+            }
+
+        }
+
+        private void commentT_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (commentT.Text == "" && idT.Text == "")
+            {
+                UploadB.IsEnabled = false;
+            }
+            else
+            {
+                UploadB.IsEnabled = false;
+            }
         }
     }
 }
