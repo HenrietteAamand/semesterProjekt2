@@ -35,8 +35,8 @@ namespace DataTier.Databaser
             connection.Open();
 
 
-            string insertStringParam = @"INSERT INTO dbo.EKGMAELING (dato, antalmaalinger, sfp_ansvrmedarbjnr, sfp_ans_org, borger_fornavn, borger_efternavn, borger_cprnr) 
-                   VALUES (@dato, @antalmaalinger, @sfp_ansvrmedarbjnr, @sfp_ans_org, @borger_fornavn, @borger_efternavn, @borger_cprnr)";
+            string insertStringParam = @"INSERT INTO dbo.EKGMAELING (dato, antalmaalinger, sfp_ansvrmedarbjnr, sfp_ans_org, borger_fornavn, borger_efternavn, borger_cprnr, sfp_anskommentar) 
+                   VALUES (@dato, @antalmaalinger, @sfp_ansvrmedarbjnr, @sfp_ans_org, @borger_fornavn, @borger_efternavn, @borger_cprnr, @sfp_anskommentar)";
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.CommandText = insertStringParam;
@@ -47,11 +47,12 @@ namespace DataTier.Databaser
                 cmd.Parameters.AddWithValue("@borger_fornavn", patient.FirstName);
                 cmd.Parameters.AddWithValue("@borger_efternavn", patient.LastName);
                 cmd.Parameters.AddWithValue("@borger_cprnr", patient.CPR);
+                cmd.Parameters.AddWithValue("@sfp_anskommentar", note);
 
                 cmd.ExecuteNonQuery();
             }
 
-            command = new SqlCommand("SELECT ekgmaaleid FROM dbo.EKGMAELING WHERE borger_cprnr = '" + patient.CPR + "' AND sfp_ansvrmedarbjnr = '" + workerID + "'", connection);
+            command = new SqlCommand("SELECT ekgmaaleid FROM dbo.EKGMAELING WHERE borger_cprnr = '" + patient.CPR + "' AND sfp_ansvrmedarbjnr = '" + workerID + "' AND sfp_anskommentar = '" + workerID + "'", connection);
             reader = command.ExecuteReader();
             if (reader.Read())
             {
