@@ -58,20 +58,6 @@ namespace LogicTier
         public bool STSegmentDepressed { get; private set; }
         public List<AnalyzedECGModel> aECGList { get; private set; }
 
-        private string fullName;
-
-        public string FullName
-        {
-            get { return fullName; }
-            set { fullName = value; }
-        }
-
-
-
-
-
-
-
         public AnalyzeECG()
         {
             illnessList = new List<IllnessModel>();
