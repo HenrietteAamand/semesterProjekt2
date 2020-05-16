@@ -157,7 +157,16 @@ namespace WPF_til_leg.Presentation
                 chartUC.From = 0;
 
             }
-            
+            if (commentT.Text != "" && idT.Text != "")
+            {
+                UploadB.IsEnabled = true;
+            }
+            if (commentT.Text == "" && idT.Text == "")
+            {
+                UploadB.IsEnabled = false;
+            }
+
+
         }
 
         private void idT_TextChanged(object sender, TextChangedEventArgs e)
