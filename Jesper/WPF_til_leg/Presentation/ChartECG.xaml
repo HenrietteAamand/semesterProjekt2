@@ -83,10 +83,14 @@
             </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis MaxValue="2" MinValue="-2"/>
+                
             </lvc:CartesianChart.AxisY>
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis MinValue="{Binding From}" MaxValue="{Binding To}" 
-                          Separator="{x:Static lvc:DefaultAxes.CleanSeparator}">
+                <lvc:Axis MinValue="{Binding From}" MaxValue="{Binding To}">
+                    <!--Separator="{x:Static lvc:DefaultAxes.CleanSeparator}"-->
+                    <lvc:Axis.Separator>
+                        <lvc:Separator IsEnabled="True" Step="5" Stroke="LightGray" StrokeThickness="1"></lvc:Separator>
+                    </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
