@@ -38,7 +38,7 @@
                 Padding="-10" 
                 Margin="10" 
                 BadgeBackground="Red">
-                <Button>
+                <Button x:Name="updateB" Click="updateB_Click">
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconModern 
                                     Width="15" 

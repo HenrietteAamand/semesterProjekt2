@@ -36,37 +36,45 @@ namespace WPF_til_leg.Presentation
         public MainWindowPresentation()
         {
             InitializeComponent();
-            ShowDialog();
+            
+
+            if (idT.Text == "")
+            {
+                UploadB.IsEnabled = false;
+            }
 
             mainObj = new MainWindowLogic();
             //chartObj = new ChartECG();
             analyzeObj = new AnalyzeECG();
+            analyzeObj.CreateAnalyzedECGs();
+            ShowDialog();
 
             aECGS = new List<AnalyzedECGModel>();
             Patients = new List<PatientModel>();
             Patients = mainObj.getAllPatiens();
-            analyzeObj.CreateAnalyzedECGs();
+            
 
 
             usersCollection = new CollectionViewSource();
             usersCollection.Source = Patients;
             usersCollection.Filter += usersCollection_Filter;
             DataContext = this;
-
-            UploadB.IsEnabled = false;
         }
+
+        
 
 
         async Task ShowDialog()
         {
-            var result = await this.ShowMessageAsync("Velkommen", $"Der er {0} nye EKG målinger. Vil du opdatere?", MessageDialogStyle.AffirmativeAndNegative);
 
-            if (result == MessageDialogResult.Affirmative)
-            {
-                analyzeObj.CreateAnalyzedECGs();
+            await this.ShowMessageAsync("Velkommen", $"Der er {analyzeObj.NewAECGModelsList.Count} nye EKG målinger.", MessageDialogStyle.Affirmative);
+
+            //if (result == MessageDialogResult.Affirmative)
+            //{
+            //    analyzeObj.CreateAnalyzedECGs();
                 
-                await this.ShowMessageAsync($" {analyzeObj.NewAECGModelsList.Count} EKG målinger er blevet opdateret","");
-            }
+            //    await this.ShowMessageAsync($"  EKG målinger er blevet opdateret","");
+            //}
 
         }
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -76,7 +84,7 @@ namespace WPF_til_leg.Presentation
 
         private void UploadB_Click(object sender, RoutedEventArgs e)
         {
-            if (idT.Text != "" && commentT.Text != "")
+            if (idT.Text != "")
             {
                 //uploadPressed.Visibility = Visibility.Hidden;
                 UploadB.Visibility = Visibility.Hidden;
@@ -91,19 +99,18 @@ namespace WPF_til_leg.Presentation
             idT.Visibility = Visibility.Visible;
             uploadPressed.Visibility = Visibility.Hidden;
             idT.Clear();
-            commentT.Clear();
         }
 
         private void okB_Click(object sender, RoutedEventArgs e)
         {
-            dynamic analyzedEcg = ecgLV.SelectedItem;
-            dynamic patient = patientsLV.SelectedItem;
+
             UploadB.Visibility = Visibility.Visible;
             idT.Visibility = Visibility.Visible;
             uploadPressed.Visibility = Visibility.Hidden;
 
-            mainObj.UploadData(analyzedEcg, patient, idT.Text, commentT.Text);
-
+            dynamic aECG = ecgLV.SelectedItem;
+            dynamic patient = patientsLV.SelectedItem;
+            mainObj.UploadData(idT.Text, commentT.Text, aECG, patient);
             idT.Text = "Måling uploaded.";
 
 
@@ -114,7 +121,6 @@ namespace WPF_til_leg.Presentation
 
             if (patientsLV.SelectedValue != null)
             {
-
 
 
                 dynamic patient = patientsLV.SelectedItem;
@@ -140,28 +146,29 @@ namespace WPF_til_leg.Presentation
 
         private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (ecgLV.SelectedItem != null)
+            if (ecgLV.SelectedItem != null && patientsLV.SelectedValue != null)
             {
-                if (patientsLV.SelectedValue != null)
-                {
-                    dynamic aECG = ecgLV.SelectedItem;
-                    //AnalyzedECGModel aECG = mainObj.aECGList[1];
+                dynamic aECG = ecgLV.SelectedItem;
+                //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
-                    chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline);
-                    ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
-                    chartUC.To = aECG.Values.Count;
-                    chartUC.From = 0;
-                }
-                
-                if (commentT.Text != "" && idT.Text != "")
-                {
-                    UploadB.IsEnabled = true;
-                }
-                if (commentT.Text == "" && idT.Text == "")
-                {
-                    UploadB.IsEnabled = false;
-                }
+                chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
+                ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
+                chartUC.To = 2/aECG.SampleRate;
+                chartUC.From = 0;
 
+            }
+            
+        }
+
+        private void idT_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(idT.Text != "")
+            {
+                UploadB.IsEnabled = true;
+            }
+            else
+            {
+                UploadB.IsEnabled = false;
             }
             
         }
@@ -218,21 +225,23 @@ namespace WPF_til_leg.Presentation
             }
         }
 
-        private void commentT_TextChanged(object sender, TextChangedEventArgs e)
+
+        private void updateB_Click(object sender, RoutedEventArgs e)
         {
-            if (commentT.Text == "" && idT.Text == "")
-            {
-                UploadB.IsEnabled = false;
-            }
+            UpdateView();
+
         }
 
-        private void idT_TextChanged(object sender, TextChangedEventArgs e)
+        public void UpdateView()
         {
-            if (commentT.Text == "" && idT.Text == "")
-            {
-                UploadB.IsEnabled = false;
-            }
-        }
+            Patients = mainObj.getAllPatiens();
+            analyzeObj.CreateAnalyzedECGs();
 
+            usersCollection.Source = Patients;
+            usersCollection.Filter += usersCollection_Filter;
+
+            RaisePropertyChanged("SourceCollection");
+            DataContext = this;
+        }
     }
 }

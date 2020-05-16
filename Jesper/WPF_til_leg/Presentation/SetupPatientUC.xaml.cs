@@ -85,7 +85,7 @@ namespace WPF_til_leg.Presentation
                 PatientTB.Text = "En eller flere oplysninger er ikke udfyldt.";
             }
 
-
+            
         }
     }
 }

@@ -107,12 +107,14 @@ namespace LogicTier
 		//	//Sker når der opdateres
 		//}
 
-		public void UploadData(AnalyzedECGModel analyzedEcg, PatientModel patient, string workerID, string note)
+		public void UploadData(string id, string note, AnalyzedECGModel aECG, PatientModel patient)
 		{
 			//Hvis der er indtastet id uploader den
-
-			DOEDB.UploadMaeling(patient, workerID, note, analyzedEcg.Date);
-			DOEDB.UploadData(analyzedEcg);
+			if (id != null && note != null)
+			{
+				DOEDB.UploadData(aECG);
+				DOEDB.UploadMaeling(patient, id, note, aECG.Date);
+			}
 
 			//Uploader data til DOEDB
 			//Sker når der trykkes på "Upload Til Offentlig Database"

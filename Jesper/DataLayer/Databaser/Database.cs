@@ -113,7 +113,7 @@ namespace DataTier.Databaser
                     
                     //values[j] = BitConverter.ToDouble(bytesArr.ToArray(), i);
                     valuesList.Add(BitConverter.ToDouble(bytesArr.ToArray(), i));
-                    if (i > 4800)
+                    if (i > 20/Convert.ToDouble(reader["Samplerate"]))
                     {
                         i = bytesArr.Length;
                     }
