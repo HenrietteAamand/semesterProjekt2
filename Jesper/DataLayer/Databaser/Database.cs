@@ -102,7 +102,7 @@ namespace DataTier.Databaser
                 byte[] bytesArr = new byte[] { };
                 double[] values = new double[800];
                 byte[] bytesArr1 = new byte[] { };
-                double[] STValues = new double[800];
+                double[] STValues = new double[8000];
                 List<double> valuesList = new List<double>();
                 List<double> STValuesList = new List<double>();
 
