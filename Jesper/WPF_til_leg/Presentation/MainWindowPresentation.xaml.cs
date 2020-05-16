@@ -33,8 +33,6 @@ namespace WPF_til_leg.Presentation
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-
-
         public MainWindowPresentation()
         {
             InitializeComponent();
@@ -164,13 +162,9 @@ namespace WPF_til_leg.Presentation
                     UploadB.IsEnabled = false;
                 }
 
-
             }
             
-
         }
-
-       
 
         public ICollectionView SourceCollection
         {
