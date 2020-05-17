@@ -16,7 +16,7 @@ namespace LogicTier
         List<List<double>> listOfListOfIntervals;
         public List<AnalyzedECGModel> NewAECGModelsList = new List<AnalyzedECGModel>();
         List<ECGModel> newECGList;
-        private const int intervalHistogram = 100;
+        private const int intervalHistogram = 5;
 
         private ILocalDatabase lDBRef;
 
@@ -213,81 +213,133 @@ namespace LogicTier
             //Så tager den, den højeste værdi efter threshold og gemmer indexet for spidsen på r-takken
             foreach (AnalyzedECGModel aECG in NewAECGModelsList)
             {
-                
+
                 int rSpidsIndex = 0;
+                int tSpidsIndex = 0;
+                bool rSpidsReached = false;
+                bool rSpidsTwoReached = false;
                 STSegmentList = new List<double>();
                 STSegmentIndexList = new List<int>();
                 //Løber alle values igennem
-                for (int i = 0; i < aECG.Values.Count; i++)
-                {
-                    //Hvis en value er større end threshold og større end den tidligere største værdi bliver rSpidsIndex = i
-                    if (aECG.Values[i] > RTakThreshhold && aECG.Values[i] > aECG.Values[rSpidsIndex])
-                    {
-                        rSpidsIndex = i;
-                    }
-                }
 
-                int sSpidsIndex = 0;
-                for (int i = 0; i < aECG.Values.Count; i++)
-                {
-                    //Hvis en value er mindre end baseline og mindre end den tidligere mindste værdi og index er større end index for rSpidsIndex(dvs efter den)
-                    //bliver sSpidsIndex = i
-                    if (aECG.Values[i] < aECG.Baseline && aECG.Values[i] < aECG.Values[sSpidsIndex] && i > rSpidsIndex)
+                    for (int i = 0; i < aECG.Values.Count; i++)
                     {
-                        sSpidsIndex = i;
+                        if (aECG.Values[i] < RTakThreshhold && rSpidsIndex != 0)
+                        {
+                            rSpidsReached = true;
+                        }
+                            
+                        //Hvis en value er større end threshold og større end den tidligere største værdi bliver rSpidsIndex = i
+                        if (aECG.Values[i] > RTakThreshhold && aECG.Values[i] > aECG.Values[rSpidsIndex] && !rSpidsReached)
+                        {
+                            rSpidsIndex = i;
+                        }
                     }
-                }
 
-                int tSpidsIndex = 0;
-                for (int i = 0; i < aECG.Values.Count; i++)
+                    rSpidsReached = false;
+                    int sSpidsIndex = 0;
+                //Der ledes ml. rtakken og 400ms frem
+                //Hvis ikke der er nået en værdi under baseline indenfor 0,1S er ST eleveret.
+                int tenMsAfterR = (rSpidsIndex + (int)(0.1 / aECG.SampleRate));
+                for (int i = rSpidsIndex; i < tenMsAfterR; i++)
                 {
-                    //Hvis en value er større end baseline og større end den tidligere største værdi og det ligger efter rSpidsIndex bliver tSpidsIndex = i
-                    if (aECG.Values[i] > aECG.Baseline && aECG.Values[i] > aECG.Values[tSpidsIndex] && i > sSpidsIndex)
+                    aECG.STElevated = true;
+                    if (aECG.Values[i] <= Baseline)
                     {
-                        tSpidsIndex = i;
+                        aECG.STElevated = false;
+                    }
+
+                }
+                //Så skal sSpidsIndex sættes til index for rTakIndex + 0,1S
+                if (aECG.STElevated)
+                {
+                    sSpidsIndex = tenMsAfterR;
+
+                    rSpidsTwoReached = false;
+                    tSpidsIndex = 0;
+                    for (int i = sSpidsIndex; i < (1.5 / aECG.SampleRate); i++)
+                    {
+
+                        //Når aECG.values[i] igen er under baseline, er det eleverede stykke slut
+                        if (aECG.Values[i] <= aECG.Baseline && i > sSpidsIndex && !rSpidsTwoReached)
+                        {
+                            tSpidsIndex = i;
+                            rSpidsTwoReached = true;
+
+                        }
                     }
                 }
+                else
+                {
+                    for (int i = rSpidsIndex; i < (1.5 / aECG.SampleRate); i++)
+                    {
+                        if (aECG.Values[i] < RTakThreshhold && rSpidsIndex != 0)
+                        {
+                            rSpidsReached = true;
+
+                        }
+                        if (rSpidsReached && aECG.Values[i] > RTakThreshhold)
+                        {
+                            rSpidsTwoReached = true;
+                        }
+
+                        //Når en value er mindre end baseline og index er større end index for rSpidsIndex(dvs efter den)
+                        //bliver sSpidsIndex = i
+                        if (aECG.Values[i] < aECG.Baseline && i > rSpidsIndex && !rSpidsTwoReached)
+                        {
+                            sSpidsIndex = i;
+                            rSpidsTwoReached = true;
+                        }
+                    }
+                    rSpidsTwoReached = false;
+                    tSpidsIndex = 0;
+                    for (int i = sSpidsIndex; i < (1.5 / aECG.SampleRate); i++)
+                    {
+
+                        //Hvis en value er større end baseline og større end den tidligere største værdi og det ligger efter rSpidsIndex bliver tSpidsIndex = i
+                        if (aECG.Values[i] > aECG.Baseline && i > sSpidsIndex && !rSpidsTwoReached)
+                        {
+                            tSpidsIndex = i;
+                            rSpidsTwoReached = true;
+
+                        }
+                    }
+                }
+                
 
 
                 //Alle values løbes igennem
                 for (int i = 0; i < aECG.Values.Count; i++)
-                {
-                    //Hvis indexet for en value, ligger ml. sSpidsIndex og tSpidsIndex tilføjes de til stSegment
-                    if (i >= sSpidsIndex && i <= tSpidsIndex)
                     {
-                        STSegmentList.Add(aECG.Values[i]);
-                        STSegmentIndexList.Add(i);
+                        //Hvis indexet for en value, ligger ml. sSpidsIndex og tSpidsIndex tilføjes de til stSegment
+                        if (i >= sSpidsIndex && i <= tSpidsIndex)
+                        {
+                            STSegmentList.Add(aECG.Values[i]);
+                            STSegmentIndexList.Add(i);
+                        }
+
                     }
-                    
-                }
-                //Startindexet gemmes i alle aECG's så man ved hvor grafen skal starte for ST-segmentet
-                if (STSegmentIndexList.Count != 0)
-                {
-                    aECG.STStartIndex = STSegmentIndexList[0];
-
-                    aECG.STValues = STSegmentList;
-                }
-                else
-                {
-                    aECG.STStartIndex = 0;
-
-                    aECG.STValues = new List<double> {0, 0};
-                }
-                    
-
-
-                //STSegmentList's længde sammenlignes med Illnesses reference værdier
-                //Hvis STSegmentList er for lang, er ST - segmentet deprimeret
-                if (STSegmentList.Count > illnessList[0].STMax)
+                    //Startindexet gemmes i alle aECG's så man ved hvor grafen skal starte for ST-segmentet
+                    if (STSegmentIndexList.Count != 0)
                     {
-                        STSegmentDepressed = true;
+                        aECG.STStartIndex = STSegmentIndexList[0];
+
+                        aECG.STValues = STSegmentList;
+                    }
+                    else
+                    {
+                        aECG.STStartIndex = 0;
+
+                        aECG.STValues = new List<double> { 0, 0 };
                     }
 
-                //Hvis længden ml.sSpindsIndex og rSpindsIndex er for lang, we ST - segmentet eleveret
 
-                if ((sSpidsIndex - rSpidsIndex) > illnessList[0].SRMax)
+
+                    //STSegmentList's længde sammenlignes med Illnesses reference værdier
+                    //Hvis STSegmentList er for lang, er ST - segmentet deprimeret
+                    if (STSegmentList.Count > illnessList[0].STMax/aECG.SampleRate)
                     {
-                        STSegmentElevated = true;
+                        aECG.STDepressed = true;
                     }
             }
 
@@ -312,15 +364,17 @@ namespace LogicTier
             //Kaldes af CalculateST()
             foreach (AnalyzedECGModel aECG in NewAECGModelsList)
             {
-                if (true)
+                if (aECG.STElevated)
                 {
-                    aECG.Illness = illnessList[0];
+                    aECG.Illness = illnessList[1];
                 }
 
-                //if (STSegmentElevated)
-                //{
-                //    //aECG.Illnes = illnessList[1];
-                //}
+                //Hvis ST segmentet er længere end 0,08S er det deprimeret
+
+                if (aECG.STDepressed)
+                {
+                    aECG.Illness = illnessList[2];
+                }
             }
         }
 
