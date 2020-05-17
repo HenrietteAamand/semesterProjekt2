@@ -88,12 +88,14 @@ namespace WPF_til_leg.Presentation
 
         private void UploadB_Click(object sender, RoutedEventArgs e)
         {
+            
             if (idT.Text != "" && commentT.Text != "")
             {
-                //uploadPressed.Visibility = Visibility.Hidden;
+
                 UploadB.Visibility = Visibility.Hidden;
                 idT.Visibility = Visibility.Hidden;
                 uploadPressed.Visibility = Visibility.Visible;
+                
             }
         }
 
@@ -108,6 +110,7 @@ namespace WPF_til_leg.Presentation
 
         private void okB_Click(object sender, RoutedEventArgs e)
         {
+           
 
             UploadB.Visibility = Visibility.Visible;
             idT.Visibility = Visibility.Visible;
@@ -117,7 +120,9 @@ namespace WPF_til_leg.Presentation
             dynamic patient = patientsLV.SelectedItem;
             mainObj.UploadData(idT.Text, commentT.Text, aECG, patient);
             idT.Text = "Måling uploaded.";
-
+            idT.IsEnabled = false;
+            commentT.IsEnabled = false;
+            commentT.Clear();
 
         }
 
@@ -151,6 +156,9 @@ namespace WPF_til_leg.Presentation
 
         private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            idT.Clear();
+            idT.IsEnabled = true;
+            commentT.IsEnabled = true;
             if (ecgLV.SelectedItem != null)
             {
                 if (patientsLV.SelectedItem != null)
@@ -159,34 +167,37 @@ namespace WPF_til_leg.Presentation
                     //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
                     chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
-                    ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
+                    //ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
 
                     if (aECG.STElevated == true)
                     {
+                        
                         chartObj.STawareTB.Text = "Mistanke: ST segment eleveret";
                     } 
                     else if (aECG.STDepressed == true)
                     {
+                        
                         chartObj.STawareTB.Text = "Mistanke: ST segment deprimeret";
                     }
                     else
                     {
-                        chartObj.STawareTB.Text = "";
+                        chartObj.STawareTB.Visibility = Visibility.Visible;
+                        chartObj.STawareTB.Text = "Ingen mistanke";
                     }
 
                     chartUC.To = 2 / aECG.SampleRate;
                     chartUC.From = 0;
                 }
-              
+
             }
-            if (commentT.Text != "" && idT.Text != "")
-            {
-                UploadB.IsEnabled = true;
-            }
-            if (commentT.Text == "" && idT.Text == "")
-            {
-                UploadB.IsEnabled = false;
-            }
+            //if (commentT.Text != "" && idT.Text != "")
+            //{
+            //    UploadB.IsEnabled = true;
+            //}
+            //if (commentT.Text == "" && idT.Text == "")
+            //{
+            //    UploadB.IsEnabled = false;
+            //}
 
 
         }
@@ -265,27 +276,32 @@ namespace WPF_til_leg.Presentation
         }
         private void idT_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (commentT.Text == "" && idT.Text == "")
+            if (ecgLV.SelectedItem != null && patientsLV.SelectedItem != null)
             {
-                UploadB.IsEnabled = false;
-            }
-            else
-            {
-                UploadB.IsEnabled = false;
-            }
-
+                if (commentT.Text != "" && idT.Text != "")
+                {
+                    UploadB.IsEnabled = true;
+                }
+                else
+                {
+                    UploadB.IsEnabled = false;
+                }
+            }            
         }
 
         private void commentT_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (commentT.Text == "" && idT.Text == "")
+            if (ecgLV.SelectedItem != null && patientsLV.SelectedItem != null)
             {
-                UploadB.IsEnabled = false;
-            }
-            else
-            {
-                UploadB.IsEnabled = false;
-            }
+                if (commentT.Text != "" && idT.Text != "")
+                {
+                    UploadB.IsEnabled = true;
+                }
+                else
+                {
+                    UploadB.IsEnabled = false;
+                }
+            }           
         }
     }
 }

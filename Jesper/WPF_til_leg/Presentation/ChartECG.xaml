@@ -84,7 +84,7 @@
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis MaxValue="2" MinValue="-2">
                     <lvc:Axis.Separator>
-                        <lvc:Separator IsEnabled="True" Step="0.1" Stroke="LightGray" StrokeThickness="0.2"></lvc:Separator>
+                        <lvc:Separator IsEnabled="True" Step="1" Stroke="LightGray" StrokeThickness="0.2"></lvc:Separator>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
                 
