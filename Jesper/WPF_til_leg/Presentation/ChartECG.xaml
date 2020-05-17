@@ -56,7 +56,7 @@
                     </Button>
                 </Controls:Badged>
             </UniformGrid>
-            <TextBox Text="Mistænkeligt: ST-Segment eleveret" BorderBrush="Transparent" VerticalContentAlignment="Center" IsEnabled="False" Background="Transparent" TextWrapping="Wrap" Foreground="Tomato"/>
+            <TextBox x:Name="STawareTB" BorderBrush="Transparent" VerticalContentAlignment="Center" IsEnabled="False" Background="Transparent" TextWrapping="Wrap" Foreground="Tomato"/>
         </DockPanel>
         <!--<lvc:CartesianChart Grid.Row="1" x:Name="chart" Hoverable="False" Series="{Binding series}" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}">
             <lvc:CartesianChart.AxisY>

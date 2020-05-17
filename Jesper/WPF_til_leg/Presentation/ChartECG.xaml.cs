@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using LiveCharts;
 using System.Windows;
+using DataTier.Models;
 
 namespace WPF_til_leg.Presentation
 {
@@ -26,7 +27,6 @@ namespace WPF_til_leg.Presentation
         {
             
             InitializeComponent();
-
 
             //MakeChart2(ecg);
             //MakeST(ecg, length, startIndex);
