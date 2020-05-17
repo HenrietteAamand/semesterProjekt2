@@ -21,6 +21,7 @@ namespace WPF_til_leg.Presentation
     /// </summary>
     public partial class MainWindowPresentation : MetroWindow, INotifyPropertyChanged
     {
+        private ChartECG chartObj;
         private MainWindowLogic mainObj;
         //private ChartECG chartObj;
         private AnalyzeECG analyzeObj;
@@ -158,8 +159,20 @@ namespace WPF_til_leg.Presentation
 
                     chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
                     ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
-                    //SÆt tekstboks.text = "Den er deprimeret" hvis aECG.IsDepressed == True
-                    //SÆt tekstboks.text = "Den er eleveret" hvis aECG.STElevated == true;
+
+                    if (aECG.STElevated == true)
+                    {
+                        chartObj.STawareTB.Text = "Mistanke: ST segment eleveret";
+                    } 
+                    else if (aECG.STDepressed == true)
+                    {
+                        chartObj.STawareTB.Text = "Mistanke: ST segment deprimeret";
+                    }
+                    else
+                    {
+                        chartObj.STawareTB.Text = "";
+                    }
+                    
                     chartUC.To = 2 / aECG.SampleRate;
                     chartUC.From = 0;
                 }
