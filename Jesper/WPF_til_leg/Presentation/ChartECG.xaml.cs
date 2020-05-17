@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Windows.Controls;
 using LiveCharts;
 using System.Windows;
-using DataTier.Models;
+using System.Windows.Forms;
 
 namespace WPF_til_leg.Presentation
 {
@@ -21,12 +21,14 @@ namespace WPF_til_leg.Presentation
 
         private double _to;
         private double _from;
+        private double xAxis;
 
 
         public ChartECG()
         {
             
             InitializeComponent();
+
 
             //MakeChart2(ecg);
             //MakeST(ecg, length, startIndex);
@@ -194,6 +196,16 @@ namespace WPF_til_leg.Presentation
             {
                 _to = value;
                 OnPropertyChanged("To");
+            }
+        }
+
+        public double XAxis
+        {
+            get { return xAxis; }
+            set
+            {
+                xAxis = value;
+                OnPropertyChanged("XAxis");
             }
         }
 
