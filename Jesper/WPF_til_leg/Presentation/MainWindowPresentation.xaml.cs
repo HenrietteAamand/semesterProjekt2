@@ -63,6 +63,7 @@ namespace WPF_til_leg.Presentation
             DataContext = this;
 
             UploadB.IsEnabled = false;
+            
         }
 
         
@@ -171,18 +172,16 @@ namespace WPF_til_leg.Presentation
 
                     if (aECG.STElevated == true)
                     {
-                        
-                        chartObj.STawareTB.Text = "Mistanke: ST segment eleveret";
+                        chartUC.STawareTB.Text = "Mistanke: ST-segment eleveret";
                     } 
                     else if (aECG.STDepressed == true)
                     {
+                        chartUC.STawareTB.Text = "Mistanke: ST-segment deprimeret";
                         
-                        chartObj.STawareTB.Text = "Mistanke: ST segment deprimeret";
                     }
                     else
-                    {
-                        chartObj.STawareTB.Visibility = Visibility.Visible;
-                        chartObj.STawareTB.Text = "Ingen mistanke";
+                    {                       
+                        chartUC.STawareTB.Text = "Ingen mistanke";
                     }
 
                     chartUC.To = 2 / aECG.SampleRate;

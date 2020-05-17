@@ -119,7 +119,7 @@
                     <Button x:Name="LinkECGB" Click="LinkECGB_Click">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconUnicons Margin="5" VerticalAlignment="Center" Kind="Link" />
-                            <TextBlock Margin="5" Text="Tilknyt EKG"/>
+                            <TextBlock Margin="5" Text="Tilknyt"/>
                         </StackPanel>
                     </Button>
 
@@ -132,7 +132,7 @@
                     <Button x:Name="ResetECGB" Click="ResetECGB_Click">
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                             <iconPacks:PackIconBoxIcons Margin="5" VerticalAlignment="Center" Kind="RegularUnlink" />
-                            <TextBlock Margin="5" Text="Nulstil EKG"/>
+                            <TextBlock Margin="5" Text="Nulstil"/>
 
                         </StackPanel>
                     </Button>
