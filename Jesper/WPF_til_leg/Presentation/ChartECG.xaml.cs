@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using LiveCharts;
 using System.Windows;
 using System.Windows.Forms;
+using UserControl = System.Windows.Controls.UserControl;
 
 namespace WPF_til_leg.Presentation
 {

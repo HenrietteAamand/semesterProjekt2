@@ -93,7 +93,7 @@
                 <lvc:Axis MinValue="{Binding From}" MaxValue="{Binding To}">
                     <!--Separator="{x:Static lvc:DefaultAxes.CleanSeparator}"-->
                     <lvc:Axis.Separator>
-                        <lvc:Separator x:Name="x" IsEnabled="True" Step="{Binding XAxis}" Stroke="LightGray" StrokeThickness="0.2"></lvc:Separator>
+                        <lvc:Separator x:Name="x" IsEnabled="True" Step="40" Stroke="LightGray" StrokeThickness="0.2"></lvc:Separator>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
