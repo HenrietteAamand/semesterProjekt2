@@ -44,8 +44,9 @@ namespace WPF_til_leg.Presentation
             //    UploadB.IsEnabled = false;
             //}
 
+
             mainObj = new MainWindowLogic();
-            //chartObj = new ChartECG();
+            chartObj = new ChartECG();
             analyzeObj = new AnalyzeECG();
             analyzeObj.CreateAnalyzedECGs();
             ShowDialog();
@@ -172,7 +173,7 @@ namespace WPF_til_leg.Presentation
                     {
                         chartObj.STawareTB.Text = "";
                     }
-                    
+
                     chartUC.To = 2 / aECG.SampleRate;
                     chartUC.From = 0;
                 }
