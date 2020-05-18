@@ -170,11 +170,11 @@ namespace WPF_til_leg.Presentation
                     chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
                     //ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
 
-                    if (aECG.STElevated == true)
+                    if (aECG.Illness.Id == 2)
                     {
                         chartUC.STawareTB.Text = "Mistanke: ST-segment eleveret";
                     } 
-                    else if (aECG.STDepressed == true)
+                    else if (aECG.Illness.Id == 3)
                     {
                         chartUC.STawareTB.Text = "Mistanke: ST-segment deprimeret";
                         
@@ -275,7 +275,7 @@ namespace WPF_til_leg.Presentation
         }
         private void idT_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (ecgLV.SelectedItem != null && patientsLV.SelectedItem != null)
+            if (ecgLV.SelectedItem != null)
             {
                 if (commentT.Text != "" && idT.Text != "")
                 {
@@ -290,7 +290,7 @@ namespace WPF_til_leg.Presentation
 
         private void commentT_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (ecgLV.SelectedItem != null && patientsLV.SelectedItem != null)
+            if (ecgLV.SelectedItem != null)
             {
                 if (commentT.Text != "" && idT.Text != "")
                 {

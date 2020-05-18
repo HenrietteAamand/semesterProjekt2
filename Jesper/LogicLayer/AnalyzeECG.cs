@@ -396,8 +396,9 @@ namespace LogicTier
             lDBRef.UpdateAnalyzedECG(aECG);
             foreach (ECGModel ecg in newECGList)
             {
-                lDBRef.UpdateIsAnalyzed(ecg);
                 ecg.IsAnalyzed = true;
+                lDBRef.UpdateIsAnalyzed(ecg);
+                
             }
         }
 

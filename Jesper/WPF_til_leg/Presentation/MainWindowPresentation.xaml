@@ -196,7 +196,15 @@
                                     </DataTrigger>
                                     <DataTrigger 
                                     Binding="{Binding Illness.Id}"
-                                    Value="1">
+                                    Value="2">
+                                        <Setter Property="Foreground"
+                                            Value="Tomato" />
+                                        <Setter Property="FontWeight"
+                                            Value="Bold" />
+                                    </DataTrigger>
+                                    <DataTrigger 
+                                    Binding="{Binding Illness.Id}"
+                                    Value="3">
                                         <Setter Property="Foreground"
                                             Value="Tomato" />
                                         <Setter Property="FontWeight"
