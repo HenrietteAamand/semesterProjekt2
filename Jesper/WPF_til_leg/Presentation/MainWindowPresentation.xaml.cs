@@ -13,6 +13,7 @@ using ListViewItem = System.Windows.Controls.ListViewItem;
 using System.Linq;
 using System.Data;
 using System.ComponentModel;
+using System.Timers;
 
 namespace WPF_til_leg.Presentation
 {
@@ -28,6 +29,7 @@ namespace WPF_til_leg.Presentation
         List<PatientModel> Patients;
         List<AnalyzedECGModel> aECGS;
         private readonly CollectionViewSource viewSource = new CollectionViewSource();
+        System.Timers.Timer opdaterTimer;
 
         private string filterText;
         private CollectionViewSource usersCollection;
@@ -37,39 +39,38 @@ namespace WPF_til_leg.Presentation
         public MainWindowPresentation()
         {
             InitializeComponent();
-            
+
 
             //if (idT.Text == "")
             //{
             //    UploadB.IsEnabled = false;
             //}
 
-
+            opdaterTimer = new System.Timers.Timer();
             mainObj = new MainWindowLogic();
             chartObj = new ChartECG();
             analyzeObj = new AnalyzeECG();
             analyzeObj.CreateAnalyzedECGs();
-            ShowDialog();
+            ShowWelcomeDialog();
 
             aECGS = new List<AnalyzedECGModel>();
             Patients = new List<PatientModel>();
             Patients = mainObj.getAllPatiens();
-            
 
 
             usersCollection = new CollectionViewSource();
             usersCollection.Source = Patients;
             usersCollection.Filter += usersCollection_Filter;
             DataContext = this;
-
             UploadB.IsEnabled = false;
             
         }
 
-        
 
 
-        async Task ShowDialog()
+
+
+        async Task ShowWelcomeDialog()
         {
 
             await this.ShowMessageAsync("Velkommen", $"Der er {analyzeObj.NewAECGModelsList.Count} nye EKG målinger.", MessageDialogStyle.Affirmative);
@@ -129,7 +130,6 @@ namespace WPF_til_leg.Presentation
 
         private void patientsLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
             if (patientsLV.SelectedValue != null)
             {
 
@@ -157,37 +157,36 @@ namespace WPF_til_leg.Presentation
 
         private void ecgLV_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            dynamic aECG = new AnalyzedECGModel();
             idT.Clear();
             idT.IsEnabled = true;
             commentT.IsEnabled = true;
+
+
             if (ecgLV.SelectedItem != null)
             {
-                if (patientsLV.SelectedItem != null)
+                aECG = ecgLV.SelectedItem;
+                //AnalyzedECGModel aECG = mainObj.aECGList[1];
+
+                chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
+                
+
+                if (aECG.Illness.Id == 2)
                 {
-                    dynamic aECG = ecgLV.SelectedItem;
-                    //AnalyzedECGModel aECG = mainObj.aECGList[1];
+                    chartUC.STawareTB.Text = "Mistanke: ST-segment eleveret";
+                }
+                else if (aECG.Illness.Id == 3)
+                {
+                    chartUC.STawareTB.Text = "Mistanke: ST-segment deprimeret";
 
-                    chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
-                    //ecgLV.ItemsSource = mainObj.GetAECGListForPatient(aECG.CPR);
-
-                    if (aECG.Illness.Id == 2)
-                    {
-                        chartUC.STawareTB.Text = "Mistanke: ST-segment eleveret";
-                    } 
-                    else if (aECG.Illness.Id == 3)
-                    {
-                        chartUC.STawareTB.Text = "Mistanke: ST-segment deprimeret";
-                        
-                    }
-                    else
-                    {                       
-                        chartUC.STawareTB.Text = "Ingen mistanke";
-                    }
-
-                    chartUC.To = 2 / aECG.SampleRate;
-                    chartUC.From = 0;
+                }
+                else
+                {
+                    chartUC.STawareTB.Text = "Ingen mistanke";
                 }
 
+                chartUC.To = 2 / aECG.SampleRate;
+                chartUC.From = 0;
             }
             //if (commentT.Text != "" && idT.Text != "")
             //{
@@ -221,7 +220,7 @@ namespace WPF_til_leg.Presentation
             {
                 filterText = value;
                 this.usersCollection.View.Refresh();
-                RaisePropertyChanged("FilterText");
+                OnPropertyChanged("FilterText");
             }
         }
 
@@ -247,7 +246,7 @@ namespace WPF_til_leg.Presentation
         }
 
 
-        public void RaisePropertyChanged(string propertyName)
+        public void OnPropertyChanged(string propertyName)
         {
             if (this.PropertyChanged != null)
             {
@@ -256,21 +255,45 @@ namespace WPF_til_leg.Presentation
         }
 
 
-        private void updateB_Click(object sender, RoutedEventArgs e)
+        private void UpdateB_Click(object sender, RoutedEventArgs e)
         {
-            UpdateView();
+            //dynamic patient = patientsLV.SelectedItem;
+            analyzeObj.GetNewECG();
+            if (analyzeObj.newECGList.Count() != 0)
+            {
+                UpdateView();
+                updateBadge.Badge = 0;
+                //ecgLV.ItemsSource = mainObj.GetAECGListForPatient(patient.ID);
+            }
+            ShowUpdateDialog();
+
+
+        }
+
+        async Task ShowUpdateDialog()
+        {
+
+            await this.ShowMessageAsync("Opdateret", $"Der er {analyzeObj.NewAECGModelsList.Count} nye EKG målinger.", MessageDialogStyle.Affirmative);
+
+            //if (result == MessageDialogResult.Affirmative)
+            //{
+            //    analyzeObj.CreateAnalyzedECGs();
+
+            //    await this.ShowMessageAsync($"  EKG målinger er blevet opdateret","");
+            //}
 
         }
 
         public void UpdateView()
         {
+
             Patients = mainObj.getAllPatiens();
             analyzeObj.CreateAnalyzedECGs();
 
             usersCollection.Source = Patients;
             usersCollection.Filter += usersCollection_Filter;
 
-            RaisePropertyChanged("SourceCollection");
+            OnPropertyChanged("SourceCollection");
             DataContext = this;
         }
         private void idT_TextChanged(object sender, TextChangedEventArgs e)
@@ -301,6 +324,31 @@ namespace WPF_til_leg.Presentation
                     UploadB.IsEnabled = false;
                 }
             }           
+        }
+
+        private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            updateBadge.Badge = 0;
+            opdaterTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            opdaterTimer.Interval = 5000;
+            opdaterTimer.Enabled = true;
+        }
+
+        private void OnTimedEvent(object source, ElapsedEventArgs e)
+        {
+            opdaterTimer.Stop();
+            
+            this.Dispatcher.Invoke(() =>
+            {
+                analyzeObj.GetNewECG();
+                if (analyzeObj.newECGList.Count() !=  (int)updateBadge.Badge)
+                {
+                    updateBadge.Badge = analyzeObj.newECGList.Count();
+                }
+                
+            });
+            
+            opdaterTimer.Start();
         }
     }
 }

@@ -19,6 +19,7 @@ namespace WPF_til_leg.Presentation
         public ChartValues<double> ECGList { get; set; }
         public ChartValues<double> BaseList { get; set; }
         public double ECGSampleRate { get; set; }
+        public double gridStep { get; set; }
 
         private double _to;
         private double _from;
@@ -49,6 +50,8 @@ namespace WPF_til_leg.Presentation
             BaseLineSeriesVisibility = true;
             STSeriesVisibility = true;
             ECGSampleRate = sampleRate;
+            gridStep = 0.04/sampleRate;
+            OnPropertyChanged("gridStep");
             MakeECGList(ecg);
             //MakeECGLine(ecg);
             MakeSTList(ecg, length, startIndex);

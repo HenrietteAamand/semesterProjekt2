@@ -389,11 +389,11 @@ namespace DataTier.Databaser
 
             connection.Open();
 
-            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG (AECGID, ECGID, CPR, BLOBValues, Date, Samplerate, MonitorID, IsRead, BLOBstValues) VALUES (@AECGID, @ECGID, @CPR, @BLOBValues, @Date, @Samplerate, @MonitorID, @IsRead, @BLOBstValues)";
+            string insertStringParam = @"INSERT INTO dbo.AnalyzedECG ( ECGID, CPR, BLOBValues, Date, Samplerate, MonitorID, IsRead, BLOBstValues) VALUES (@ECGID, @CPR, @BLOBValues, @Date, @Samplerate, @MonitorID, @IsRead, @BLOBstValues)";
             using (SqlCommand cmd = new SqlCommand(insertStringParam, connection))
             {
                 cmd.CommandText = insertStringParam;
-                cmd.Parameters.AddWithValue("@AECGID", analyzedEcg.AECGID);
+                //cmd.Parameters.AddWithValue("@AECGID", analyzedEcg.AECGID);
                 cmd.Parameters.AddWithValue("@ECGID", analyzedEcg.ECGID);            
                 cmd.Parameters.AddWithValue("@CPR", analyzedEcg.CPR);
                 cmd.Parameters.AddWithValue("@Date", date);

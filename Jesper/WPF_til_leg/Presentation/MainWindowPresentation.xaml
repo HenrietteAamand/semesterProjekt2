@@ -17,7 +17,7 @@
 		WindowStartupLocation="CenterScreen"
     
         TitleBarHeight="50"
-        WindowState="Maximized">
+        WindowState="Maximized" Loaded="MetroWindow_Loaded">
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands Margin="5">
             <Button Click="Button_Click">
@@ -38,7 +38,7 @@
                 Padding="-10" 
                 Margin="10" 
                 BadgeBackground="Red">
-                <Button x:Name="updateB" Click="updateB_Click">
+                <Button x:Name="updateB" Click="UpdateB_Click">
                     <StackPanel Orientation="Horizontal">
                         <iconPacks:PackIconModern 
                                     Width="15" 
@@ -168,14 +168,15 @@
                     Style="{StaticResource MahApps.Styles.ListView.Virtualized}" SelectionChanged="patientsLV_SelectionChanged">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn DisplayMemberBinding="{Binding CPR}" Header="CPR" x:Name="cprColumn"/>
-                                <GridViewColumn DisplayMemberBinding="{Binding FullName}" Header="Navn"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding CPR}" Width="90" Header="CPR" x:Name="cprColumn"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding FullName}" Width="107" Header="Navn"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
 
                     <ListView
                     x:Name="ecgLV"
+                    
                     BorderThickness="0.5"
                     SelectedIndex="0"
                     ItemsSource="{Binding ËCGs}"
@@ -245,7 +246,7 @@
                         </TextBox.Style>
                     </TextBox>
 
-                    <Grid Margin="0,0,0,0"  >
+                    <Grid>
                         <!--ROW 3-->
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -257,9 +258,8 @@
                         </Grid.RowDefinitions>
                         <!--Visible when not pressed-->
                         <Controls:Badged 
-             
-            x:Name="uploadOffDBB"
-            Margin="0,0,5,0" >
+                            x:Name="uploadOffDBB"
+                            Margin="0,0,5,0" >
 
                             <Button x:Name="UploadB" Click="UploadB_Click" Visibility="Visible" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
@@ -275,12 +275,12 @@
                      Grid.Column="1"
                      Controls:TextBoxHelper.ClearTextButton="True"
                      Controls:TextBoxHelper.Watermark="Indtast personale ID..." 
-                     Grid.ColumnSpan="1" Margin="5,0,0,0" 
+                     Grid.ColumnSpan="1" 
                      HorizontalAlignment="Stretch" 
                      VerticalAlignment="Stretch"
                      TextWrapping="Wrap"
                      VerticalContentAlignment="Center"
-                     HorizontalContentAlignment="Stretch" RenderTransformOrigin="0.501,0.5" TextChanged="idT_TextChanged">
+                     HorizontalContentAlignment="Stretch" TextChanged="idT_TextChanged">
                             <TextBox.Style>
                                 <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
                                     <Style.Triggers>
@@ -295,7 +295,7 @@
                         <UniformGrid Columns="2" Grid.ColumnSpan="2" Name="uploadPressed" Visibility="Hidden" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Controls:Badged>
 
-                                <Button x:Name="cancelB" Click="cancelB_Click" Visibility="Visible">
+                                <Button x:Name="cancelB" Click="cancelB_Click" Visibility="Visible" Margin="0,0,2.50,0">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                         <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Cancel" />
                                         <TextBlock Margin="5" Text="Fortryd"/>
@@ -306,7 +306,7 @@
                             <Controls:Badged  
                 Grid.Column="2">
 
-                                <Button x:Name="okB" Click="okB_Click" Visibility="Visible">
+                                <Button x:Name="okB" Click="okB_Click" Visibility="Visible" Margin="2.5,0,0,0">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
                                         <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="Check" />
                                         <TextBlock Margin="5" Text="OK"/>
