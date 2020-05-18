@@ -28,10 +28,7 @@ namespace DataTier.Databaser
         public Database()
         {
             Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-            illness = new IllnessModel();
-            illness = GetIllness(1);
-
-
+            
         }
 
         public void CreatePatient(PatientModel patient)
@@ -105,7 +102,7 @@ namespace DataTier.Databaser
                 double[] STValues = new double[8000];
                 List<double> valuesList = new List<double>();
                 List<double> STValuesList = new List<double>();
-
+               
                 bytesArr = (byte[])reader["BLOBValues"];
 
                 for (int i = 0, j = 0; i < bytesArr.Length; i += 8, j++)
@@ -169,7 +166,7 @@ namespace DataTier.Databaser
                         ameasurements[k].IsRead = false;
                     if (reader["Illness"].GetType() != typeof(DBNull))
                     {
-                    ameasurements[k].Illness = illness;
+                    ameasurements[k].Illness = GetIllness((int)reader["Illness"]);
                     }
                     else 
                         ameasurements[k].Illness = new IllnessModel();

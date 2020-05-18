@@ -111,9 +111,9 @@ namespace LogicTier
 		{
 			//Hvis der er indtastet id uploader den
 			if (id != null && note != null)
-			{
-				DOEDB.UploadData(aECG);
+			{				
 				DOEDB.UploadMaeling(patient, id, note, aECG.Date);
+				DOEDB.UploadData(aECG);
 			}
 
 			//Uploader data til DOEDB

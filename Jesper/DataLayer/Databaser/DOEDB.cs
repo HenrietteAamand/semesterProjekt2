@@ -52,7 +52,7 @@ namespace DataTier.Databaser
                 cmd.ExecuteNonQuery();
             }
 
-            command = new SqlCommand("SELECT ekgmaaleid FROM dbo.EKGMAELING WHERE borger_cprnr = '" + patient.CPR + "' AND sfp_ansvrmedarbjnr = '" + workerID + "' AND sfp_anskommentar = '" + workerID + "'", connection);
+            command = new SqlCommand("SELECT ekgmaaleid FROM dbo.EKGMAELING WHERE borger_cprnr = '" + patient.CPR + "' AND sfp_ansvrmedarbjnr = '" + workerID + "' AND sfp_anskommentar = '" + note + "'", connection);
             reader = command.ExecuteReader();
             if (reader.Read())
             {

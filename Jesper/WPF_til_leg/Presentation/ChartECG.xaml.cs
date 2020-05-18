@@ -36,6 +36,7 @@ namespace WPF_til_leg.Presentation
             //MakeChart2(analyzeLogic.NewAECGModelsList[0].Values);
             //MakeST(analyzeLogic.NewAECGModelsList[0].Values, analyzeLogic.NewAECGModelsList[0].STValues.Count, analyzeLogic.NewAECGModelsList[0].STStartIndex);
             PrevB.IsEnabled = false;
+            
         }
 
         public void MakeCharts(List<double> ecg, int length, int startIndex, double baseline, double sampleRate)
@@ -230,5 +231,7 @@ namespace WPF_til_leg.Presentation
             To -= 1 /ECGSampleRate;
             
         }
+
+       
     }
 }
