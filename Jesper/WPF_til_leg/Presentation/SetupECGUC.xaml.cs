@@ -52,7 +52,7 @@ namespace WPF_til_leg.Presentation
 
             foreach (PatientModel patient in patientList)
             {
-                string item = $"{patient.FullName}: CPR {patient.CPR}";
+                string item = $"CPR {patient.CPR}: {patient.FullName}";
                 PatientIDCB.Items.Add(item);
             }
             PatientIDCB.IsEnabled = false;
@@ -88,7 +88,7 @@ namespace WPF_til_leg.Presentation
         //Trykker på Tilknyt knappen:
         private void LinkECGB_Click(object sender, RoutedEventArgs e)
         {
-            string patientIDString = PatientIDCB.SelectedItem.ToString().Remove(0,11);
+            string patientIDString = PatientIDCB.SelectedItem.ToString().Remove(0,4).Remove(11);
             
             int ecgMonitorID = 0;
             string ecgMonitorString = EcgCB.SelectedItem.ToString().Remove(0, 6);
@@ -105,7 +105,7 @@ namespace WPF_til_leg.Presentation
             UpdateCB();
             SetupTB.Text = "Tilknytning gennemført.";
 
-            EcgCB.Text = "Vælg EKG måler...";
+            //EcgCB.Text = "Vælg EKG måler...";
             PatientIDCB.Text = "Vælg et PatientID...";
         }
 
