@@ -1,0 +1,14 @@
+{
+  "version": "0.2.0",
+  "adapter": "c:\\Program Files (x86)\\Putty\\plink.exe",
+  "adapterArgs": "pi@raspberrypi.local -pw raspberry -batch -T /usr/share/vsdbg/vsdbg --interpreter=vscode",
+  "configurations": [
+    {
+      "name": ".NET Core Launch",
+      "type": "coreclr",
+      "cwd": "~/Programs",
+      "program": "RPi_dotnet_core_Console_Application1.dll", // Denne ændres til hvad I kalder jeres projekt
+      "request": "launch"
+    }
+  ]
+}
