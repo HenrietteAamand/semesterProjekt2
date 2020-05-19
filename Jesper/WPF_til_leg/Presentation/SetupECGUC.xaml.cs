@@ -88,7 +88,6 @@ namespace WPF_til_leg.Presentation
         //Trykker på Tilknyt knappen:
         private void LinkECGB_Click(object sender, RoutedEventArgs e)
         {
-
             string patientIDString = PatientIDCB.SelectedItem.ToString().Remove(0,11);
             
             int ecgMonitorID = 0;
@@ -105,8 +104,9 @@ namespace WPF_til_leg.Presentation
             PatientIDCB.SelectedValue = null;
             UpdateCB();
             SetupTB.Text = "Tilknytning gennemført.";
-            
 
+            EcgCB.Text = "Vælg EKG måler...";
+            PatientIDCB.Text = "Vælg et PatientID...";
         }
 
         private void ResetECGB_Click(object sender, RoutedEventArgs e)
