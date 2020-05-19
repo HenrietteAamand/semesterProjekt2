@@ -342,7 +342,7 @@ namespace LogicTier
 
                     //STSegmentList's længde sammenlignes med Illnesses reference værdier
                     //Hvis STSegmentList er for lang, er ST - segmentet deprimeret
-                    if (STSegmentList.Count > illnessList[0].STMax/aECG.SampleRate)
+                    if (STSegmentList.Count > illnessList[2].STMax/aECG.SampleRate)
                     {
                         aECG.STDepressed = true;
                     }
