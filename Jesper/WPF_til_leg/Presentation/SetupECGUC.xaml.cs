@@ -101,6 +101,7 @@ namespace WPF_til_leg.Presentation
             }           
 
             SetupTB.Visibility = Visibility.Visible;
+            PatientIDCB.SelectedValue = null;
             UpdateCB();
             SetupTB.Text = "Tilknytning gennemført.";
 
@@ -117,6 +118,7 @@ namespace WPF_til_leg.Presentation
             setupObj.ResetECGMonitor(ecgMonitorString);
             SetupTB.Visibility = Visibility.Visible;
             UpdateCB();
+            PatientIDCB.SelectedValue = null;
             SetupTB.Text = "Nulstilling gennemført.";
             
         }
@@ -126,7 +128,8 @@ namespace WPF_til_leg.Presentation
         {
 
             UpdateCB();
-           
+            PatientIDCB.SelectedValue = null;
+
 
         }
 

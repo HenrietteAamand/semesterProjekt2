@@ -15,7 +15,7 @@ namespace LogicTier
         private List<ECGModel> ecgList;
         List<List<double>> listOfListOfIntervals;
         public List<AnalyzedECGModel> NewAECGModelsList = new List<AnalyzedECGModel>();
-        List<ECGModel> newECGList;
+        public List<ECGModel> newECGList { get; set; }
         private const int intervalHistogram = 5;
 
         private ILocalDatabase lDBRef;
@@ -76,9 +76,10 @@ namespace LogicTier
 
         //public List<ECGModel> LoadNewECGs(PatientModel patient) { throw new NotImplementedException(); }
 
-        public void CreateAnalyzedECGs()
+        public void GetNewECG()
         {
             ecgList = lDBRef.GetAllECGs();
+            newECGList.Clear();
             foreach (ECGModel ecg in ecgList)
             {
                 if (!ecg.IsAnalyzed)
@@ -86,6 +87,10 @@ namespace LogicTier
                     newECGList.Add(ecg);
                 }
             }
+        }
+        public void CreateAnalyzedECGs()
+        {
+            GetNewECG();
 
             //Næste ID findes
             FindNextID();
@@ -368,13 +373,15 @@ namespace LogicTier
                 {
                     aECG.Illness = illnessList[1];
                 }
-
                 //Hvis ST segmentet er længere end 0,08S er det deprimeret
 
-                if (aECG.STDepressed)
+                else if (aECG.STDepressed)
                 {
                     aECG.Illness = illnessList[2];
                 }
+                else
+                    aECG.Illness = illnessList[0];
+
             }
         }
 
@@ -457,20 +464,22 @@ namespace LogicTier
         {
             AECGIDS = new List<int>();
             aECGList = lDBRef.GetAllAnalyzedECGs();
+            NextID = 0;
             //Putter alle ID's ind i aECGIDS
             foreach (AnalyzedECGModel aECG in aECGList)
             {
                 AECGIDS.Add(aECG.AECGID);
             }
-
+            
             //LØber alle ID's igennem
-            foreach (int id in aECGIDS)
-            {
-                if (id > NextID)
-                {
-                    NextID = id;
-                }
-            }
+            //foreach (int id in aECGIDS)
+            //{
+            //    if (id > NextID)
+            //    {
+            //        NextID = id;
+            //    }
+            //}
+            NextID = AECGIDS[AECGIDS.Count-1];
             NextID++;
         }
 
