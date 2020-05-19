@@ -11,7 +11,7 @@ namespace Raspberry_Pi_Dot_Net_Core_Console_Application3
         static void Main(string[] args)
         {
             TWIST Button = new TWIST();
-            int knaptryk = 0;
+            int knaptryk = 1;
 
             while(true)
             {
