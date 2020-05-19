@@ -52,7 +52,7 @@ namespace WPF_til_leg.Presentation
 
             foreach (PatientModel patient in patientList)
             {
-                string item = $"PatientCPR {patient.CPR}";
+                string item = $"{patient.FullName}: CPR {patient.CPR}";
                 PatientIDCB.Items.Add(item);
             }
             PatientIDCB.IsEnabled = false;

@@ -19,19 +19,25 @@ namespace WPF_til_leg.Presentation
     /// <summary>
     /// Interaction logic for SetupUC.xaml
     /// </summary>
+    
     public partial class SetupPatientUC : UserControl
+    { 
 
-    {
+
+        private MainWindowPresentation parentWindow;
         private SetupWindowLogic setupObj;
 
         public SetupPatientUC()
         {
             InitializeComponent();
             setupObj = new SetupWindowLogic();
+             
             PatientTB.Visibility = Visibility.Hidden;
             PatientTB.IsEnabled = false;
             CPRTB.MaxLength = 11;
+            parentWindow = (MainWindowPresentation)App.Current.MainWindow;
             
+
         }
 
         private void OpretB_Click(object sender, RoutedEventArgs e)
@@ -57,6 +63,11 @@ namespace WPF_til_leg.Presentation
                             setupObj.newPatient(CPRTB.Text, FnavnTB.Text, EnavnTB.Text);
                             PatientTB.Visibility = Visibility.Visible;
                             PatientTB.Text = "Patient oprettet.";
+                            CPRTB.Text = "";
+                            FnavnTB.Text = "";
+                            EnavnTB.Text = "";
+                            parentWindow.UpdateView();
+
 
                         }
                         else

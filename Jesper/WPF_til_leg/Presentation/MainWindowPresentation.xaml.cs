@@ -30,6 +30,7 @@ namespace WPF_til_leg.Presentation
         List<AnalyzedECGModel> aECGS;
         private readonly CollectionViewSource viewSource = new CollectionViewSource();
         System.Timers.Timer opdaterTimer;
+        public SetupPatientUC setupUC;
 
         private string filterText;
         private CollectionViewSource usersCollection;
@@ -39,8 +40,6 @@ namespace WPF_til_leg.Presentation
         public MainWindowPresentation()
         {
             InitializeComponent();
-
-
             //if (idT.Text == "")
             //{
             //    UploadB.IsEnabled = false;
@@ -53,6 +52,8 @@ namespace WPF_til_leg.Presentation
             analyzeObj.CreateAnalyzedECGs();
             ShowWelcomeDialog();
 
+            
+
             aECGS = new List<AnalyzedECGModel>();
             Patients = new List<PatientModel>();
             Patients = mainObj.getAllPatiens();
@@ -63,7 +64,6 @@ namespace WPF_til_leg.Presentation
             usersCollection.Filter += usersCollection_Filter;
             DataContext = this;
             UploadB.IsEnabled = false;
-            
         }
 
 
@@ -328,6 +328,7 @@ namespace WPF_til_leg.Presentation
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            //setupUC = new SetupPatientUC(this);
             updateBadge.Badge = 0;
             opdaterTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             opdaterTimer.Interval = 5000;
