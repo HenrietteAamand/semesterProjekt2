@@ -161,15 +161,26 @@ namespace RPi_EKG_program
         {
             string cpr;
             string firstName;
+           if(cprName!=""&& cprName != null)
+           {
+                cpr = cprName.Split(Convert.ToChar(";"))[0];
 
-            cpr = cprName.Split(Convert.ToChar(";"))[0];
-            firstName = cprName.Split(Convert.ToChar(";"))[1];
+                firstName = cprName.Split(Convert.ToChar(";"))[1];
 
-            using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"EKGPersonID.txt"))
-            {
-                file.WriteLine(cpr + ";" + firstName + ";" + DateTime.Now.ToString());
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"EKGPersonID.txt"))
+                {
+                    file.WriteLine(cpr + ";" + firstName + ";" + DateTime.Now.ToString());
+                }
+           }
+           else
+           {
+               
+                using (System.IO.StreamWriter file = new System.IO.StreamWriter(@"EKGPersonID.txt"))
+                {
+                    file.WriteLine("");
+                }
             }
-
+            
         }
 
         public string getInfoLocal()

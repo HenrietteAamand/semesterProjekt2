@@ -10,8 +10,8 @@ namespace RPi_EKG_program
     class Program
     {
            
-        private const string monitorID = "Måler1";
-        private static int sampleRate = 10;
+        private const string monitorID = "1";
+        private static int sampleRate = 20;
 
         static void Main(string[] args)
         {
@@ -22,19 +22,20 @@ namespace RPi_EKG_program
             ADC adConverter = new ADC();
             Start_Button startB = new Start_Button();
 
+            
          
+            
             if(localDB.isConnected())
             {
                 localStorage.storeInfoLocal(localDB.recieveData(monitorID));           
-                
-
             }
 
 
-            while (localStorage.getCPRLocal() == null)
+            while (localStorage.getCPRLocal() == null|| localStorage.getCPRLocal() == "")
             {
                 displayController.screenShow(7, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
                 
+
                 if (localDB.isConnected())
                 {
                     localStorage.storeInfoLocal(localDB.recieveData(monitorID));
@@ -44,29 +45,30 @@ namespace RPi_EKG_program
             }
 
             displayController.showGreeting(localStorage.getInfoLocal(), localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
-
             Thread.Sleep(5000);
+         
 
 
             while (true)
             {
-                if (localDB.isConnected() && localStorage.checkUnSentData()!=0)
+               
+                while (adConverter.checkBattery() == 1)
+                {
+                    displayController.screenShow(8, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
+                   
+                }
+
+                if (localDB.isConnected() && localStorage.checkUnSentData() != 0)
                 {
                     displayController.screenShow(9, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
-                    Thread.Sleep(1000);
+
 
                     foreach (var item in localStorage.findUnSentData())
                     {
                         localDB.sendData(item);
                     }
-                    Thread.Sleep(5000);
+                    
 
-                }
-
-                while (adConverter.checkBattery() == 1)
-                {
-                    displayController.screenShow(8, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
-                    Thread.Sleep(3000);
                 }
 
                 displayController.screenShow(3, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
@@ -85,8 +87,8 @@ namespace RPi_EKG_program
                         DateTime endTime = DateTime.Now;
                         TimeSpan measureTime = endTime - startTime;
 
-                        
 
+                        Thread.Sleep(5000);
                         Measurement newMeasurement = new Measurement(localStorage.getCPRLocal(), new List<double>(), DateTime.Now, (sampleRate/1000),monitorID );
                         displayController.statusUpdateMeasurment(measureTime.TotalSeconds, connection, storageStatus, batteryStatus);
 
@@ -119,7 +121,7 @@ namespace RPi_EKG_program
                             displayController.screenShow(6, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
 
                             localDB.sendData(newMeasurement);
-
+                            Thread.Sleep(10000);
 
                         }
                         else
@@ -128,14 +130,16 @@ namespace RPi_EKG_program
                             displayController.screenShow(5, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
                             Thread.Sleep(10000);
 
+
                         }
-                                          
+
                     }
 
                     else
                     {
                         displayController.screenShow(2, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
-                        Thread.Sleep(5000);
+                        Thread.Sleep(15000);
+
                     }
 
                 }

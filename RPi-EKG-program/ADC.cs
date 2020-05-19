@@ -18,7 +18,16 @@ namespace RPi_EKG_program
         
         public bool isCableConnected()
         {
-            
+            int test = adConverter.readADC_SingleEnded(0);
+
+            int test2 = adConverter.readADC_SingleEnded(0);
+
+            int test3 = adConverter.readADC_SingleEnded(0);
+
+            int test4 = adConverter.readADC_SingleEnded(0);
+
+
+
             if (adConverter.readADC_SingleEnded(0)==0)
             { 
                 return false; 

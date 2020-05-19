@@ -20,7 +20,7 @@ namespace RPi_EKG_program
         {
             //return twistButton.isPressed(); //Dette er sådan det skulle være lavet, men siden vi ikke har en knap
             //så bliver det således i stedet for:
-            Thread.Sleep(7000);
+            //Thread.Sleep(7000);
             return true;
 
         }

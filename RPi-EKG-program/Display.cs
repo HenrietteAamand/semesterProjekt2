@@ -42,7 +42,7 @@ namespace RPi_EKG_program
                     {
                         // Her ville der være en "custom" karatker for at vise batteristatus
                         //Da vi ikke kan lave specielle custom karakter, bruger vi et system med procent 0- 100.
-                        batteryStatusIcon = "25";
+                        batteryStatusIcon = "5";
                         //SKAL vise screen 8
 
 
@@ -77,7 +77,7 @@ namespace RPi_EKG_program
         {
             displayController = new SerLCD();
             displayController.lcdDisplay();
-            displayController.lcdSetBackLight(255,255,0);
+            displayController.lcdSetBackLight(0,0,255);
             clearScreen = true;
 
             
@@ -114,7 +114,7 @@ namespace RPi_EKG_program
             displayController.lcdPrint(navnIcon);
             displayController.lcdGotoXY(14, 3);
             displayController.lcdPrint(cprIcon);
-
+           
         }
 
         public void statusUpdateMeasurment(double time, bool connection, byte storageStatus, byte batteryStatus)
@@ -185,6 +185,7 @@ namespace RPi_EKG_program
                 case 3:
                     {
                         displayController.lcdClear();
+
                         this.updateInfoBar(connection, storageStatus, batteryStatus);
 
                         displayController.lcdGotoXY(3, 2);
@@ -244,7 +245,7 @@ namespace RPi_EKG_program
                     displayController.lcdPrint("Tilslut oplader");
 
                     break;
-                case 1:
+                case 9:
                     {
                         displayController.lcdClear();
                         this.updateInfoBar(connection, storageStatus, batteryStatus);

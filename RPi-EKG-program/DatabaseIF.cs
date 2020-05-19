@@ -59,7 +59,7 @@ namespace RPi_EKG_program
                 connection.Open();
                 writecmd.ExecuteScalar();
             }
-            catch (SqlException)
+            catch (Exception)
             {
 
                 throw;
