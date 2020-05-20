@@ -7,11 +7,8 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using LogicTier;
 using DataTier.Models;
-using System.Windows.Forms;
 using System.Windows.Data;
-using ListViewItem = System.Windows.Controls.ListViewItem;
 using System.Linq;
-using System.Data;
 using System.ComponentModel;
 using System.Timers;
 
@@ -297,7 +294,7 @@ namespace WPF_til_leg.Presentation
         {
             updateBadge.Badge = 0;
             opdaterTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            opdaterTimer.Interval = 5000;
+            opdaterTimer.Interval = 60000;
             opdaterTimer.Enabled = true;
         }
 

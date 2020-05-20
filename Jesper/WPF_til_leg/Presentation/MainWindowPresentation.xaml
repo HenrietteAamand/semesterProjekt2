@@ -216,7 +216,7 @@
                         </ListView.Resources>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="Målinger" DisplayMemberBinding="{Binding Date, StringFormat='MM/dd/yy, hh:mm'}" Width="200"/>
+                                <GridViewColumn Header="Målinger" DisplayMemberBinding="{Binding Date, StringFormat='MM/dd/yy, hh:mm'}" Width="198"/>
                             </GridView>
                         </ListView.View>
                     </ListView>

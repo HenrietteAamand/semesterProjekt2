@@ -1,42 +1,36 @@
 ﻿using DataTier.Databaser;
 using DataTier.Interfaces;
 using DataTier.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace LogicTier
 {
     public class SetupWindowLogic
     {
-
+        #region Attributes
         private ILocalDatabase DB;
         private List<ECGMonitorModel> ecgMonitorList;
-        private List<PatientModel> patientList;
+        private List<PatientModel> patientList; 
+        #endregion
 
+        #region Ctor
         public SetupWindowLogic()
         {
             ecgMonitorList = new List<ECGMonitorModel>();
             patientList = new List<PatientModel>();
-
             DB = new Database();
+
             patientList = DB.GetAllPatients();
             ecgMonitorList = DB.GetAllECGMonitors();
-            //newPatient("112233-4455", "Jens", "Jensen");
-            //LinkECGToPatient("112233-4455", 1);
-            //ResetECGMonitor(1);
-            //getAllMonitors();
-            //getAllPatiens();
-            //monitorInUse(1);
-        }
+        } 
+        #endregion
 
+        #region Methods
         public void newPatient(string cpr, string firstName, string lastName)
-        {
+        {   //Sker når der trykeks på "Opret patient"
             //Opretter en patient, og gemmer den i databasen
-            //Kalder CreatePatient()
             DB.CreatePatient(new PatientModel(cpr, firstName, lastName));
-            //Sker når der trykeks på "Opret patient"
         }
 
         public void LinkECGToPatient(string cpr, string ecgMonitorID)
@@ -49,7 +43,6 @@ namespace LogicTier
                     patient.ECGMonitorID = ecgMonitorID;
                     DB.UpdatePatient(patient);
                     patientList = DB.GetAllPatients();
-
                 }
             }
 
@@ -62,7 +55,6 @@ namespace LogicTier
                     ecgMonitorList = DB.GetAllECGMonitors();
                 }
             }
-
         }
 
         public void ResetECGMonitor(string ecgID)
@@ -76,10 +68,7 @@ namespace LogicTier
                     patient.ECGMonitorID = null;
                     DB.UpdatePatient(patient);
                     patientList = DB.GetAllPatients();
-
-
                 }
-
             }
             //Sætter InUse på ECG-monitoren til false
             foreach (ECGMonitorModel monitor in ecgMonitorList.ToList())
@@ -89,13 +78,8 @@ namespace LogicTier
                     monitor.InUse = false;
                     DB.UpdateECGMonitor(monitor);
                     ecgMonitorList = DB.GetAllECGMonitors();
-
                 }
-
             }
-
-
-            //Sker når der trykkes på "Nulstil EKG-måler", og når ern EKG-måler der er i brug, er valgt
         }
 
 
@@ -144,7 +128,7 @@ namespace LogicTier
             }
 
             return result;
-        }
+        } 
+        #endregion
     }
-
 }
