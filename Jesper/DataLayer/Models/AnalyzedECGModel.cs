@@ -6,10 +6,6 @@ namespace DataTier.Models
 {
     public class AnalyzedECGModel : ECGModel
     {
-        #region Attributes
-
-        #endregion
-
         #region Properties
         private int aECGID;
 
@@ -21,8 +17,6 @@ namespace DataTier.Models
                 aECGID = value;
             }
         }
-
-
 
         private IllnessModel illness;
 
@@ -110,15 +104,6 @@ namespace DataTier.Models
 
 
         public AnalyzedECGModel() { }
-
-        //public AnalyzedECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values, int monitorId, bool isAnalyzed) 
-        //    : base(cpr, ecgID, date, sampleRate, values, monitorId, isAnalyzed)
-        //{
-        //}
-        #endregion
-
-        #region Methods
-
         #endregion
     }
 }

@@ -1,90 +1,91 @@
-﻿using LogicTier;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Controls;
 using LiveCharts;
 using System.Windows;
-using System.Windows.Forms;
 using UserControl = System.Windows.Controls.UserControl;
 
 namespace WPF_til_leg.Presentation
 {
     public partial class ChartECG : UserControl, INotifyPropertyChanged
     {
+        #region Attributes
         private bool _ECGSeriesVisibility;
         private bool _baseLineSeriesVisibility;
-        private bool _stSeriesVisibility;
+        private bool _stSeriesVisibility; 
+        #endregion
+
+        #region Properties
         public SeriesCollection series { get; set; }
         public ChartValues<double> STList { get; set; }
         public ChartValues<double> ECGList { get; set; }
         public ChartValues<double> BaseList { get; set; }
         public double ECGSampleRate { get; set; }
         public double gridStep { get; set; }
-
-        private double _to;
-        private double _from;
+        private double from;
+        public double From
+        {
+            get { return from; }
+            set
+            {
+                from = value;
+                OnPropertyChanged("From");
+            }
+        }
+        private double to;
+        public double To
+        {
+            get { return to; }
+            set
+            {
+                to = value;
+                OnPropertyChanged("To");
+            }
+        }
         private double xAxis;
+        public double XAxis
+        {
+            get { return xAxis; }
+            set
+            {
+                xAxis = value;
+                OnPropertyChanged("XAxis");
+            }
+        }
+        #endregion
 
-
+        #region Ctor
         public ChartECG()
         {
-            
             InitializeComponent();
-
-
-            //MakeChart2(ecg);
-            //MakeST(ecg, length, startIndex);
-            //MakeChart2(analyzeLogic.NewAECGModelsList[0].Values);
-            //MakeST(analyzeLogic.NewAECGModelsList[0].Values, analyzeLogic.NewAECGModelsList[0].STValues.Count, analyzeLogic.NewAECGModelsList[0].STStartIndex);
             PrevB.IsEnabled = false;
-            
         }
+        #endregion
 
+        #region Methods
         public void MakeCharts(List<double> ecg, int length, int startIndex, double baseline, double sampleRate)
         {
-            
             STList = new ChartValues<double>();
             ECGList = new ChartValues<double>();
             BaseList = new ChartValues<double>();
+
             ECGSeriesVisibility = true;
             BaseLineSeriesVisibility = true;
             STSeriesVisibility = true;
+
             ECGSampleRate = sampleRate;
-            gridStep = 0.04/sampleRate;
+            gridStep = 0.04 / sampleRate;
             OnPropertyChanged("gridStep");
+
             MakeECGList(ecg);
-            //MakeECGLine(ecg);
             MakeSTList(ecg, length, startIndex);
-            //MakeSTLine(ecg, length, startIndex);
             MakeBaseList(ecg, baseline);
-            //MakeBaseLineChart(ecg, baseline);
-
             OnPropertyChanged("ECGList");
-
+            OnPropertyChanged("STList");
             OnPropertyChanged("BaseList");
+
             DataContext = this;
         }
 
-
-        //public void MakeSTLine(List<double> ecg, int length, int startIndex)
-        //{   
-        //    List<double >ecg1 = new List<double>();
-        //    ecg1 = ecg;
-        //    for (int i = 0; i < ecg1.Count; i++)
-        //    {
-        //        if (i < startIndex || i > startIndex + length)
-        //        {
-        //            ecg1[i] = double.NaN;
-        //        }
-        //    }
-        //    stLine.Values = new ChartValues<double>();
-        //    for (int i = 0; i < ecg1.Count; i++)
-        //    {
-        //        stLine.Values.Add(ecg1[i]);
-        //    }
-        //    series.Add(stLine);
-        //    DataContext = this;
-        //}
         public void MakeSTList(List<double> ecg, int length, int startIndex)
         {
             List<double> ecg12 = new List<double>();
@@ -108,23 +109,12 @@ namespace WPF_til_leg.Presentation
             DataContext = this;
             OnPropertyChanged("STList");
         }
-        //public void MakeECGLine(List<double> ecg)
-        //{
-        //    List<double> ecg2 = new List<double>();
-        //    ecg2 = ecg;
-        //    ecgLine.Values = new ChartValues<double>();
-        //    for (int i = 0; i < ecg2.Count; i++)
-        //    {
-        //        ecgLine.Values.Add(ecg2[i]);
-        //    }
-        //    series.Add(ecgLine);
-        //    DataContext = this;
-        //}
+
         public void MakeECGList(List<double> ecg)
         {
             List<double> ecg2 = new List<double>();
             ecg2 = ecg;
-            ChartValues<double> ecgValues= new ChartValues<double>();
+            ChartValues<double> ecgValues = new ChartValues<double>();
             for (int i = 0; i < ecg2.Count; i++)
             {
                 ecgValues.Add(ecg2[i]);
@@ -184,35 +174,7 @@ namespace WPF_til_leg.Presentation
             if (PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        public double From
-        {
-            get { return _from; }
-            set
-            {
-                _from = value;
-                OnPropertyChanged("From");
-            }
-        }
 
-        public double To
-        {
-            get { return _to; }
-            set
-            {
-                _to = value;
-                OnPropertyChanged("To");
-            }
-        }
-
-        public double XAxis
-        {
-            get { return xAxis; }
-            set
-            {
-                xAxis = value;
-                OnPropertyChanged("XAxis");
-            }
-        }
 
         private void NextOnClick(object sender, RoutedEventArgs e)
         {
@@ -231,10 +193,9 @@ namespace WPF_til_leg.Presentation
                 PrevB.IsEnabled = false;
             }
             From -= 1 / ECGSampleRate;
-            To -= 1 /ECGSampleRate;
-            
-        }
+            To -= 1 / ECGSampleRate;
 
-       
+        } 
+        #endregion
     }
 }

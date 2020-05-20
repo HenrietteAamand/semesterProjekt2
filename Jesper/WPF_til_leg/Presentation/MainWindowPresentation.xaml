@@ -233,7 +233,7 @@
                 VerticalScrollBarVisibility="Auto"
                 TextWrapping="Wrap"
                 Controls:TextBoxHelper.ClearTextButton="True"
-                Controls:TextBoxHelper.Watermark="Skriv kommentar til Den Offentlige Database..." TextChanged="commentT_TextChanged">
+                Controls:TextBoxHelper.Watermark="Skriv kommentar til Den Offentlige Database..." TextChanged="CommentT_TextChanged">
                         <TextBox.Style>
                             <Style BasedOn="{StaticResource MahApps.Styles.TextBox}" TargetType="{x:Type TextBox}">
                                 <Style.Triggers>
@@ -333,8 +333,6 @@
             <uc:ChartECG x:Name="chartUC" Margin="10" />
         </Border>
 
-
-        
     </Grid>
 
 </Controls:MetroWindow>

@@ -16,7 +16,7 @@
                     <Setter.Value>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical" UseLayoutRounding="True">
-                                <TextBlock Margin="0 4 0 4" Text="{Binding}" />
+                                <TextBlock Margin="0, 4, 0, 4" Text="{Binding}" />
                                 <Separator />
                             </StackPanel>
                         </DataTemplate>
@@ -43,7 +43,7 @@
             Header="Tilknyt EKG"
             HorizontalAlignment="Stretch"
             Padding="auto">
-            <Grid VerticalAlignment="Center" Height="204" Margin="0,0,0.333,0.667">
+            <Grid VerticalAlignment="Center" Height="204">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
@@ -61,15 +61,14 @@
                         Grid.Row="1" 
                         Grid.Column="0" 
                         Grid.ColumnSpan="2" 
-                        Margin="10,10,10,0" 
+                        Margin="10, 10, 10, 0" 
                         Header="TextBox Header" 
                         HorizontalAlignment="Center"
-                        BorderThickness="0,0,0,1">
+                        BorderThickness="0, 0, 0, 1">
                     <Controls:MetroHeader.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                <!--<iconPacks:PackIconMaterial VerticalAlignment="Center" Margin="0,5,0,0" Kind="" />-->
-                                <TextBlock Margin="5,5,5,0" VerticalAlignment="Center" Text="Tilknyt EKG til PatientID" />
+                                <TextBlock Margin="5, 5, 5, 0" VerticalAlignment="Center" Text="Tilknyt EKG til PatientID" />
                             </StackPanel>
                         </DataTemplate>
                     </Controls:MetroHeader.HeaderTemplate>
@@ -90,7 +89,7 @@
                             <MenuItem Header="ECG" />
                         </ContextMenu>
                     </ComboBox.ContextMenu>
-                    
+
                 </ComboBox>
 
                 <ComboBox x:Name="PatientIDCB"
@@ -108,7 +107,7 @@
                             <MenuItem Header="PatientID" />
                         </ContextMenu>
                     </ComboBox.ContextMenu>
-                    
+
                 </ComboBox>
 
                 <Controls:Badged 

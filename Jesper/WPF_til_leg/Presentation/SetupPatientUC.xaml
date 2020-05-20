@@ -15,7 +15,7 @@
                     <Setter.Value>
                         <DataTemplate>
                             <StackPanel Orientation="Vertical" UseLayoutRounding="True">
-                                <TextBlock Margin="0 4 0 4" Text="{Binding}" />
+                                <TextBlock Margin="0,4,0,4" Text="{Binding}" />
                                 <Separator />
                             </StackPanel>
                         </DataTemplate>
@@ -42,7 +42,7 @@
             Header="Opret Patient"
             HorizontalAlignment="Stretch"
             Padding="auto">
-            <Grid VerticalAlignment="Center" Margin="0,2,0.333,-0.333" Height="233">
+            <Grid VerticalAlignment="Center" Height="233">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
@@ -66,7 +66,6 @@
                     <Controls:MetroHeader.HeaderTemplate>
                         <DataTemplate>
                             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                <!--<iconPacks:PackIconMaterial VerticalAlignment="Center" Margin="0,5,0,0" Kind="" />-->
                                 <TextBlock Margin="5,5,5,0" VerticalAlignment="Center" Text="Opret ny patient" />
                             </StackPanel>
                         </DataTemplate>
@@ -77,24 +76,17 @@
                     Margin="10"
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.Watermark="Indtast CPR..."/>
-                <!--IsDocumentEnabled="True"
-                    SpellCheck.IsEnabled="True" />-->
 
                 <UniformGrid Grid.Row="3" Columns="2">
                     <TextBox x:Name="FnavnTB" 
                     Margin="10"
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.Watermark="Indtast Fornavn..."/>
-                    <!--IsDocumentEnabled="True"-->
-                    <!--SpellCheck.IsEnabled="True" />-->
 
                     <TextBox x:Name="EnavnTB" 
                     Margin="10"
                     Controls:TextBoxHelper.ClearTextButton="True"
                     Controls:TextBoxHelper.Watermark="Indtast Efternavn..."/>
-                    <!--IsDocumentEnabled="True"
-                    SpellCheck.IsEnabled="True"-->
-
                 </UniformGrid>
 
 

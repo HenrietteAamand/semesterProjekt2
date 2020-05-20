@@ -12,7 +12,6 @@ namespace LogicTier
     {
 
         private ILocalDatabase DB;
-
         private List<ECGMonitorModel> ecgMonitorList;
         private List<PatientModel> patientList;
 
@@ -20,7 +19,7 @@ namespace LogicTier
         {
             ecgMonitorList = new List<ECGMonitorModel>();
             patientList = new List<PatientModel>();
-            
+
             DB = new Database();
             patientList = DB.GetAllPatients();
             ecgMonitorList = DB.GetAllECGMonitors();
@@ -50,7 +49,7 @@ namespace LogicTier
                     patient.ECGMonitorID = ecgMonitorID;
                     DB.UpdatePatient(patient);
                     patientList = DB.GetAllPatients();
-                    
+
                 }
             }
 
@@ -80,7 +79,7 @@ namespace LogicTier
 
 
                 }
-                
+
             }
             //Sætter InUse på ECG-monitoren til false
             foreach (ECGMonitorModel monitor in ecgMonitorList.ToList())
@@ -92,7 +91,7 @@ namespace LogicTier
                     ecgMonitorList = DB.GetAllECGMonitors();
 
                 }
-                
+
             }
 
 

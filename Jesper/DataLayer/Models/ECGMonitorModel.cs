@@ -6,9 +6,6 @@ namespace DataTier.Models
 {
     public class ECGMonitorModel
     {
-        #region Attributes
-        #endregion
-
         #region Properties
         private bool inUse;
 
@@ -39,8 +36,5 @@ namespace DataTier.Models
 
         #endregion
 
-        #region Methods
-
-        #endregion
     }
 }

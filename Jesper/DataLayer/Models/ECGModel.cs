@@ -6,10 +6,6 @@ namespace DataTier.Models
 {
     public class ECGModel
     {
-        #region Attributes
-
-        #endregion
-
         #region Properties
         private string cpr;
         public string CPR
@@ -85,10 +81,6 @@ namespace DataTier.Models
         public ECGModel()
         {
         }
-
-        #endregion
-
-        #region Methods
 
         #endregion
     }

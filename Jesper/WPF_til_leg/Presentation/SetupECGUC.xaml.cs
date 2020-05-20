@@ -7,9 +7,6 @@ using System.Windows.Documents;
 using LogicTier;
 using DataTier.Models;
 
-
-//using System.Windows.Forms;
-
 namespace WPF_til_leg.Presentation
 {
     /// <summary>
@@ -17,12 +14,13 @@ namespace WPF_til_leg.Presentation
     /// </summary>
     public partial class SetupECGUC : UserControl
     {
+        #region Attributes
         private SetupWindowLogic setupObj;
-        
         private List<ECGMonitorModel> monitorList;
-        private List<PatientModel> patientList;
-       
+        private List<PatientModel> patientList; 
+        #endregion
 
+        #region Ctor
         public SetupECGUC()
         {
             InitializeComponent();
@@ -35,7 +33,9 @@ namespace WPF_til_leg.Presentation
             ResetECGB.IsEnabled = false;
             LinkECGB.IsEnabled = false;
         }
+        #endregion
 
+        #region Methods
         public void LoadCB()
         {
             monitorList = new List<ECGMonitorModel>();
@@ -63,7 +63,6 @@ namespace WPF_til_leg.Presentation
         {
             int ecgMonitorID = 0;
             string ecgMonitorString = EcgCB.SelectedItem.ToString().Remove(0, 6);
-            //ecgMonitorID = ecgMonitorString.Remove(0, 5).Remove(6);
             ecgMonitorID = Convert.ToInt32(ecgMonitorString);
 
             if (setupObj.monitorInUse(ecgMonitorID.ToString()) == false)
@@ -73,7 +72,7 @@ namespace WPF_til_leg.Presentation
                 PatientIDCB.IsEnabled = true;
                 LinkECGB.IsEnabled = false;
                 ResetECGB.IsEnabled = false;
-                
+
             }
             else if (setupObj.monitorInUse(ecgMonitorID.ToString()) == true)
             {
@@ -85,42 +84,37 @@ namespace WPF_til_leg.Presentation
             }
         }
 
-        //Trykker på Tilknyt knappen:
         private void LinkECGB_Click(object sender, RoutedEventArgs e)
         {
-            string patientIDString = PatientIDCB.SelectedItem.ToString().Remove(0,4).Remove(11);
-            
+            string patientIDString = PatientIDCB.SelectedItem.ToString().Remove(0, 4).Remove(11);
+
             int ecgMonitorID = 0;
             string ecgMonitorString = EcgCB.SelectedItem.ToString().Remove(0, 6);
-            //ecgMonitorID = ecgMonitorString.Remove(0, 5).Remove(6);
             ecgMonitorID = Convert.ToInt32(ecgMonitorString);
 
             if (EcgCB.SelectedItem != null)
             {
                 setupObj.LinkECGToPatient(patientIDString, ecgMonitorID.ToString());
-            }           
+            }
 
             SetupTB.Visibility = Visibility.Visible;
             PatientIDCB.SelectedValue = null;
             UpdateCB();
             SetupTB.Text = "Tilknytning gennemført.";
 
-            //EcgCB.Text = "Vælg EKG måler...";
             PatientIDCB.Text = "Vælg et PatientID...";
         }
 
         private void ResetECGB_Click(object sender, RoutedEventArgs e)
         {
-            //strin ecgMonitorID = 0;
             string ecgMonitorString = EcgCB.SelectedItem.ToString().Remove(0, 6).Trim();
-            //ecgMonitorID = Convert.ToInt32(ecgMonitorString.Remove(0, 5));
 
             setupObj.ResetECGMonitor(ecgMonitorString);
             SetupTB.Visibility = Visibility.Visible;
             UpdateCB();
             PatientIDCB.SelectedValue = null;
             SetupTB.Text = "Nulstilling gennemført.";
-            
+
         }
 
         // Tilknyt patient eller nulstil EKG-måler:
@@ -138,5 +132,6 @@ namespace WPF_til_leg.Presentation
             ResetECGB.IsEnabled = false;
             LinkECGB.IsEnabled = true;
         }
+        #endregion
     }
 }

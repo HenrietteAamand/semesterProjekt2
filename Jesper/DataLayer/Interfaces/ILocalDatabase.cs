@@ -36,22 +36,5 @@ namespace DataTier.Interfaces
 
         void UpdateAnalyzedECG(AnalyzedECGModel analyzedEcg);
 
-
-
-        //int HowManyNewECG();
-
-        //List<PatientModel> PatientsWithNewECGs();
-
-        //List<AnalyzedECGModel> ECGFromPatientWhichIsNew(PatientModel patient);
-
-        //int HowManyNewIllkECG();
-
-        //List<PatientModel> PatientsWithNewIllECGs();
-
-        //List<AnalyzedECGModel> ECGFromPatientWhichIsNewAndIll(PatientModel patient);
-
-
-
-
     }
 }

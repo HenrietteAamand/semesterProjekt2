@@ -7,10 +7,6 @@ namespace DataTier.Models
     public class PatientModel
     {
 
-        #region Attributes
-
-        #endregion
-
         #region Properties
         private int id;
 
@@ -60,23 +56,6 @@ namespace DataTier.Models
             set { FullName = value; }
         }
 
-        //private List<ECGModel> ecgList;
-
-        //public List<ECGModel> ECGList
-        //{
-        //    get { return ecgList; }
-        //    set { ecgList = value; }
-        //}
-
-        //private List<AnalyzedECGModel> aECGList;
-
-        //public List<AnalyzedECGModel> AECGList
-        //{
-        //    get { return aECGList; }
-        //    set { aECGList = value; }
-        //}
-
-
         #endregion
 
         #region Constructor
@@ -87,14 +66,11 @@ namespace DataTier.Models
 
         public PatientModel(string ecgMonitorID, string cpr, string firstName, string lastName)
         {
-            //ID = id;
             ECGMonitorID = ecgMonitorID;
             CPR = cpr;
             FirstName = firstName;
             LastName = lastName;
             
-            //ECGList = ecgList;
-            //AECGList = aECGList;
            
         }
 
@@ -105,10 +81,6 @@ namespace DataTier.Models
             LastName = lastName;
           
         }
-        #endregion
-
-        #region Methods
-
         #endregion
 
     }

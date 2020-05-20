@@ -22,67 +22,57 @@ namespace WPF_til_leg.Presentation
     /// </summary>
     public partial class MainWindowPresentation : MetroWindow, INotifyPropertyChanged
     {
+        #region Attributes
         private ChartECG chartObj;
         private MainWindowLogic mainObj;
-        //private ChartECG chartObj;
-        private AnalyzeECG analyzeObj;
-        List<PatientModel> Patients;
-        List<AnalyzedECGModel> aECGS;
-        private readonly CollectionViewSource viewSource = new CollectionViewSource();
-        System.Timers.Timer opdaterTimer;
         public SetupPatientUC setupUC;
+        private AnalyzeECG analyzeObj;
+        private readonly CollectionViewSource viewSource;
+        private System.Timers.Timer opdaterTimer;
 
         private string filterText;
         private CollectionViewSource usersCollection;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private List<PatientModel> Patients;
+        private List<AnalyzedECGModel> aECGS;
+        #endregion
+
+        #region Ctor
         public MainWindowPresentation()
         {
             InitializeComponent();
-            //if (idT.Text == "")
-            //{
-            //    UploadB.IsEnabled = false;
-            //}
 
             opdaterTimer = new System.Timers.Timer();
             mainObj = new MainWindowLogic();
             chartObj = new ChartECG();
             analyzeObj = new AnalyzeECG();
-            analyzeObj.CreateAnalyzedECGs();
-            ShowWelcomeDialog();
-
-            
-
             aECGS = new List<AnalyzedECGModel>();
             Patients = new List<PatientModel>();
+            viewSource = new CollectionViewSource();
+            usersCollection = new CollectionViewSource();
+
+            analyzeObj.CreateAnalyzedECGs();
             Patients = mainObj.getAllPatiens();
 
-
-            usersCollection = new CollectionViewSource();
-            usersCollection.Source = Patients;
             usersCollection.Filter += usersCollection_Filter;
+            usersCollection.Source = Patients;
             DataContext = this;
             UploadB.IsEnabled = false;
-        }
 
+            ShowWelcomeDialog();
+        } 
+        #endregion
 
-
-
-
+        #region Methods
         async Task ShowWelcomeDialog()
         {
 
-            await this.ShowMessageAsync("Velkommen", $"Der er {analyzeObj.NewAECGModelsList.Count} nye EKG målinger.", MessageDialogStyle.Affirmative);
-
-            //if (result == MessageDialogResult.Affirmative)
-            //{
-            //    analyzeObj.CreateAnalyzedECGs();
-                
-            //    await this.ShowMessageAsync($"  EKG målinger er blevet opdateret","");
-            //}
+            await this.ShowMessageAsync("Velkommen", $"Der er {analyzeObj.NewAECGModelsList.Count} nye EKG målinger.",
+                MessageDialogStyle.Affirmative);
 
         }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             settingsFlyOut.IsOpen = true;
@@ -90,14 +80,14 @@ namespace WPF_til_leg.Presentation
 
         private void UploadB_Click(object sender, RoutedEventArgs e)
         {
-            
+
             if (idT.Text != "" && commentT.Text != "")
             {
 
                 UploadB.Visibility = Visibility.Hidden;
                 idT.Visibility = Visibility.Hidden;
                 uploadPressed.Visibility = Visibility.Visible;
-                
+
             }
         }
 
@@ -112,8 +102,6 @@ namespace WPF_til_leg.Presentation
 
         private void okB_Click(object sender, RoutedEventArgs e)
         {
-           
-
             UploadB.Visibility = Visibility.Visible;
             idT.Visibility = Visibility.Visible;
             uploadPressed.Visibility = Visibility.Hidden;
@@ -132,8 +120,6 @@ namespace WPF_til_leg.Presentation
         {
             if (patientsLV.SelectedValue != null)
             {
-
-
                 dynamic patient = patientsLV.SelectedItem;
                 string cpr = patient.CPR;
                 ecgLV.ItemsSource = mainObj.GetAECGListForPatient(cpr);
@@ -142,7 +128,7 @@ namespace WPF_til_leg.Presentation
                 NavnTB.Text = "NAVN: " + mainObj.GetPatient(cpr).FirstName + " " + mainObj.GetPatient(cpr).LastName;
                 AlderTB.Text = "ALDER: " + Convert.ToString(mainObj.GetAge(cpr)) + " år";
 
-                if (mainObj.IsAMan(cpr) == true)
+                if (mainObj.IsAMan(cpr))
                 {
                     KonTB.Text = "KØN: Mand";
                 }
@@ -166,10 +152,8 @@ namespace WPF_til_leg.Presentation
             if (ecgLV.SelectedItem != null)
             {
                 aECG = ecgLV.SelectedItem;
-                //AnalyzedECGModel aECG = mainObj.aECGList[1];
 
                 chartUC.MakeCharts(mainObj.GetECGValues(aECG.AECGID), aECG.STValues.Count, aECG.STStartIndex, aECG.Baseline, aECG.SampleRate);
-                
 
                 if (aECG.Illness.Id == 2)
                 {
@@ -188,19 +172,9 @@ namespace WPF_til_leg.Presentation
                 chartUC.To = 2 / aECG.SampleRate;
                 chartUC.From = 0;
             }
-            //if (commentT.Text != "" && idT.Text != "")
-            //{
-            //    UploadB.IsEnabled = true;
-            //}
-            //if (commentT.Text == "" && idT.Text == "")
-            //{
-            //    UploadB.IsEnabled = false;
-            //}
-
-
         }
 
-        
+
 
         public ICollectionView SourceCollection
         {
@@ -232,8 +206,8 @@ namespace WPF_til_leg.Presentation
                 return;
             }
 
-            PatientModel usr = e.Item as PatientModel;
-            if (usr.CPR.ToUpper().Contains(FilterText.ToUpper()))
+            PatientModel patient = e.Item as PatientModel;
+            if (patient.CPR.ToUpper().Contains(FilterText.ToUpper()))
             {
                 e.Accepted = true;
             }
@@ -257,13 +231,14 @@ namespace WPF_til_leg.Presentation
 
         private void UpdateB_Click(object sender, RoutedEventArgs e)
         {
-            //dynamic patient = patientsLV.SelectedItem;
             analyzeObj.GetNewECG();
-            if (analyzeObj.newECGList.Count() != 0)
+            dynamic patient = patientsLV.SelectedItem;
+
+            if (analyzeObj.NewECGList.Count() != 0)
             {
                 UpdateView();
                 updateBadge.Badge = 0;
-                //ecgLV.ItemsSource = mainObj.GetAECGListForPatient(patient.ID);
+                ecgLV.ItemsSource = mainObj.GetAECGListForPatient(patient.CPR);
             }
             ShowUpdateDialog();
 
@@ -273,20 +248,12 @@ namespace WPF_til_leg.Presentation
         async Task ShowUpdateDialog()
         {
 
-            await this.ShowMessageAsync("Opdateret", $"Der er {analyzeObj.NewAECGModelsList.Count} nye EKG målinger.", MessageDialogStyle.Affirmative);
-
-            //if (result == MessageDialogResult.Affirmative)
-            //{
-            //    analyzeObj.CreateAnalyzedECGs();
-
-            //    await this.ShowMessageAsync($"  EKG målinger er blevet opdateret","");
-            //}
-
+            await this.ShowMessageAsync("Opdateret", $"Der er {analyzeObj.NewAECGModelsList.Count} nye EKG målinger.",
+                MessageDialogStyle.Affirmative);
         }
 
         public void UpdateView()
         {
-
             Patients = mainObj.getAllPatiens();
             analyzeObj.CreateAnalyzedECGs();
 
@@ -308,10 +275,10 @@ namespace WPF_til_leg.Presentation
                 {
                     UploadB.IsEnabled = false;
                 }
-            }            
+            }
         }
 
-        private void commentT_TextChanged(object sender, TextChangedEventArgs e)
+        private void CommentT_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (ecgLV.SelectedItem != null)
             {
@@ -323,12 +290,11 @@ namespace WPF_til_leg.Presentation
                 {
                     UploadB.IsEnabled = false;
                 }
-            }           
+            }
         }
 
         private void MetroWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //setupUC = new SetupPatientUC(this);
             updateBadge.Badge = 0;
             opdaterTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             opdaterTimer.Interval = 5000;
@@ -338,18 +304,19 @@ namespace WPF_til_leg.Presentation
         private void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             opdaterTimer.Stop();
-            
+
             this.Dispatcher.Invoke(() =>
             {
                 analyzeObj.GetNewECG();
-                if (analyzeObj.newECGList.Count() !=  (int)updateBadge.Badge)
+                if (analyzeObj.NewECGList.Count() != (int)updateBadge.Badge)
                 {
-                    updateBadge.Badge = analyzeObj.newECGList.Count();
+                    updateBadge.Badge = analyzeObj.NewECGList.Count();
                 }
-                
+
             });
-            
+
             opdaterTimer.Start();
-        }
+        } 
+        #endregion
     }
 }

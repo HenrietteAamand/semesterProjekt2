@@ -16,16 +16,21 @@ namespace DataTier.Databaser
 {
     public class DOEDB : IDOEDB
     {
+        #region Attributes
         private SqlConnection connection;
         private SqlDataReader reader;
         private SqlCommand command;
         private const String db = "ST2PRJ2OffEKGDatabase";
-        int ecgid;
+        private int ecgid;
+        #endregion
 
+        #region Ctors
         public DOEDB()
         {
         }
+        #endregion
 
+        #region Methods
         public void UploadMaeling(PatientModel patient, string workerID, string note, DateTime date)
         {
 
@@ -61,7 +66,6 @@ namespace DataTier.Databaser
             connection.Close();
         }
 
-
         public void UploadData(AnalyzedECGModel analyzedEcg)
         {
             double[] values = (analyzedEcg.Values).ToArray();
@@ -94,6 +98,7 @@ namespace DataTier.Databaser
             connection.Close();
 
         }
+        #endregion
 
     }
 }
