@@ -22,10 +22,9 @@ namespace RPi_EKG_program
             ADC adConverter = new ADC();
             Start_Button startB = new Start_Button();
 
-            
          
-            
-            if(localDB.isConnected())
+
+            if (localDB.isConnected())
             {
                 localStorage.storeInfoLocal(localDB.recieveData(monitorID));           
             }
@@ -112,7 +111,7 @@ namespace RPi_EKG_program
 
                         //Vi viser den nu før og efter en måling.
                         displayController.statusUpdateMeasurment(measureTime.TotalSeconds, connection, storageStatus, batteryStatus);
-                        //Thread.Sleep(5000);
+                        Thread.Sleep(5000);
 
                         localStorage.storeDataLocal(newMeasurement, localDB.isConnected());
 

@@ -28,7 +28,7 @@ namespace RPi_EKG_program
 
 
 
-            if (adConverter.readADC_SingleEnded(0)==0)
+            if (adConverter.readADC_SingleEnded(0)==65535)
             { 
                 return false; 
             }

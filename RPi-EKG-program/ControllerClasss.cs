@@ -5,6 +5,8 @@
 //using System.Collections.Generic;
 //using System.Threading;
 
+//>DebugAdapterHost.Launch /LaunchJson:"C:\Users\emils\Source\Repos\semesterProjekt2\RPi-EKG-program\launch.json" /EngineGuid:541B8A8A-6081-4506-9F0A-1CE771DEBC04
+
 //namespace RPi_EKG_program
 //{
 //    class Program
@@ -121,7 +123,7 @@
 //                            displayController.screenShow(6, localDB.isConnected(), localStorage.checkUnSentData(), adConverter.checkBattery());
 
 //                            localDB.sendData(newMeasurement);
-                                //Thread.Sleep(10000);
+//Thread.Sleep(10000);
 
 
 //                        }
