@@ -228,13 +228,13 @@
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DataLayer\DataTier.csproj">
+      <Project>{a5048103-4c0c-4770-8fd1-2b210c2fcfc9}</Project>
+      <Name>DataTier</Name>
+    </ProjectReference>
     <ProjectReference Include="..\LogicLayer\LogicTier.csproj">
       <Project>{eb37023b-dd9e-4c10-9727-396cef71745b}</Project>
       <Name>LogicTier</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Models\Models.csproj">
-      <Project>{47848402-88d7-4dab-83b9-222241e6fb6b}</Project>
-      <Name>Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

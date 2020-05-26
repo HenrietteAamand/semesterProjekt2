@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Models.Models
+namespace DataTier.Models
 {
     public class ECGMonitorModel
     {
-        #region Attributes
-        #endregion
-
         #region Properties
         private bool inUse;
 
@@ -39,8 +36,5 @@ namespace Models.Models
 
         #endregion
 
-        #region Methods
-
-        #endregion
     }
 }

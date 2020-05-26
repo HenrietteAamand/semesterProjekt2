@@ -8,8 +8,8 @@
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              xmlns:ChartECG="clr-namespace:WPF_til_leg.Presentation"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{Binding ChartECG}">
-   
+             d:DesignHeight="500" d:DesignWidth="800" d:DataContext="{Binding ChartECG}">
+
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="bvc"></BooleanToVisibilityConverter>
     </UserControl.Resources>
@@ -19,60 +19,67 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-            <StackPanel.Resources>
-                <Style BasedOn="{StaticResource MahApps.Styles.CheckBox}" TargetType="{x:Type CheckBox}">
-                    <Setter Property="Margin" Value="20" />
-                    <Setter Property="Width" Value="100" />
-                    <Setter Property="MaxWidth" Value="100" />
-                </Style>
-            </StackPanel.Resources>
-            <CheckBox IsChecked="{Binding ECGSeriesVisibility}">
-                EKG
-            </CheckBox>
-            <CheckBox IsChecked="{Binding BaseLineSeriesVisibility}">
-                Base Line
-            </CheckBox>
-            <CheckBox IsChecked="{Binding STSeriesVisibility}">
-                ST Segment
-            </CheckBox>
-        </StackPanel>
-        <lvc:CartesianChart Grid.Row="1" Hoverable="False" Series="{Binding series}" Visibility="{Binding ECGSeriesVisibility}">
+        <DockPanel HorizontalAlignment="Stretch">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                <StackPanel.Resources>
+                    <Style BasedOn="{StaticResource MahApps.Styles.CheckBox}" TargetType="{x:Type CheckBox}">
+                        <Setter Property="Margin" Value="20" />
+                        <Setter Property="Width" Value="90" />
+                        <Setter Property="MaxWidth" Value="100" />
+                    </Style>
+                </StackPanel.Resources>
+                <CheckBox IsChecked="{Binding ECGSeriesVisibility}">
+                    EKG
+                </CheckBox>
+                <CheckBox IsChecked="{Binding BaseLineSeriesVisibility}">
+                    Base Line
+                </CheckBox>
+                <CheckBox IsChecked="{Binding STSeriesVisibility}">
+                    ST Segment
+                </CheckBox>
+            </StackPanel>
+            <UniformGrid Columns="2">
+                <Controls:Badged Margin="10">
+                    <Button x:Name="PrevB" Click="PrevOnClick">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="ArrowLeft" />
+                            <TextBlock Margin="5" Text="Venstre"/>
+                        </StackPanel>
+                    </Button>
+                </Controls:Badged>
+                <Controls:Badged Margin="10" >
+                    <Button x:Name="NextB" Click="NextOnClick">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                            <iconPacks:PackIconMaterial Margin="5" VerticalAlignment="Center" Kind="ArrowRight" />
+                            <TextBlock Margin="5" Text="Højre"/>
+                        </StackPanel>
+                    </Button>
+                </Controls:Badged>
+            </UniformGrid>
+            <TextBox x:Name="STawareTB" FontWeight="Bold" BorderBrush="Transparent" VerticalContentAlignment="Center" IsEnabled="False" Background="Transparent" TextWrapping="Wrap" Foreground="Tomato"/>
+        </DockPanel>
+
+        <lvc:CartesianChart Grid.Row="1" Hoverable="False"  DisableAnimations="True">
+            <lvc:CartesianChart.Series>
+                <lvc:LineSeries Title="EKG" Values="{Binding ECGList}" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}" Fill="Transparent" PointGeometrySize="0"/>
+                <lvc:LineSeries Title="Base Line" Values="{Binding BaseList}" Visibility="{Binding BaseLineSeriesVisibility, Converter={StaticResource bvc}}" Fill="Transparent" Stroke="Black" PointGeometrySize="0"/>
+                <lvc:LineSeries Title="ST Segment" Values="{Binding STList}" Visibility="{Binding STSeriesVisibility, Converter={StaticResource bvc}}"  Fill="Transparent" Stroke="Red" PointGeometrySize="0"/>
+            </lvc:CartesianChart.Series>
             <lvc:CartesianChart.AxisY>
-                <lvc:Axis>
+                <lvc:Axis MaxValue="2" MinValue="-2" Labels="">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="1"></lvc:Separator>
+                        <lvc:Separator IsEnabled="True" Step="0.1" Stroke="LightGray" StrokeThickness="0.2"></lvc:Separator>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
+
             </lvc:CartesianChart.AxisY>
             <lvc:CartesianChart.AxisX>
-                <lvc:Axis>
+                <lvc:Axis MinValue="{Binding From}" MaxValue="{Binding To}" Labels="">
                     <lvc:Axis.Separator>
-                        <lvc:Separator Step="1"></lvc:Separator>
+                        <lvc:Separator x:Name="x" IsEnabled="True" Step="{Binding gridStep}" Stroke="LightGray" StrokeThickness="0.2"></lvc:Separator>
                     </lvc:Axis.Separator>
                 </lvc:Axis>
             </lvc:CartesianChart.AxisX>
         </lvc:CartesianChart>
-        <!--<lvc:CartesianChart Grid.Row="1" Hoverable="False">
-            <lvc:CartesianChart.Series>
-                <lvc:LineSeries Title="EKG" Visibility="{Binding ECGSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" PointGeometrySize="0"/>
-                --><!--<lvc:LineSeries Title="Base Line" Values="4,4,4,4,4,4,4,4,4,4,4,4,4,4" Visibility="{Binding BaseLineSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" Stroke="Black" PointGeometrySize="0"/>-->
-                <!--<lvc:LineSeries Title="ST Segment" Values="NaN,NaN,NaN,NaN,NaN,NaN,NaN,1,2,4,NaN" Visibility="{Binding STSeriesVisibility, Converter={StaticResource bvc}}" MaxWidth="1000" Fill="Transparent" Stroke="Red" PointGeometrySize="0"/>--><!--
-            </lvc:CartesianChart.Series>
-            <lvc:CartesianChart.AxisY>
-                <lvc:Axis>
-                    <lvc:Axis.Separator>
-                        <lvc:Separator Step="1"></lvc:Separator>
-                    </lvc:Axis.Separator>
-                </lvc:Axis>
-            </lvc:CartesianChart.AxisY>
-            <lvc:CartesianChart.AxisX>
-                <lvc:Axis>
-                    <lvc:Axis.Separator>
-                        <lvc:Separator Step="1"></lvc:Separator>
-                    </lvc:Axis.Separator>
-                </lvc:Axis>
-            </lvc:CartesianChart.AxisX>
-        </lvc:CartesianChart>-->
     </Grid>
 </UserControl>

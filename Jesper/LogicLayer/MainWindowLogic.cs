@@ -1,4 +1,4 @@
-﻿using Models.Models;
+﻿using DataTier.Models;
 using System;
 using System.Collections.Generic;
 using DataTier.Databaser;
@@ -8,192 +8,167 @@ namespace LogicTier
 {
     public class MainWindowLogic
     {
-		private AnalyzeECG analyzeECG;
-		public PatientModel patientRef { get; private set; }
-		public AnalyzedECGModel aECGRef { get; private set; }
-		public List<AnalyzedECGModel> aECGList { get; private set; }
-		public List<PatientModel> patientList { get; private set; }
-		private ILocalDatabase DB;
-		private IDOEDB DOEDB;
+        #region Attributes
+        public ILocalDatabase DB;
+        private IDOEDB DOEDB;
+        #endregion
 
-		public MainWindowLogic()
-		{
-			analyzeECG = new AnalyzeECG();
-			patientList = new List<PatientModel>();
-			aECGList = new List<AnalyzedECGModel>();
-			DB = new TestDB();
-			DOEDB = new DOEDB();
-			patientList = DB.GetAllPatients();
-			aECGList = DB.GetAllAnalyzedECGs();
-		}
+        #region Properties
+        public PatientModel patientRef { get; private set; }
+        public AnalyzedECGModel aECGRef { get; private set; }
+        public List<AnalyzedECGModel> aECGList { get; private set; }
+        public List<PatientModel> patientList { get; private set; }
+        #endregion
 
-		public List<AnalyzedECGModel> GetAECGListForPatient(string cpr)
-		{
-			List<AnalyzedECGModel> analyzedECGList = new List<AnalyzedECGModel>();
-			//Viser alle analyserede ECG'er på listen for valgt patient
+        #region Ctors
+        public MainWindowLogic()
+        {
+            DB = new Database();
+            patientList = new List<PatientModel>();
+            aECGList = new List<AnalyzedECGModel>();
 
-			foreach (AnalyzedECGModel aECG in aECGList)
-			{
-				if (aECG.CPR == cpr)
-				{
-					analyzedECGList.Add(aECG);
-				}
-			}
+            DOEDB = new DOEDB();
+            patientList = DB.GetAllPatients();
+        }
+        #endregion
 
-			//Sker når en patient vælges på listen
-			return analyzedECGList;
-		}
-
-		public void UpdatePatientList()
-		{
-			//Sætter attributter, som fortæller at der er nye målinger og/eller nye syge målinger for alle patienter.
-			foreach (PatientModel patient in patientList)
-			{
-				foreach (AnalyzedECGModel aECG in aECGList)
-				{
-					if (aECG.CPR == patient.CPR)
-					{
-						if (!aECG.IsRead)
-						{
-							if (aECG.Illnes != null)
-							{
-								//Sæt skriftfarven til rød
-
-							}
-							//Sæt farven til blå
-
-						}
-
-						if (aECG.Illnes != null)
-						{
-							//Sæt skriftfarven til rød
-						}
-					}
-				}
-			}
+        #region Methods
+        public List<AnalyzedECGModel> GetAECGListForPatient(string cpr)
+        {
+            //Viser alle analyserede ECG'er på listen for valgt patient
+            List<AnalyzedECGModel> analyzedECGList = new List<AnalyzedECGModel>();
+            aECGList = DB.GetAllAnalyzedECGs();
+            foreach (AnalyzedECGModel aECG in aECGList)
+            {
+                if (aECG.CPR == cpr)
+                {
+                    analyzedECGList.Add(aECG);
+                }
+            }
+            return analyzedECGList;
+        }
 
 
-			//Sker når der opdateres
-		}
+        public void UploadData(string id, string note, AnalyzedECGModel aECG, PatientModel patient)
+        {
+            //Hvis der er indtastet id uploader den
+            if (id != null && note != null)
+            {
+                DOEDB.UploadMaeling(patient, id, note, aECG.Date);
+                DOEDB.UploadData(aECG);
+            }
+        }
 
-		//public void UpdateAECGList()
-		//{
-		//	//Sætter alle nye målinger ind på patientlisten
-		//	//Sker når der opdateres
-		//}
+        public AnalyzedECGModel GetAnalyzedECG(int aECGID)
+        {
+            aECGList = DB.GetAllAnalyzedECGs();
+            AnalyzedECGModel result = new AnalyzedECGModel();
+            foreach (AnalyzedECGModel aECG in aECGList)
+            {
+                if (aECG.ECGID == aECGID)
+                {
+                    result = aECG;
+                }
+            }
+            return result;
+        }
 
-		public void UploadData(string id)
-		{
-			//Hvis der er indtastet id uploader den
-			if (id != null)
-			{
-				DOEDB.UploadData();
-			}
+        public List<double> GetECGValues(int AECGID)
+        {
+            List<double> ecgValuesList = new List<double>();
 
-			//Uploader data til DOEDB
-			//Sker når der trykkes på "Upload Til Offentlig Database"
-			//Kan kun gøres, hvis der er udfyldt et ID
-		}
+            foreach (AnalyzedECGModel aECG in aECGList)
+            {
+                if (aECG.AECGID == AECGID)
+                {
+                    ecgValuesList = aECG.Values;
+                    aECG.IsRead = true;
+                    DB.UpdateAnalyzedECG(aECG);
+                }
+            }
+            return ecgValuesList;
+        }
 
-		public AnalyzedECGModel GetAnalyzedECG(int aECGID)
-		{
-			AnalyzedECGModel result = new AnalyzedECGModel();
-			foreach (AnalyzedECGModel aECG in aECGList)
-			{
-				if (aECG.ECGID == aECGID)
-				{
-					result = aECG;
-				}
-			}
+        public List<double> GetSTValues(int ecgID)
+        {
+            List<double> stValuesList = new List<double>();
 
-			//Sætter også isRead = true
-			//Sker når der vælges en ECG på listen
-			return result;
-		}
+            foreach (AnalyzedECGModel aECG in aECGList)
+            {
+                if (aECG.ECGID == ecgID)
+                {
+                    stValuesList = aECG.STValues;
+                }
+            }
+            return stValuesList;
+        }
 
-		public List<double> GetECGValues(int ecgID)
-		{
-			List<double> ecgValuesList = new List<double>();
+        public int GetSTStartIndex(int ecgID)
+        {
+            int stStartIndex = 0;
 
-			foreach (AnalyzedECGModel aECG in aECGList)
-			{
-				if (aECG.ECGID == ecgID)
-				{
-					ecgValuesList = aECG.Values;
-					aECG.IsRead = true;
-					//DB.UpdateIsRead(aECG.AECGID);
-				}
-			}
+            foreach (AnalyzedECGModel aECG in aECGList)
+            {
 
-			//Sætter også isRead = true
-			//Sker når der vælges en ECG på listen
-			return ecgValuesList;
-		}
-
-
-		//Metode til ST-values
-		public List<double> GetSTValues(int ecgID)
-		{
-			List<double> stValuesList = new List<double>();
-
-			foreach (AnalyzedECGModel aECG in aECGList)
-			{
-				if (aECG.ECGID == ecgID)
-				{
-					stValuesList = aECG.STValues;
-				}
-			}
-
-			//Sætter også isRead = true
-			//Sker når der vælges en ECG på listen
-			return stValuesList;
-		}
-
-		public int GetSTStartIndex(int ecgID)
-		{
-			int stStartIndex = 0;
-
-			foreach (AnalyzedECGModel aECG in aECGList)
-			{
-
-				if (aECG.ECGID == ecgID)
-				{
-					stStartIndex = aECG.STStartIndex;
-				}
-			}
-			return stStartIndex;
-		}
+                if (aECG.ECGID == ecgID)
+                {
+                    stStartIndex = aECG.STStartIndex;
+                }
+            }
+            return stStartIndex;
+        }
 
 
 
-		public PatientModel GetPatient(string cpr)
-		{
-			PatientModel patient = new PatientModel();
+        public PatientModel GetPatient(string cpr)
+        {
+            PatientModel patient = new PatientModel();
 
-			foreach (PatientModel pa in patientList)
-			{
-				if (pa.CPR == cpr)
-				{
-					patient = pa;
-				}
+            foreach (PatientModel pa in patientList)
+            {
+                if (pa.CPR == cpr)
+                {
+                    patient = pa;
+                }
 
-			}
+            }
 
-			return patient;
-		}
+            return patient;
+        }
 
-		public int GetAge(string cpr)
-		{
-			throw new NotImplementedException();
-		}
+        public int GetAge(string cpr)
+        {
+            cpr = cpr.Replace("-", "");
+            cpr = cpr.Remove(6);
+            DateTime birthday = DateTime.ParseExact(cpr, "ddmmyy", null);
+            int result = new DateTime(DateTime.Now.Subtract(birthday).Ticks).Year - 1;
+            if (result > 110)
+            {
+                result = -100;
+            }
+            return result;
+        }
 
-		public bool IsAMan(string cpr)
-		{
-			throw new NotImplementedException();
-			//bool result;
-			//cpr.ToString()
-			//if(cpr.ToString())
-		}
+        public bool IsAMan(string cpr)
+        {
+            bool result = false;
 
-	}
+            int tal = Convert.ToInt32(cpr.Remove(0, 10));
+            if (tal % 2 != 0)
+            {
+                result = true;
+            }
+            return result;
+        }
+
+        public List<PatientModel> getAllPatiens()
+        {
+            //Henter alle Patient til liste
+            List<PatientModel> patientList = new List<PatientModel>();
+            patientList = DB.GetAllPatients();
+            return patientList;
+        } 
+        #endregion
+
+    }
 }

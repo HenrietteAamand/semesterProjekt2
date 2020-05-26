@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Models.Models
+namespace DataTier.Models
 {
     public class ECGModel
     {
-        #region Attributes
-
-        #endregion
-
         #region Properties
         private string cpr;
         public string CPR
@@ -85,10 +80,6 @@ namespace Models.Models
         public ECGModel()
         {
         }
-
-        #endregion
-
-        #region Methods
 
         #endregion
     }

@@ -1,15 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Models.Models
+namespace DataTier.Models
 {
     public class PatientModel
     {
-
-        #region Attributes
-
-        #endregion
 
         #region Properties
         private int id;
@@ -52,40 +46,30 @@ namespace Models.Models
             set { lastName = value; }
         }
 
-        //private List<ECGModel> ecgList;
+        private String fullName;
 
-        //public List<ECGModel> ECGList
-        //{
-        //    get { return ecgList; }
-        //    set { ecgList = value; }
-        //}
-
-        //private List<AnalyzedECGModel> aECGList;
-
-        //public List<AnalyzedECGModel> AECGList
-        //{
-        //    get { return aECGList; }
-        //    set { aECGList = value; }
-        //}
-
+        public String FullName
+        {
+            get { return firstName + " " + lastName; }
+            set { FullName = value; }
+        }
 
         #endregion
 
         #region Constructor
         public PatientModel()
         {
-
+            
         }
 
         public PatientModel(string ecgMonitorID, string cpr, string firstName, string lastName)
         {
-            //ID = id;
             ECGMonitorID = ecgMonitorID;
             CPR = cpr;
             FirstName = firstName;
             LastName = lastName;
-            //ECGList = ecgList;
-            //AECGList = aECGList;
+            
+           
         }
 
         public PatientModel(string cpr, string firstName, string lastName)
@@ -93,11 +77,8 @@ namespace Models.Models
             CPR = cpr;
             FirstName = firstName;
             LastName = lastName;
+          
         }
-        #endregion
-
-        #region Methods
-
         #endregion
 
     }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Models.Models
+namespace DataTier.Models
 {
     public class IllnessModel
     {
@@ -43,7 +43,7 @@ namespace Models.Models
 
         #endregion
 
-        #region Constructor
+        #region Constructors
         public IllnessModel(int id, string name, string about, double stMax, double srMax, bool stSegmentElevated, bool stSegmentDepressed)
         {
             Id = id;
@@ -57,15 +57,7 @@ namespace Models.Models
 
         }
 
-        public IllnessModel()
-        {
-
-        }
-
-        #endregion
-
-        #region Methods
-
+        public IllnessModel() {}
         #endregion
     }
 }

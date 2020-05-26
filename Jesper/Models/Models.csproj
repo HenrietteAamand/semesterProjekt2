@@ -41,12 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
-    <Compile Include="Models\AnalyzedECGModel.cs" />
-    <Compile Include="Models\ECGModel.cs" />
-    <Compile Include="Models\ECGMonitorModel.cs" />
-    <Compile Include="Models\IllnessModel.cs" />
-    <Compile Include="Models\PatientModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

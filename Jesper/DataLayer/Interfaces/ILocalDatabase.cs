@@ -1,8 +1,5 @@
-﻿using DataTier;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Models.Models;
+﻿using System.Collections.Generic;
+using DataTier.Models;
 
 namespace DataTier.Interfaces
 {
@@ -20,37 +17,21 @@ namespace DataTier.Interfaces
 
         List<IllnessModel> GetAllIllnesses();
 
+        IllnessModel GetIllness(int id);
+
 
         //Gem
-        //void UpdateLinkECGToPatient(PatientModel patient, ECGMonitorModel monitor);
+        void UpdatePatient(PatientModel patient);
 
         void CreatePatient(PatientModel patient);
 
-        void UpdateECGMonitor(ECGMonitorModel monitor);
+        void UpdateECGMonitor(ECGMonitorModel ecgMonitor);
 
         void UpdateIsAnalyzed(ECGModel ecgID);
 
         void UploadAnalyzedECGs(AnalyzedECGModel analyzedEcg);
 
-        void UpdateIsRead(AnalyzedECGModel aECGID);
-        void UpdatePatient(PatientModel patient);
-
-
-
-        //int HowManyNewECG();
-
-        //List<PatientModel> PatientsWithNewECGs();
-
-        //List<AnalyzedECGModel> ECGFromPatientWhichIsNew(PatientModel patient);
-
-        //int HowManyNewIllkECG();
-
-        //List<PatientModel> PatientsWithNewIllECGs();
-
-        //List<AnalyzedECGModel> ECGFromPatientWhichIsNewAndIll(PatientModel patient);
-
-
-
+        void UpdateAnalyzedECG(AnalyzedECGModel analyzedEcg);
 
     }
 }

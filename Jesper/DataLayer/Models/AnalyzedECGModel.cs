@@ -1,15 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Models.Models
+namespace DataTier.Models
 {
     public class AnalyzedECGModel : ECGModel
     {
-        #region Attributes
-
-        #endregion
-
         #region Properties
         private int aECGID;
 
@@ -22,11 +17,9 @@ namespace Models.Models
             }
         }
 
-
-
         private IllnessModel illness;
 
-        public IllnessModel Illnes
+        public IllnessModel Illness
         {
             get { return illness; }
             set { illness = value; }
@@ -110,15 +103,6 @@ namespace Models.Models
 
 
         public AnalyzedECGModel() { }
-
-        //public AnalyzedECGModel(string cpr, int ecgID, DateTime date, int sampleRate, List<double> values, int monitorId, bool isAnalyzed) 
-        //    : base(cpr, ecgID, date, sampleRate, values, monitorId, isAnalyzed)
-        //{
-        //}
-        #endregion
-
-        #region Methods
-
         #endregion
     }
 }
